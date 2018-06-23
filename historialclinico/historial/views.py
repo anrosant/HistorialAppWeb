@@ -14,18 +14,10 @@ def index(request):
         usuario = Usuario.objects.get(usuario=request.user.username)
     except Usuario.DoesNotExist:
         usuario = None
-    '''try:
-        usuario = Usuario.objects.get(usuario=request.user.username)
-        print(usuario)
-    except Usuario.DoesNotExist:
-        usuario = None
     if usuario is not None:
-        usuarioValido = usuario
+        usuario = usuario
     else:
         return redirect('historial:login')
-    context = {
-        'usuario': usuarioValido
-    }'''
     context = {
         'usuario': usuario
     }

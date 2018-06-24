@@ -1,0 +1,6 @@
+{% extends "historial/base.html" %}
+{% block titulo %}Historial médico{% endblock %}
+{% block contenido %}
+<li style="float:right"><a href="{% url 'historial:cerrarSesion'%}"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
+    <p>{{ usuario.usuario }}</p>
+{% endblock %}

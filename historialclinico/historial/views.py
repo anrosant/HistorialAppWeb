@@ -1,10 +1,10 @@
-from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.template import loader
 
-from historial.models import Usuario
+from .models import *
+
 
 ''' Esta vista me redirge a la página principal
     Valida si existe el usuario o no'''

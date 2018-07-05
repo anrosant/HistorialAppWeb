@@ -23,6 +23,29 @@ class Empleado(models.Model):
     ocupacion_act = models.CharField(max_length=50)
     fecha_registro = models.DateField()
     foto = models.IntegerField()
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nombre
+        return "{}".format(self.nombre)
+
+class ConsultaMedica(models.Model):
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    fechaConsulta = models.DateField()
+    probActual = models.CharField(max_length=100)
+    motivo = models.CharField(max_length=100)
+    revision_medica = models.CharField(max_length=100)
+    examen_fisico = models.CharField(max_length=100)
+
+class AtencionEnfermeria(models.Model):
+    fechaAtencion = models.DateField()
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    motivoAtencion = models.CharField(max_length=100)
+    diagnosticoEnfermeria = models.CharField(max_length=100)
+    planCuidados = models.CharField(max_length=100)
+
+class SignosVitales(models.Model):
+    presion_sistolica = models.IntegerField()
+    presion_distolica = models.IntegerField()
+    pulso = models.IntegerField()
+    temperatura = models.FloatField()
+    consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE)

@@ -4,3 +4,6 @@ from .models import *
 
 admin.site.register(Empleado)
 admin.site.register(Usuario)
+admin.site.register(SignosVitales)
+admin.site.register(ConsultaMedica)
+admin.site.register(AtencionEnfermeria)

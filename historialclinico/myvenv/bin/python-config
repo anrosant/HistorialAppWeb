@@ -1,4 +1,4 @@
-#!/home/annrosant/HistrorialAppWeb/historialclinico/myvenv/bin/python
+#!/home/historialMedico/HistorialAppWeb/historialclinico/myvenv/bin/python
 
 import sys
 import getopt

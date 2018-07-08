@@ -11,7 +11,7 @@ from .models import *
 def index(request):
     template = loader.get_template('historial/index.html')
     try:
-        usuario = Usuario.objects.get(usuario=request.user.username)
+        usuario = Usuario.objects.get(nombre_usuario=request.user.username)
     except Usuario.DoesNotExist:
         usuario = None
     if usuario is not None:
@@ -29,7 +29,7 @@ def loginUser(request):
         nombre = request.POST['usuario']
         clave = request.POST['password']
         try:
-            usuario = Usuario.objects.get(usuario=nombre, contrasenia=clave)
+            usuario = Usuario.objects.get(nombre_usuario=nombre, contrasenia=clave)
         except Usuario.DoesNotExist:
             usuario = None
         if usuario is not None:

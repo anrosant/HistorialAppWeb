@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/annrosant/HistrorialAppWeb/historialclinico/myvenv"
+VIRTUAL_ENV="/home/historialMedico/HistorialAppWeb/historialclinico/myvenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

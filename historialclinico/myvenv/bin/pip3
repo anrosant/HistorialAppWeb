@@ -1,4 +1,4 @@
-#!/home/annrosant/HistrorialAppWeb/historialclinico/myvenv/bin/python3.6
+#!/home/historialMedico/HistorialAppWeb/historialclinico/myvenv/bin/python3.6
 
 # -*- coding: utf-8 -*-
 import re

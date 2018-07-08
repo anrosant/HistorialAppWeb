@@ -84,14 +84,17 @@ class AntecedentePatologicoPersonal(models.Model):
     lugar_patologia = models.CharField(max_length=100)
     detalle_patologia = models.CharField(max_length=300)
 
-class RevisionAparatoSistema(models.Model):
-    ficha_medica = models.ForeignKey(FichaMedica, default = DEFAULT, on_delete=models.CASCADE)
 
 class AparatoSistema(models.Model):
-    revision_aparato_sistema = models.ForeignKey(RevisionAparatoSistema, default = DEFAULT, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
     hallazgo = models.CharField(max_length=300)
     detalle = models.CharField(max_length=300)
+
+
+class RevisionAparatoSistema(models.Model):
+    ficha_medica = models.ForeignKey(FichaMedica, default = DEFAULT, on_delete=models.CASCADE)
+    aparato_sistema = models.ForeignKey(AparatoSistema, default = DEFAULT, on_delete=models.CASCADE)
+
 
 class AntecedenteLaboral(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, default = DEFAULT, on_delete=models.CASCADE)

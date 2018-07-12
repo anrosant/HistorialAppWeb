@@ -20,6 +20,7 @@ class Empleado(models.Model):
     edad = models.IntegerField()
     sexo = models.CharField(max_length=9)
     lugar_nacimiento = models.CharField(max_length=20)
+    lugar_nacimiento = models.CharField(max_length=20)
     fecha_nacimiento = models.DateField(default=timezone.now())
     ocupacion_actual = models.CharField(max_length=50)
     fecha_registro = models.DateField(default=timezone.now())
@@ -32,11 +33,11 @@ class Empleado(models.Model):
 class ConsultaMedica(models.Model):
     empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     fecha = models.DateField(default=timezone.now())
-    motivo = models.CharField(max_length=300)
-    problema_actual = models.CharField(max_length=300)
-    revision = models.CharField(max_length=300)
-    prescripcion = models.CharField(max_length=300)
-    examen_fisico = models.CharField(max_length=300)
+    motivo = models.CharField(max_length=300, blank=True)
+    problema_actual = models.CharField(max_length=300, blank=True)
+    revision = models.CharField(max_length=300, blank=True)
+    prescripcion = models.CharField(max_length=300, blank=True)
+    examen_fisico = models.CharField(max_length=300, blank=True)
 
 class AtencionEnfermeria(models.Model):
     empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)

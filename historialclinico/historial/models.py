@@ -31,6 +31,7 @@ class Empleado(models.Model):
         return "{}".format(self.nombre)
 
 class ConsultaMedica(models.Model):
+    id = models.AutoField(primary_key=True);
     empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     fecha = models.DateField(default=timezone.now())
     motivo = models.CharField(max_length=300, blank=True)

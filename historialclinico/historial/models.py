@@ -31,7 +31,7 @@ class Empleado(models.Model):
         return "{}".format(self.nombre)
 
 class ConsultaMedica(models.Model):
-    id = models.AutoField(primary_key=True);
+    id = models.AutoField(primary_key=True)
     empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     fecha = models.DateField(default=timezone.now())
     motivo = models.CharField(max_length=300, blank=True)
@@ -130,21 +130,21 @@ class Vacuna(models.Model):
 
 class ExamenLaboratorio(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
-    descripcion = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=50, blank=True)
     archivo = models.ImageField()
 
 class SomaticoGeneral(models.Model):
-    apariencia = models.CharField(max_length=300)
-    estado_nutricional = models.CharField(max_length=300)
-    actividades_psicomotoras = models.CharField(max_length=300)
+    apariencia = models.CharField(max_length=300, blank=True)
+    estado_nutricional = models.CharField(max_length=300, blank=True)
+    actividades_psicomotoras = models.CharField(max_length=300, blank=True)
 
 class Regional(models.Model):
-    piel_tegumentos = models.CharField(max_length=300)
-    cabeza_cuello = models.CharField(max_length=300)
-    torax = models.CharField(max_length=300)
-    corazon = models.CharField(max_length=300)
-    pulmones = models.CharField(max_length=300)
-    abdomen = models.CharField(max_length=300)
+    piel_tegumentos = models.CharField(max_length=300, blank=True)
+    cabeza_cuello = models.CharField(max_length=300, blank=True)
+    torax = models.CharField(max_length=300, blank=True)
+    corazon = models.CharField(max_length=300, blank=True)
+    pulmones = models.CharField(max_length=300, blank=True)
+    abdomen = models.CharField(max_length=300, blank=True)
 
 class Columna(models.Model):
     cifosis_acentuada = models.BooleanField()
@@ -154,12 +154,12 @@ class Columna(models.Model):
     escoliosis = models.BooleanField()
     motricidad = models.BooleanField()
     lassegue = models.BooleanField()
-    detalle = models.CharField(max_length=300)
+    detalle = models.CharField(max_length=300,blank=True)
 
 class RegionLumbar(models.Model):
     dolor_punio_percusion = models.BooleanField()
     motricidad = models.BooleanField()
-    detalle = models.CharField(max_length=300)
+    detalle = models.CharField(max_length=300, blank=True)
 
 class Extremidades(models.Model):
     phalen = models.BooleanField()
@@ -168,7 +168,7 @@ class Extremidades(models.Model):
     signo_cajon_rodilla = models.BooleanField()
     finkelstein = models.BooleanField()
     motricidad = models.BooleanField()
-    observaciones = models.CharField(max_length=500)
+    observaciones = models.CharField(max_length=500, blank=True)
 
 class ExamenFisico(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)

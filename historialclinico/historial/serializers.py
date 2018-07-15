@@ -16,7 +16,7 @@ class EmpleadoSerializer(serializers.ModelSerializer):
 class ConsultaMedicaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConsultaMedica
-        fields = ('empleado', 'fecha', 'motivo', 'problema_actual', 'revision', 'prescripcion')
+        fields = ('empleado', 'fecha', 'motivo', 'problema_actual', 'revision', 'prescripcion', 'examen_fisico')
 
 class AtencionEnfermeriaSerializer(serializers.ModelSerializer):
     class Meta:

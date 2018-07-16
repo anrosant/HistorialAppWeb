@@ -55,21 +55,21 @@ class SignosVitales(models.Model):
     pulso = models.IntegerField()
     temperatura = models.FloatField()
 
-class PermisoMedico(models.Model):
-    empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
-    fecha_inicio = models.DateField(default=timezone.now())
-    fecha_fin = models.DateField(default=timezone.now())
-    dias = models.IntegerField()
-
 class Enfermedad(models.Model):
     codigo = models.CharField(max_length=10)
     nombre = models.CharField(max_length=100)
 
 class Diagnostico(models.Model):
-    permiso_medico = models.ForeignKey(PermisoMedico, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     consulta_medica = models.ForeignKey(ConsultaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     enfermedad = models.ForeignKey(Enfermedad, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=100)
+
+class PermisoMedico(models.Model):
+    diagnostico = models.ForeignKey(Diagnostico, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
+    empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
+    fecha_inicio = models.DateField(default=timezone.now())
+    fecha_fin = models.DateField(default=timezone.now())
+    dias = models.IntegerField()
 
 class Chequeo(models.Model):
     fecha = models.DateField(default=timezone.now())

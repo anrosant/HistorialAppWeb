@@ -1,7 +1,6 @@
 from rest_framework import routers, serializers, viewsets
 from historial.models import *
 
-
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
@@ -22,15 +21,10 @@ class AtencionEnfermeriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = AtencionEnfermeria
         fields = ('pk','empleado', 'fecha', 'motivo', 'diagnostico', 'plan_cuidados')
-
 class SignosVitalesSerializer(serializers.ModelSerializer):
     class Meta:
         model = SignosVitales
         fields = ('pk','consulta_medica', 'atencion_enfermeria', 'presion_sistolica', 'presion_distolica', 'pulso','temperatura')
-class PermisoMedicoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PermisoMedico
-        fields = ('pk','empleado', 'fecha_inicio', 'fecha_fin', 'dias')
 class EnfermedadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enfermedad
@@ -38,7 +32,11 @@ class EnfermedadSerializer(serializers.ModelSerializer):
 class DiagnosticoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diagnostico
-        fields = ('pk','permiso_medico', 'consulta_medica', 'enfermedad', 'tipo')
+        fields = ('pk', 'consulta_medica', 'enfermedad', 'tipo')
+class PermisoMedicoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PermisoMedico
+        fields = ('pk','diagnostico','empleado', 'fecha_inicio', 'fecha_fin', 'dias')
 class ChequeoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chequeo

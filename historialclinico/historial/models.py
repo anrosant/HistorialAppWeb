@@ -43,9 +43,9 @@ class ConsultaMedica(models.Model):
 class AtencionEnfermeria(models.Model):
     empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     fecha = models.DateField(default=timezone.now())
-    motivo = models.CharField(max_length=300)
-    diagnostico = models.CharField(max_length=300)
-    plan_cuidados = models.CharField(max_length=500)
+    motivo = models.CharField(max_length=300, blank=True)
+    diagnostico = models.CharField(max_length=300, blank=True)
+    plan_cuidados = models.CharField(max_length=500, blank=True)
 
 class SignosVitales(models.Model):
     consulta_medica = models.ForeignKey(ConsultaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)

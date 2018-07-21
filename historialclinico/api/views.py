@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.forms import model_to_dict
 from rest_framework import generics
@@ -5,19 +6,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .serializers import *
-
-'''class CrearUsuarioView(generics.ListCreateAPIView):
-    """This class defines the create behavior of our rest api."""
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
-    def perform_create(self, serializer):
-        """Save the post data when creating a new user."""
-        serializer.save()
-
-class ListaUsuarioView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests."""
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
 
 class CrearEmpleadoView(generics.ListCreateAPIView):
     queryset = Empleado.objects.all()
@@ -261,14 +249,21 @@ class ListaExamenFisicoView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ExamenFisicoSerializer
 
 @api_view(['GET', 'POST'])
-def helloMama(request):
+def ingresoUsuario(request):
     context = {}
     if(request.method == 'POST'):
-        saludo = request.data['saludo']
-        if(saludo == 'Hola'):
-            context["Response"] = saludo
+        user = request.data['usuario']
+        password = request.data['password']
+        try:
+            usuario = authenticate(username=user, password=password)
+        except User.DoesNotExist:
+            usuario = None
+        if usuario is not None:
+            usuario = User.objects.get(username=user)
+            context["usuarioId"] = usuario.id
+            context["msg"] = "Ingreso exitoso"
         else:
-            context["Response"] = "Adios"
+            context["msg"]="Usuario o contraseña incorrectos"
     else:
-        context["Response"] = model_to_dict(User.objects.get(pk=1))
-    return Response(context)'''
+        context["Response"] = "No tiene permisos"
+    return Response(context)

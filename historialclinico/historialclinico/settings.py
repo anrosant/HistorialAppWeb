@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
+#'rest_framework.authtoken','rest_auth',
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'historial'
+    'historial',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,18 @@ TEMPLATES = [
         },
     },
 ]
+
+'''REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}'''
 
 WSGI_APPLICATION = 'historialclinico.wsgi.application'
 

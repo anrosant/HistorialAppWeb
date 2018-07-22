@@ -1,0 +1,29 @@
+a.nav-link.link {
+    margin-left: 15px;
+}
+.card {
+    border: 0;
+}
+.heading {
+    background-color: lightskyblue;
+    cursor: pointer;
+}
+.heading:hover {
+    background-color: dodgerblue;
+}
+a.nav-link.titulo {
+    color: white;
+}
+a.nav-link.titulo:hover {
+    color: white;
+}
+a#cerrar_sesion {
+    color: black;
+}
+a#cerrar_sesion:hover {
+    text-decoration: none;
+    color: blue;
+}
+li#usuario {
+    margin-right: 15px;
+}

@@ -20,7 +20,6 @@ class Empleado(models.Model):
     edad = models.IntegerField()
     sexo = models.CharField(max_length=9)
     lugar_nacimiento = models.CharField(max_length=20)
-    lugar_nacimiento = models.CharField(max_length=20)
     fecha_nacimiento = models.DateField(default=timezone.now())
     ocupacion_actual = models.CharField(max_length=50)
     fecha_registro = models.DateField(default=timezone.now())

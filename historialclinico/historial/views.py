@@ -6,7 +6,7 @@ from django.template import loader
 from .models import *
 
 
-''' Esta vista me redirge a la página principal
+''' Esta vista me redirige a la página principal
     Valida si existe el usuario o no'''
 def index(request):
     template = loader.get_template('historial/index.html')
@@ -46,6 +46,7 @@ def loginUser(request):
         'notice': notice
     }
     return HttpResponse(template.render(context, request))
+
 def cerrarSesion(request):
     logout(request)
     return redirect('historial:login')

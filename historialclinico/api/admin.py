@@ -1,0 +1,28 @@
+from django.contrib import admin
+from .models import *
+# Register your models here.
+
+admin.site.register(Empleado)
+admin.site.register(SignosVitales)
+admin.site.register(ConsultaMedica)
+admin.site.register(AtencionEnfermeria)
+admin.site.register(PermisoMedico)
+admin.site.register(Enfermedad)
+admin.site.register(Diagnostico)
+admin.site.register(Chequeo)
+admin.site.register(FichaMedica)
+admin.site.register(AntecedentePatologicoPersonal)
+admin.site.register(RevisionAparatoSistema)
+admin.site.register(AparatoSistema)
+admin.site.register(AntecedenteLaboral)
+admin.site.register(Empresa)
+admin.site.register(AntecedentePatologicoFamiliar)
+admin.site.register(Inmunizacion)
+admin.site.register(Vacuna)
+admin.site.register(ExamenLaboratorio)
+admin.site.register(SomaticoGeneral)
+admin.site.register(Regional)
+admin.site.register(Columna)
+admin.site.register(RegionLumbar)
+admin.site.register(Extremidades)
+admin.site.register(ExamenFisico)

@@ -1,9 +1,9 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
-
-from .models import *
+from django.views.defaults import page_not_found
 
 
 ''' Esta vista me redirige a la página principal
@@ -11,8 +11,8 @@ from .models import *
 def index(request):
     template = loader.get_template('historial/index.html')
     try:
-        usuario = Usuario.objects.get(nombre_usuario=request.user.username)
-    except Usuario.DoesNotExist:
+        usuario = User.objects.get(username=request.user.username)
+    except User.DoesNotExist:
         usuario = None
     if usuario is not None:
         usuario = usuario
@@ -28,11 +28,9 @@ def loginUser(request):
     if (request.method == 'POST'):
         nombre = request.POST['usuario']
         clave = request.POST['password']
-        try:
-            usuario = Usuario.objects.get(nombre_usuario=nombre, contrasenia=clave)
-        except Usuario.DoesNotExist:
-            usuario = None
+        usuario = authenticate(username=nombre, password=clave)
         if usuario is not None:
+            usuario = User.objects.get(username=nombre)
             template = loader.get_template('historial/index.html')
             context = {
                 'usuario': usuario,
@@ -50,3 +48,9 @@ def loginUser(request):
 def cerrarSesion(request):
     logout(request)
     return redirect('historial:login')
+
+'''
+def mi_error_404(request):
+    nombre_template = 'historial/error404.html'
+
+    return page_not_found(request, template_name=nombre_template)'''

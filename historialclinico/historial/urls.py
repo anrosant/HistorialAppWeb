@@ -1,6 +1,10 @@
 from django.conf.urls import url
+from django.urls import path, include
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token
+from rest_framework_jwt.views import verify_jwt_token
+
 from . import views
-from . import apiView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 app_name = 'historial'
@@ -8,56 +12,9 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.loginUser, name='login'),
     url(r'^cerrarSesion/$', views.cerrarSesion, name='cerrarSesion'),
-    url(r'^usuario/$', apiView.CrearUsuarioView.as_view(), name="create"),
-    url(r'^usuario/(?P<pk>[0-9]+)/$', apiView.ListaUsuarioView.as_view(), name="details"),
-    url(r'^empleado/$', apiView.CrearEmpleadoView.as_view(), name="create"),
-    url(r'^empleado/(?P<pk>[0-9]+)/$', apiView.ListaEmpleadoView.as_view(), name="details"),
-    url(r'^signosVitales/$', apiView.CrearSignosVitalesView.as_view(), name="create"),
-    url(r'^signosVitales/(?P<pk>[0-9]+)/$', apiView.ListaSignosVitalesView.as_view(), name="details"),
-    url(r'^consultaMedica/$', apiView.CrearConsultaMedicaView.as_view(), name="create"),
-    url(r'^consultaMedica/(?P<pk>[0-9]+)/$', apiView.ListaConsultaMedicaView.as_view(), name="details"),
-    url(r'^atencionEnfermeria/$', apiView.CrearAtencionEnfermeriaView.as_view(), name="create"),
-    url(r'^atencionEnfermeria/(?P<pk>[0-9]+)/$', apiView.ListaAtencionEnfermeriaView.as_view(), name="details"),
-    url(r'^permisoMedico/$', apiView.CrearPermisoMedicoView.as_view(), name="create"),
-    url(r'^permisoMedico/(?P<pk>[0-9]+)/$', apiView.ListaPermisoMedicoView.as_view(), name="details"),
-    url(r'^enfermedad/$', apiView.CrearEnfermedadView.as_view(), name="create"),
-    url(r'^enfermedad/(?P<pk>[0-9]+)/$', apiView.ListaEnfermedadView.as_view(), name="details"),
-    url(r'^diagnostico/$', apiView.CrearDiagnosticoView.as_view(), name="create"),
-    url(r'^diagnostico/(?P<pk>[0-9]+)/$', apiView.ListaDiagnosticoView.as_view(), name="details"),
-    url(r'^chequeo/$', apiView.CrearChequeoView.as_view(), name="create"),
-    url(r'^chequeo/(?P<pk>[0-9]+)/$', apiView.ListaChequeoView.as_view(), name="details"),
-    url(r'^fichaMedica/$', apiView.CrearFichaMedicaView.as_view(), name="create"),
-    url(r'^fichaMedica/(?P<pk>[0-9]+)/$', apiView.ListaFichaMedicaView.as_view(), name="details"),
-    url(r'^antecedentePatologicoPersonal/$', apiView.CrearAntecedentePatologicoPersonal.as_view(), name="create"),
-    url(r'^antecedentePatologicoPersonal/(?P<pk>[0-9]+)/$', apiView.ListaAntecedentePatologicoPersonalView.as_view(), name="details"),
-    url(r'^revisionAparatoSistema/$', apiView.CrearRevisionAparatoSistemaView.as_view(), name="create"),
-    url(r'^revisionAparatoSistema/(?P<pk>[0-9]+)/$', apiView.ListaRevisionAparatoSistemaView.as_view(), name="details"),
-    url(r'^aparatoSistema/$', apiView.CrearAparatoSistemaView.as_view(), name="create"),
-    url(r'^aparatoSistema/(?P<pk>[0-9]+)/$', apiView.ListaAparatoSistemaView.as_view(), name="details"),
-    url(r'^antecedenteLaboral/$', apiView.CrearAntecedenteLaboralView.as_view(), name="create"),
-    url(r'^antecedenteLaboral/(?P<pk>[0-9]+)/$', apiView.ListaAntecedenteLaboralView.as_view(), name="details"),
-    url(r'^empresa/$', apiView.CrearEmpresaView.as_view(), name="create"),
-    url(r'^empresa/(?P<pk>[0-9]+)/$', apiView.ListaEmpresaView.as_view(), name="details"),
-    url(r'^antecedentePatologicoFamiliar/$', apiView.CrearAntecedentePatologicoFamiliarView.as_view(), name="create"),
-    url(r'^antecedentePatologicoFamiliar/(?P<pk>[0-9]+)/$', apiView.ListaAntecedentePatologicoFamiliarView.as_view(), name="details"),
-    url(r'^Inmunizacion/$', apiView.CrearInmunizacionView.as_view(), name="create"),
-    url(r'^Inmunizacion/(?P<pk>[0-9]+)/$', apiView.ListaInmunizacionView.as_view(), name="details"),
-    url(r'^vacuna/$', apiView.CrearVacunaView.as_view(), name="create"),
-    url(r'^vacuna/(?P<pk>[0-9]+)/$', apiView.ListaVacunaView.as_view(), name="details"),
-    url(r'^examenLaboratorio/$', apiView.CrearExamenLaboratorioView.as_view(), name="create"),
-    url(r'^examenLaboratorio/(?P<pk>[0-9]+)/$', apiView.ListaExamenLaboratorioView.as_view(), name="details"),
-    url(r'^somaticoGeneral/$', apiView.CrearSomaticoGeneralView.as_view(), name="create"),
-    url(r'^somaticoGeneral/(?P<pk>[0-9]+)/$', apiView.ListaSomaticoGeneralView.as_view(), name="details"),
-    url(r'^regional/$', apiView.CrearRegionalView.as_view(), name="create"),
-    url(r'^regional/(?P<pk>[0-9]+)/$', apiView.ListaRegionalView.as_view(), name="details"),
-    url(r'^columna/$', apiView.CrearColumnaView.as_view(), name="create"),
-    url(r'^columna/(?P<pk>[0-9]+)/$', apiView.ListaColumnaView.as_view(), name="details"),
-    url(r'^regionLumbar/$', apiView.CrearRegionLumbarView.as_view(), name="create"),
-    url(r'^regionLumbar/(?P<pk>[0-9]+)/$', apiView.ListaRegionLumbarView.as_view(), name="details"),
-    url(r'^extremidades/$', apiView.CrearExtremidadesView.as_view(), name="create"),
-    url(r'^extremidades/(?P<pk>[0-9]+)/$', apiView.ListaExtremidadesView.as_view(), name="details"),
-    url(r'^examenFisico/$', apiView.CrearExamenFisicoView.as_view(), name="create"),
-    url(r'^examenFisico/(?P<pk>[0-9]+)/$', apiView.ListaExamenFisicoView.as_view(), name="details"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+'''url(r'^auth-jwt/', obtain_jwt_token),
+    url(r'^auth-jwt-refresh/', refresh_jwt_token),
+    url(r'^auth-jwt-verify/', verify_jwt_token),'''

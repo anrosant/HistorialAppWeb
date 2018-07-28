@@ -4,6 +4,7 @@ from django.forms import model_to_dict
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.core import serializers as ser
 
 from .serializers import *
 
@@ -261,9 +262,27 @@ def ingresoUsuario(request):
         if usuario is not None:
             usuario = User.objects.get(username=user)
             context["usuarioId"] = usuario.id
-            context["msg"] = "Ingreso exitoso"
+            context["msj"] = "Ingreso exitoso"
+            dataEmpleado = ser.serialize("json", Empleado.objects.all())
+            context["empleado"] = dataEmpleado
+            dataEnfermedad = ser.serialize("json", Enfermedad.objects.all())
+            context["enfermedad"] = dataEnfermedad
+            dataConsultaMedica = ser.serialize("json", ConsultaMedica.objects.all())
+            context["consultaMedica"] = dataConsultaMedica
+            dataAtencionEnfermeria = ser.serialize("json", AtencionEnfermeria.objects.all())
+            context["atencionEnfermeria"] = dataAtencionEnfermeria
+            dataDiagnostico = ser.serialize("json", Diagnostico.objects.all())
+            context["diagnostico"] = dataDiagnostico
+            dataPatologiasPersonales = ser.serialize("json", AntecedentePatologicoPersonal.objects.all())
+            context["patologiasPersonales"] = dataPatologiasPersonales
+            dataPatologiasFamiliares = ser.serialize("json", AntecedentePatologicoFamiliar.objects.all())
+            context["patologiasFamiliares"] = dataPatologiasFamiliares
+            dataSignosVitales = ser.serialize("json", SignosVitales.objects.all())
+            context["signosVitales"] = dataSignosVitales
+            dataPermisoMedico = ser.serialize("json", PermisoMedico.objects.all())
+            context["permisoMedico"] = dataPermisoMedico
         else:
-            context["msg"]="Usuario o contraseña incorrectos"
+            context["msj"]="Usuario o contraseña incorrectos"
     else:
-        context["Response"] = "No tiene permisos"
+        context["msj"] = "No tiene permisos"
     return Response(context)

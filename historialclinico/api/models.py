@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
 DEFAULT = 0
 
 class Empleado(models.Model):
@@ -20,6 +19,7 @@ class Empleado(models.Model):
     fecha_registro = models.DateField(default=timezone.now())
     foto = models.IntegerField()
     nombre_usuario = models.ForeignKey(User, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
+    actual_ficha_medica = models.IntegerField(default = DEFAULT)
 
     def __str__(self):
         return "{}".format(self.nombre)
@@ -44,6 +44,7 @@ class AtencionEnfermeria(models.Model):
 class SignosVitales(models.Model):
     consulta_medica = models.ForeignKey(ConsultaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     atencion_enfermeria = models.ForeignKey(AtencionEnfermeria, default = DEFAULT, blank=True, null=True, on_delete=models.CASCADE)
+    empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     presion_sistolica = models.IntegerField()
     presion_distolica = models.IntegerField()
     pulso = models.IntegerField()
@@ -52,6 +53,7 @@ class SignosVitales(models.Model):
 class Enfermedad(models.Model):
     codigo = models.CharField(max_length=10)
     nombre = models.CharField(max_length=100)
+    grupo = models.CharField(max_length=100, blank=True, null=True)
 
 class Diagnostico(models.Model):
     consulta_medica = models.ForeignKey(ConsultaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
@@ -61,10 +63,11 @@ class Diagnostico(models.Model):
 class PermisoMedico(models.Model):
     diagnostico = models.ForeignKey(Diagnostico, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
+    consulta_medica = models.ForeignKey(ConsultaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     fecha_inicio = models.DateField(default=timezone.now())
     fecha_fin = models.DateField(default=timezone.now())
     dias = models.IntegerField()
-
+    observaciones = models.CharField(max_length=100, blank=True, null=True)
 class Chequeo(models.Model):
     fecha = models.DateField(default=timezone.now())
     tipo = models.CharField(max_length=100)
@@ -72,7 +75,7 @@ class Chequeo(models.Model):
 class FichaMedica(models.Model):
     empleado = models.ForeignKey(Empleado, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
     chequeo = models.ForeignKey(Chequeo, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)
-    foto = models.ImageField()
+    foto = models.ImageField(upload_to='images')
 
 class AntecedentePatologicoPersonal(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, blank=True, null=True, default = DEFAULT, on_delete=models.CASCADE)

@@ -5,7 +5,7 @@ class EmpleadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empleado
         fields = ('pk','cedula', 'nombre', 'apellido', 'correo', 'direccion', 'profesion', 'estado_civil', 'edad',
-                  'sexo', 'lugar_nacimiento', 'fecha_nacimiento', 'ocupacion_actual', 'fecha_registro', 'foto', 'nombre_usuario')
+                  'sexo', 'lugar_nacimiento', 'fecha_nacimiento', 'ocupacion_actual', 'fecha_registro', 'foto', 'nombre_usuario', 'actual_ficha_medica')
 
 class ConsultaMedicaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,11 +19,11 @@ class AtencionEnfermeriaSerializer(serializers.ModelSerializer):
 class SignosVitalesSerializer(serializers.ModelSerializer):
     class Meta:
         model = SignosVitales
-        fields = ('pk','consulta_medica', 'atencion_enfermeria', 'presion_sistolica', 'presion_distolica', 'pulso','temperatura')
+        fields = ('pk','consulta_medica', 'atencion_enfermeria', 'empleado', 'presion_sistolica', 'presion_distolica', 'pulso', 'temperatura')
 class EnfermedadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enfermedad
-        fields = ( 'pk','codigo', 'nombre')
+        fields = ( 'pk','codigo', 'nombre','grupo')
 class DiagnosticoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diagnostico
@@ -31,7 +31,7 @@ class DiagnosticoSerializer(serializers.ModelSerializer):
 class PermisoMedicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = PermisoMedico
-        fields = ('pk','diagnostico','empleado', 'fecha_inicio', 'fecha_fin', 'dias')
+        fields = ('pk','diagnostico','empleado', 'consulta_medica', 'fecha_inicio', 'fecha_fin', 'dias', 'observaciones')
 class ChequeoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chequeo

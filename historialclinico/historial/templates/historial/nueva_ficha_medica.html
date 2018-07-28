@@ -1,0 +1,86 @@
+{% extends "historial/base.html" %}
+{% load static %}
+{% block titulo %}Historial médico{% endblock %}
+{% block estilos %}
+<link href="{% static 'css/nueva_ficha_medica.css' %}" rel="stylesheet">
+{% endblock %}
+{% block contenido %}
+<div id="titulo_contenido">
+    <h4>Nueva Ficha Médica</h4>
+</div>
+<div class="accordion" id="acordeon_nueva_ficha_medica">
+    <form action="#" method="post">{% csrf_token %}
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#datos_empleado" aria-expanded="true" aria-controls="datos_empleado">
+                    Datos de filiación
+                </button>
+            </h5>
+        </div>
+        <div id="datos_empleado" class="collapse show" aria-labelledby="headingOne" data-parent="#acordeon_nueva_ficha_medica">
+            <div class="card-body">
+                <div class="row">
+                <div class="card col-lg-3">
+                    <img class="card-img-top" id="foto_empleado" height="300" src="{% static 'images/cargar_foto.png' %}" alt="Foto empleado">
+                    <div class="card-body">
+                        <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                Subir foto <input type="file" id="ingreso_foto">
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" readonly>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Cédula</label>
+                    <input class="form-control" id="cedula" name="cedula" required>
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Nombres</label>
+                    <input class="form-control" id="nombres" name="nombres" required>
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Apellidos</label>
+                    <input class="form-control" id="apellidos" name="apellidos" required>
+                </div>
+            </div>
+                </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_laborales" aria-expanded="false" aria-controls="antecedentes_laborales">
+                    Antecedentes laborales
+                </button>
+            </h5>
+        </div>
+        <div id="antecedentes_laborales" class="collapse" aria-labelledby="headingTwo" data-parent="#acordeon_nueva_ficha_medica">
+            <div class="card-body">
+                Formulario
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_personales" aria-expanded="false" aria-controls="antecedentes_personales">
+                    Antecedentes patológicos personales
+                </button>
+            </h5>
+        </div>
+        <div id="antecedentes_personales" class="collapse" aria-labelledby="headingThree" data-parent="#acordeon_nueva_ficha_medica">
+            <div class="card-body">
+                Formulario
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/nueva_ficha_medica.js' %}" type="text/javascript"></script>
+{% endblock %}

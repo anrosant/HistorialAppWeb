@@ -17,7 +17,7 @@
             <div id="titulo_sesion">
                 <h4>Inicio de sesión</h4>
             </div>
-            <form action="#" method="post">{% csrf_token %}
+            <form action="{% url 'historial:login' %}" method="post">{% csrf_token %}
                 <div class="form-group">
                     <input class="form-control" id="usuario" name="usuario" placeholder="Usuario" required>
                 </div>

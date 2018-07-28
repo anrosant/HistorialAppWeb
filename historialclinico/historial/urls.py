@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.loginUser, name='login'),
     url(r'^cerrarSesion/$', views.cerrarSesion, name='cerrarSesion'),
+    url(r'^ficha/nuevo/$', views.nuevaFichaMedica, name='nuevaFichaMedica'),
 ]
 
 if settings.DEBUG:

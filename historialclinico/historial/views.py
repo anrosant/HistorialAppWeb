@@ -4,7 +4,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.contrib.auth.decorators import login_required
-from django.views.defaults import page_not_found
 
 ''' Esta vista me redirige a la página principal
     Valida si existe el usuario o no'''

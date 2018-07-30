@@ -47,13 +47,21 @@ def cerrarSesion(request):
 '''
 def mi_error_404(request):
     nombre_template = 'historial/error404.html'
-
     return page_not_found(request, template_name=nombre_template)'''
 
 
 @login_required(login_url='/login/')
 def nuevaFichaMedica(request):
     template = loader.get_template('historial/nueva_ficha_medica.html')
+    usuario = User.objects.get(username=request.user.username)
+    context = {
+        'usuario': usuario
+    }
+    return HttpResponse(template.render(context, request))
+
+@login_required(login_url='/login/')
+def nuevoEmpleado(request):
+    template = loader.get_template('historial/nuevo_empleado.html')
     usuario = User.objects.get(username=request.user.username)
     context = {
         'usuario': usuario

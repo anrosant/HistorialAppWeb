@@ -27,13 +27,6 @@ a#cerrar_sesion:hover {
 li#usuario {
     margin-right: 15px;
 }
-ul#navbar_vertical, div#contenido {
-    padding: 0;
-}
 div#navbar {
-    padding-right: 0;
-}
-#contenido {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    padding-left: 0;
 }

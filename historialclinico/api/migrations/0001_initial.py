@@ -122,7 +122,7 @@ class Migration(migrations.Migration):
                 ('ocupacion_actual', models.CharField(max_length=50)),
                 ('fecha_registro', models.DateField(default=datetime.datetime(2018, 7, 21, 5, 5, 30, 462942, tzinfo=utc))),
                 ('foto', models.IntegerField()),
-                ('nombre_usuario', models.ForeignKey(blank=True, default=0, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('usuario', models.ForeignKey(blank=True, default=0, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(

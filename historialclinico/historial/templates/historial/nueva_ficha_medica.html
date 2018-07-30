@@ -10,74 +10,89 @@
 </div>
 <div class="accordion" id="acordeon_nueva_ficha_medica">
     <form action="#" method="post">{% csrf_token %}
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#datos_empleado" aria-expanded="true" aria-controls="datos_empleado">
-                    Datos de filiación
-                </button>
-            </h5>
-        </div>
-        <div id="datos_empleado" class="collapse show" aria-labelledby="headingOne" data-parent="#acordeon_nueva_ficha_medica">
-            <div class="card-body">
-                <div class="row">
-                <div class="card col-lg-3">
-                    <img class="card-img-top" id="foto_empleado" height="300" src="{% static 'images/cargar_foto.png' %}" alt="Foto empleado">
-                    <div class="card-body">
-                        <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default btn-file">
-                                Subir foto <input type="file" id="ingreso_foto">
-                            </span>
-                        </span>
-                        <input type="text" class="form-control" readonly>
+        <div class="card">
+            <div class="card-header" id="heading_antecedentes_laborales">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_laborales" aria-expanded="false" aria-controls="antecedentes_laborales">
+                        Antecedentes laborales
+                    </button>
+                </h5>
+            </div>
+            <div id="antecedentes_laborales" class="collapse" aria-labelledby="heading_antecedentes_laborales" data-parent="#acordeon_nueva_ficha_medica">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5>Empresa actual</h5>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Nombre de la empresa</label>
+                            <input class="form-control" id="nombre_empresa" name="nombre_empresa" type="text" required>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Edad de inicio</label>
+                            <input class="form-control" id="edad_inicio" name="edad_inicio" min="18" max="80" type="number" required>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Cargo</label>
+                            <input class="form-control" id="cargo" name="cargo" type="text" required>
+                        </div>
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label>Actividad</label>
+                            <textarea class="form-control" id="actividad" name="actividad" style="resize: none" rows="2" type="text" required></textarea>
+                        </div>
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label>EPPS</label>
+                            <textarea class="form-control" id="epps" name="epps" style="resize: none" rows="2" type="text" required></textarea>
+                        </div>
+                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <h6>Riesgos</h6>
+                            <div id="container_riesgos_actuales" class="row">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <label>Tipo</label>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <label>Nombre</label>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <select class="form-control" id="tipo_riesgo" name="tipo_riesgo" required>
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        <option value="soltero">Tipo riesgo</option>
+                                    </select>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <select class="form-control" id="nombre_riesgo" name="nombre_riesgo" required>
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        <option value="soltero">Nombre riesgo</option>
+                                    </select>
+                                </div>
+                                <div id="" class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                    <button id="boton_mas" class="btn btn-primary" onclick="agregarRiesgoActual()">
+                                        <span style="font-size:16px; font-weight:bold;">+ </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <h5>Empresas anteriores</h5>
+                        </div>
                     </div>
-                    </div>
-                </div>
-                <div class="form-group col-lg-3">
-                    <label>Cédula</label>
-                    <input class="form-control" id="cedula" name="cedula" required>
-                </div>
-                <div class="form-group col-lg-3">
-                    <label>Nombres</label>
-                    <input class="form-control" id="nombres" name="nombres" required>
-                </div>
-                <div class="form-group col-lg-3">
-                    <label>Apellidos</label>
-                    <input class="form-control" id="apellidos" name="apellidos" required>
                 </div>
             </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="heading_antecedentes_personales">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_personales" aria-expanded="false" aria-controls="antecedentes_personales">
+                        Antecedentes patológicos personales
+                    </button>
+                </h5>
+            </div>
+            <div id="antecedentes_personales" class="collapse" aria-labelledby="heading_antecedentes_personales" data-parent="#acordeon_nueva_ficha_medica">
+                <div class="card-body">
+                    Formulario
                 </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_laborales" aria-expanded="false" aria-controls="antecedentes_laborales">
-                    Antecedentes laborales
-                </button>
-            </h5>
-        </div>
-        <div id="antecedentes_laborales" class="collapse" aria-labelledby="headingTwo" data-parent="#acordeon_nueva_ficha_medica">
-            <div class="card-body">
-                Formulario
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingThree">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_personales" aria-expanded="false" aria-controls="antecedentes_personales">
-                    Antecedentes patológicos personales
-                </button>
-            </h5>
-        </div>
-        <div id="antecedentes_personales" class="collapse" aria-labelledby="headingThree" data-parent="#acordeon_nueva_ficha_medica">
-            <div class="card-body">
-                Formulario
-            </div>
-        </div>
-    </div>
     </form>
 </div>
 {% endblock %}

@@ -1,0 +1,45 @@
+div#navbar {
+    display: none;
+}
+#contenido {
+    margin: 10px auto 50px auto;
+}
+#titulo_contenido {
+    text-align: center;
+    margin: 25px 0;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    border-color: gray;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+#foto_empleado {
+    display: block;
+    margin: 0 auto;
+    padding: .25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+}
+.card-body {
+    border: 1px solid black;
+}
+#boton {
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}

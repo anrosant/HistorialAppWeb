@@ -22,6 +22,28 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_sesion" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-user">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="opciones_empleado" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Empleados
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'historial:nuevoEmpleado' %}">Nuevo</a>
+                            <a class="dropdown-item" href="#">Consultar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="opciones_reporte" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Reportes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Reporte 1</a>
+                            <a class="dropdown-item" href="#">Reporte 2</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <div id="menu_sesion" class="collapse navbar-collapse d-flex justify-content-end">
                 <ul class="nav navbar-nav navbar-user navbar-right">
                     <li id="usuario" class="nav-item">
@@ -35,56 +57,58 @@
                 </ul>
             </div>
         </nav>
-        <div class="row">
-            <div id="navbar" class="col-lg-2">
-                <ul id="navbar_vertical" class="nav flex-column">
-                    <li class="nav-item">
-                        <div id="acordeon_ficha" class="accordion">
-                            <div class="card">
-                                <div id="headingOne" class="heading">
-                                    <a class="nav-link collapsed titulo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                        Ficha Médica
-                                    </a>
-                                </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#acordeon_ficha">
-                                    <a class="nav-link link" href="{% url 'historial:nuevaFichaMedica'%}">Nuevo</a>
-                                    <a class="nav-link link" href="#">Consultar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div id="acordeon_consulta" class="accordion">
-                            <div class="card">
-                                <div id="headingTwo" class="heading">
-                                    <a class="nav-link collapsed titulo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Consulta Médica
-                                    </a>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#acordeon_consulta">
-                                    <a class="nav-link link" href="#">Consultar</a>
+        <div class="container-fluid">
+            <div class="row">
+                <div id="navbar" class="col-xl-2 col-lg-2 col-md-2">
+                    <ul id="navbar_vertical" class="nav flex-column">
+                        <li class="nav-item">
+                            <div id="acordeon_ficha" class="accordion">
+                                <div class="card">
+                                    <div id="headingOne" class="heading">
+                                        <a class="nav-link collapsed titulo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            Ficha Médica
+                                        </a>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#acordeon_ficha">
+                                        <a class="nav-link link" href="{% url 'historial:nuevaFichaMedica'%}">Nuevo</a>
+                                        <a class="nav-link link" href="#">Consultar</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div id="acordeon_atencion" class="accordion">
-                            <div class="card">
-                                <div id="headingThree" class="heading">
-                                    <a class="nav-link collapsed titulo" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Atención de Enfermería
-                                    </a>
-                                </div>
-                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#acordeon_atencion">
-                                    <a class="nav-link link" href="#">Consultar</a>
+                        </li>
+                        <li class="nav-item">
+                            <div id="acordeon_consulta" class="accordion">
+                                <div class="card">
+                                    <div id="headingTwo" class="heading">
+                                        <a class="nav-link collapsed titulo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Consulta Médica
+                                        </a>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#acordeon_consulta">
+                                        <a class="nav-link link" href="#">Consultar</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div id="contenido" class="col-lg-10">
-                {% block contenido %}{% endblock %}
+                        </li>
+                        <li class="nav-item">
+                            <div id="acordeon_atencion" class="accordion">
+                                <div class="card">
+                                    <div id="headingThree" class="heading">
+                                        <a class="nav-link collapsed titulo" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Atención de Enfermería
+                                        </a>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#acordeon_atencion">
+                                        <a class="nav-link link" href="#">Consultar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="contenido" class="col-xl-10 col-lg-10 col-md-10">
+                    {% block contenido %}{% endblock %}
+                </div>
             </div>
         </div>
         <script src="{% static 'js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>

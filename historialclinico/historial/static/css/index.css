@@ -1,0 +1,9 @@
+div#contenido {
+    margin: 50px auto;
+}
+#titulo_lista {
+    text-align: center;
+}
+div#navbar {
+    display: none;
+}

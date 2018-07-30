@@ -1,5 +1,39 @@
 {% extends "historial/base.html" %}
+{% load static %}
 {% block titulo %}Historial médico{% endblock %}
+{% block estilos %}
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet">
+{% endblock %}
 {% block contenido %}
-<h1>Index</h1>
+<div id="titulo_lista">
+    <h4>Lista de empleados</h4>
+</div>
+<div>
+    <p>Seleccione un empleado para realizar una acción:</p>
+</div>
+<div>
+    <table id="tabla_empleados" class="cell-border hover">
+        <thead>
+            <tr>
+                <th>Columna 1</th>
+                <th>Columna 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Empleado 1</td>
+                <td>Data 1</td>
+            </tr>
+            <tr>
+                <td>Empleado 2</td>
+                <td>Data 2</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/index.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}" type="text/javascript"></script>
 {% endblock %}

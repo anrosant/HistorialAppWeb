@@ -11,7 +11,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.loginUser, name='login'),
     url(r'^cerrarSesion/$', views.cerrarSesion, name='cerrarSesion'),
-    url(r'^ficha/nuevo/$', views.nuevaFichaMedica, name='nuevaFichaMedica'),
+    url(r'^nuevo/ficha$', views.nuevaFichaMedica, name='nuevaFichaMedica'),
+    url(r'^nuevo/empleado$', views.nuevoEmpleado, name='nuevoEmpleado'),
 ]
 
 if settings.DEBUG:

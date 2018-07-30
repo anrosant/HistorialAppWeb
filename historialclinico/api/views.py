@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from django.forms import model_to_dict
 from rest_framework import generics
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.core import serializers as ser
+
+from rest_framework_jwt.settings import api_settings
+from rest_framework.permissions import AllowAny
 
 from .serializers import *
 
@@ -250,6 +252,7 @@ class ListaExamenFisicoView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ExamenFisicoSerializer
 
 @api_view(['GET', 'POST'])
+@permission_classes((AllowAny, ))
 def ingresoUsuario(request):
     context = {}
     if(request.method == 'POST'):
@@ -260,7 +263,16 @@ def ingresoUsuario(request):
         except User.DoesNotExist:
             usuario = None
         if usuario is not None:
+            '''Función que genera tokens de usuarios'''
+            jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+            jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
             usuario = User.objects.get(username=user)
+            payload = jwt_payload_handler(usuario)
+            token = jwt_encode_handler(payload)
+            usuario.token = token
+            usuario.save()
+            context["token"] = usuario.token
             context["usuarioId"] = usuario.id
             context["msj"] = "Ingreso exitoso"
             dataEmpleado = ser.serialize("json", Empleado.objects.all())

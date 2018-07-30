@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+
+token = models.CharField(max_length=200, null=True)
+token.contribute_to_class(User, 'token')
+
 DEFAULT = 0
 
 class Empleado(models.Model):

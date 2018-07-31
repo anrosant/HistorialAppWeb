@@ -100,8 +100,11 @@ WSGI_APPLICATION = 'historialclinico.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'historialMedico$historialMedico',
+        'USER': 'historialMedico',
+        'PASSWORD': 'm3d1c0hist',
+        'HOST': 'historialMedico.mysql.pythonanywhere-services.com',
     }
 }
 

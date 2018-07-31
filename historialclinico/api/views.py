@@ -270,9 +270,7 @@ def ingresoUsuario(request):
             usuario = User.objects.get(username=user)
             payload = jwt_payload_handler(usuario)
             token = jwt_encode_handler(payload)
-            usuario.token = token
-            usuario.save()
-            context["token"] = usuario.token
+            context["token"] = token
             context["usuarioId"] = usuario.id
             context["msj"] = "Ingreso exitoso"
             dataEmpleado = ser.serialize("json", Empleado.objects.all())

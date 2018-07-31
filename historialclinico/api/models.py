@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 class Empleado(models.Model):
     foto = models.ImageField()
@@ -20,6 +23,14 @@ class Empleado(models.Model):
 
     def __str__(self):
         return "{}".format(self.nombre)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, null = True)
+    token = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):  # __unicode__ for Python 2
+        return self.user.username
 
 class ConsultaMedica(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)

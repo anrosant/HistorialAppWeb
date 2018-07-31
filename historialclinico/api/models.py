@@ -20,6 +20,7 @@ class Empleado(models.Model):
     profesion = models.CharField(max_length=50)
     ocupacion = models.CharField(max_length=50)
     fechaRegistro = models.DateField(default=timezone.now())
+    ficha_actual = models.IntegerField(default = 0)
 
     def __str__(self):
         return "{}".format(self.nombre)

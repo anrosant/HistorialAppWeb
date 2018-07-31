@@ -5,7 +5,7 @@ class EmpleadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empleado
         fields = ('pk', 'foto', 'cedula', 'nombre', 'apellido', 'edad', 'sexo', 'estadoCivil', 'lugarNacimiento', 'fechaNacimiento',
-                  'direccion', 'correo', 'instruccion', 'profesion', 'ocupacion', 'fechaRegistro')
+                  'direccion', 'correo', 'instruccion', 'profesion', 'ocupacion', 'fechaRegistro', 'ficha_actual')
 
 class ConsultaMedicaSerializer(serializers.ModelSerializer):
     class Meta:

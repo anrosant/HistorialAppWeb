@@ -20,6 +20,14 @@ $(document).ready(function() {
     })
 });
 
-function agregarRiesgoActual() {
+function agregarRiesgo(tipo) {
+
+}
+
+function agregarPatologiaPersonal() {
+
+}
+
+function agregarPatologiaFamiliar() {
 
 }

@@ -5,3 +5,10 @@
     text-align: center;
     margin: 25px 0;
 }
+#titulo_empresas_anteriores {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+#titulo_empresa_actual {
+    margin-bottom: 10px;
+}

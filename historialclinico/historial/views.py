@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.contrib.auth.decorators import login_required
+from datetime import date
+from api.models import *
 
 ''' Esta vista me redirige a la página principal
     Valida si existe el usuario o no'''
@@ -53,8 +55,18 @@ def mi_error_404(request):
 def nuevaFichaMedica(request):
     template = loader.get_template('historial/nueva_ficha_medica.html')
     usuario = User.objects.get(username=request.user.username)
+    tipos = FactorRiesgo.TIPOS
+    nombres = FactorRiesgo.NOMBRES
+    tipos_ficha = FichaMedica.TIPOS
+    lugares = AntecedentePatologicoPersonal.LUGARES
+    fecha_ficha = date.today().strftime("%Y-%m-%d")
     context = {
-        'usuario': usuario
+        'usuario': usuario,
+        'tipos': tipos,
+        'nombres': nombres,
+        'fecha_ficha': fecha_ficha,
+        'tipos_ficha': tipos_ficha,
+        'lugares': lugares
     }
     return HttpResponse(template.render(context, request))
 

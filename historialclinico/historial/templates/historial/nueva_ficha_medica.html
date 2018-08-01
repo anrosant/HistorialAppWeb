@@ -11,6 +11,38 @@
 <div class="accordion" id="acordeon_nueva_ficha_medica">
     <form action="#" method="post">{% csrf_token %}
         <div class="card">
+            <div class="card-header" id="heading_chequeo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#chequeo" aria-expanded="false" aria-controls="chequeo">
+                        Información de la ficha médica
+                    </button>
+                </h5>
+            </div>
+            <div id="chequeo" class="collapse" aria-labelledby="heading_chequeo" data-parent="#acordeon_nueva_ficha_medica">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Fecha</label>
+                            <input class="form-control" id="fecha_ficha" name="fecha_ficha" type="date" value="{{ fecha_ficha }}" disabled required>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Ciudad</label>
+                            <input class="form-control" id="ciudad_ficha" name="ciudad_ficha" type="text" required>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Tipo</label>
+                            <select class="form-control" id="tipo_ficha" name="tipo_ficha" required>
+                                <option selected disabled hidden>Escoja una opción</option>
+                                {% for key, value in tipos_ficha %}
+                                <option value="{{ key }}">{{ key }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-header" id="heading_antecedentes_laborales">
                 <h5 class="mb-0">
                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_laborales" aria-expanded="false" aria-controls="antecedentes_laborales">
@@ -21,12 +53,12 @@
             <div id="antecedentes_laborales" class="collapse" aria-labelledby="heading_antecedentes_laborales" data-parent="#acordeon_nueva_ficha_medica">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div id="titulo_empresa_actual" class="col-lg-12">
                             <h5>Empresa actual</h5>
                         </div>
                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                             <label>Nombre de la empresa</label>
-                            <input class="form-control" id="nombre_empresa" name="nombre_empresa" type="text" required>
+                            <input class="form-control" id="nombre_empresa_actual" name="nombre_empresa_actual" type="text" required>
                         </div>
                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                             <label>Edad de inicio</label>
@@ -34,7 +66,7 @@
                         </div>
                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                             <label>Cargo</label>
-                            <input class="form-control" id="cargo" name="cargo" type="text" required>
+                            <input class="form-control" id="cargo_actual" name="cargo_actual" type="text" required>
                         </div>
                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             <label>Actividad</label>
@@ -50,30 +82,82 @@
                                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
                                     <label>Tipo</label>
                                 </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                     <label>Nombre</label>
                                 </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
-                                    <select class="form-control" id="tipo_riesgo" name="tipo_riesgo" required>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5" id="container_tipo_riesgo_actual">
+                                    <select class="form-control tipo_riesgo_actual" name="tipo_riesgo_actual" required>
                                         <option selected disabled hidden>Escoja una opción</option>
-                                        <option value="soltero">Tipo riesgo</option>
+                                        {% for key, value in tipos %}
+                                            <option value="{{ key }}">{{ key }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
-                                    <select class="form-control" id="nombre_riesgo" name="nombre_riesgo" required>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6" id="container_nombre_riesgo_actual">
+                                    <select class="form-control nombre_riesgo_actual" name="nombre_riesgo_actual" required>
                                         <option selected disabled hidden>Escoja una opción</option>
-                                        <option value="soltero">Nombre riesgo</option>
+                                        {% for key, value in nombres %}
+                                            {% for key2, value2 in value %}
+                                                <option class="{{ key }}" value="{{ key2 }}">{{ key2 }}</option>
+                                            {% endfor %}
+                                        {% endfor %}
                                     </select>
                                 </div>
-                                <div id="" class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                                    <button id="boton_mas" class="btn btn-primary" onclick="agregarRiesgoActual()">
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_riesgo_empresa_actual">
+                                    <button class="btn btn-primary" onclick="agregarRiesgo('actual')">
                                         <span style="font-size:16px; font-weight:bold;">+ </span>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <div id="titulo_empresas_anteriores" class="col-lg-12">
                             <h5>Empresas anteriores</h5>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Nombre de la empresa</label>
+                            <input class="form-control nombre_empresa_anterior" name="nombre_empresa" type="text" required>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Edad de inicio</label>
+                            <input class="form-control" id="tiempo_empresa_anterior" name="tiempo_empresa_anterior" min="18" max="80" type="number" required>
+                        </div>
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <label>Cargo</label>
+                            <input class="form-control cargo_empresa_anterior" name="cargo_empresa_anterior" type="text" required>
+                        </div>
+                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <h6>Riesgos</h6>
+                            <div class="row" id="container_riesgos_anteriores">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <label>Tipo</label>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <label>Nombre</label>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5" id="container_tipo_riesgo_anterior">
+                                    <select class="form-control tipo_riesgo_anterior" name="tipo_riesgo_anterior" required>
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        {% for key, value in tipos %}
+                                            <option value="{{ key }}">{{ key }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6" id="container_nombre_riesgo_anterior">
+                                    <select class="form-control nombre_riesgo_anterior" name="nombre_riesgo_anterior" required>
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        {% for key, value in nombres %}
+                                            {% for key2, value2 in value %}
+                                                <option class="{{ key }}" value="{{ key2 }}">{{ key2 }}</option>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_riesgo_empresa_anterior">
+                                    <button class="btn btn-primary" onclick="agregarRiesgo('anterior')">
+                                        <span style="font-size:16px; font-weight:bold;">+ </span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +173,72 @@
             </div>
             <div id="antecedentes_personales" class="collapse" aria-labelledby="heading_antecedentes_personales" data-parent="#acordeon_nueva_ficha_medica">
                 <div class="card-body">
-                    Formulario
+                    <div id="container_patologias_personales">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Patología</label>
+                            </div>
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <label>Detalle</label>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3" id="container_nombre_patologia_personal">
+                                <select class="form-control nombre_patologia_personal" name="nombre_patologia_personal" required>
+                                    <option selected disabled hidden>Escoja una opción</option>
+                                    {% for key, value in lugares %}
+                                    <option value="{{ key }}">{{ key }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <textarea class="form-control detalle_patologia_personal" name="detalle_patologia_personal" style="resize: none" rows="1" type="text" required></textarea>
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_patologia_personal">
+                                <button class="btn btn-primary" onclick="agregarPatologiaPersonal()">
+                                    <span style="font-size:16px; font-weight:bold;">+ </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="heading_antecedentes_familiares">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_familiares" aria-expanded="false" aria-controls="antecedentes_familiares">
+                        Antecedentes patológicos familiares
+                    </button>
+                </h5>
+            </div>
+            <div id="antecedentes_familiares" class="collapse" aria-labelledby="heading_antecedentes_familiares" data-parent="#acordeon_nueva_ficha_medica">
+                <div class="card-body">
+                    <div id="container_patologias_familiares">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Parentesco</label>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Patología</label>
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                <label>Detalle</label>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <input class="form-control" id="parentesco_patologia_familiar" name="parentesco_patologia_familiar" type="text" required>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <input class="form-control" id="nombre_patologia_familiar" name="nombre_patologia_familiar" type="text" required>
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                <textarea class="form-control detalle_patologia_familiar" name="detalle_patologia_familiar" style="resize: none" rows="1" type="text" required></textarea>
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_patologia_familiar">
+                                <button class="btn btn-primary" onclick="agregarPatologiaFamiliar()">
+                                    <span style="font-size:16px; font-weight:bold;">+ </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -89,11 +89,17 @@ class Vacuna(models.Model):
     fecha = models.DateField(default=timezone.now())
 
 class FichaMedica(models.Model):
+    TIPOS = (
+        ('Inicial', 'Inicial'),
+        ('Periódico', 'Periódico'),
+        ('Postocupacional', 'Postocupacional'),
+        ('Reintegro', 'Reintegro'),
+    )
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     inmunizacion = models.ForeignKey(Inmunizacion, null=True, on_delete=models.CASCADE)
     fecha = models.DateField()
     ciudad = models.CharField(max_length=50)
-    tipo = models.CharField(max_length=15)
+    tipo = models.CharField(max_length=15, choices=TIPOS, default='Periódico')
 
 class AparatoSistema(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
@@ -101,9 +107,36 @@ class AparatoSistema(models.Model):
     detalle = models.CharField(max_length=300)
 
 class AntecedentePatologicoPersonal(models.Model):
+    LUGARES = (
+        ('Sistema nervioso', 'Sistema nervioso'),
+        ('Ojos', 'Ojos'),
+        ('Oídos', 'Oídos'),
+        ('Nariz', 'Nariz'),
+        ('Garganta', 'Garganta'),
+        ('Cardiovascular', 'Cardiovascular'),
+        ('Respiratoria', 'Respiratoria'),
+        ('Gastrointestinal', 'Gastrointestinal'),
+        ('Metabólica', 'Metabólica'),
+        ('Endocrina', 'Endocrina'),
+        ('Renal', 'Renal'),
+        ('Urinaria', 'Urinaria'),
+        ('Órganos reproductores', 'Órganos reproductores'),
+        ('Muscular', 'Muscular'),
+        ('Articular', 'Articular'),
+        ('Ósea (columna, otros)', 'Ósea (columna, otros)'),
+        ('Piel y faneras', 'Piel y faneras'),
+        ('Hematopoyéctica', 'Hematopoyéctica'),
+        ('Sistema inmune (alergias)', 'Sistema inmune (alergias)'),
+        ('Psiquiátrica', 'Psiquiátrica'),
+        ('Cáncer - oncológicas', 'Cáncer - oncológicas'),
+        ('Congénitas o genéticas', 'Congénitas o genéticas'),
+        ('Traumática', 'Traumática'),
+        ('Quirúrgica', 'Quirúrgica'),
+        ('Medicamentos', 'Medicamentos')
+    )
     ficha = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
     consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
-    lugar = models.CharField(max_length=100)
+    lugar = models.CharField(max_length=100, choices=LUGARES, default="Ojos")
     detalle = models.CharField(max_length=300)
 
 class AntecedentePatologicoFamiliar(models.Model):
@@ -126,9 +159,77 @@ class AntecedenteLaboral(models.Model):
     actual = models.BooleanField(default=False)
 
 class FactorRiesgo(models.Model):
+    TIPOS = (
+        ('Físico', 'Físico'),
+        ('Químico', 'Químico'),
+        ('Biológico', 'Biológico'),
+        ('Ergonómico', 'Ergonómico'),
+        ('Mecánico', 'Mecánico'),
+        ('Psicosocial', 'Psicosocial')
+    )
+    NOMBRES = (
+        ('Físico',
+            (
+                ('Ruido', 'Ruido'),
+                ('Vibración', 'Vibración'),
+                ('Iluminación', 'Iluminación'),
+                ('Radiaciones ionizantes', 'Radiaciones ionizantes'),
+                ('Radiaciones no ionizantes', 'Radiaciones no ionizantes'),
+                ('Presión', 'Presión'),
+                ('Contacto con circuitos eléctricos', 'Contacto con circuitos eléctricos')
+            )
+        ),
+        ('Químico',
+            (
+                ('Vapores', 'Vapores'),
+                ('Gases (crudo, lixiviados, otros)', '(crudo, lixiviados, otros)'),
+                ('Fibras (de madera, aluminio, otros)', 'Fibras (de madera, aluminio, otros)'),
+                ('Polvos orgánicos', 'Polvos orgánicos'),
+                ('Polvos inorgánicos', 'Polvos inorgánicos'),
+                ('Humos metálicos (soldadura, otros)', 'Humos metálicos (soldadura, otros)'),
+                ('Humos de combustión', 'Humos de combustión'),
+                ('Neblinas', 'Neblinas'),
+                ('Líquidos', 'Líquidos')
+            )
+        ),
+        ('Biológico',
+             (
+                 ('Bacterias, hongos, virus, etc', 'Bacterias, hongos, virus, etc'),
+                 ('Insalubridad en áreas', 'Insalubridad en áreas')
+             )
+        ),
+        ('Ergonómico',
+             (
+                 ('Cargas', 'Cargas'),
+                 ('Uso de pantallas de visualización', 'Uso de pantallas de visualización'),
+                 ('Posturas en el trabajo mantenidas', 'Posturas en el trabajo mantenidas'),
+                 ('Fatiga por esfuerzo físico', 'Fatiga por esfuerzo físico'),
+                 ('Movimientos repetitivos', 'Movimientos repetitivos')
+             )
+        ),
+        ('Mecánico',
+             (
+                 ('Contactos con superficies calientes', 'Contactos con superficies calientes'),
+                 ('Contacto con herramientas, utensilios cortopunzantes', 'Contacto con herramientas, utensilios cortopunzantes'),
+                 ('Golpes con objetos, herramientas', 'Golpes con objetos, herramientas'),
+                 ('Atrapamiento en partes', 'Atrapamiento en partes'),
+                 ('Caída de objetos', 'Caída de objetos'),
+                 ('Derrumbes', 'Derrumbes'),
+                 ('Transporte en vehículos - colisión', 'Transporte en vehículos - colisión')
+             )
+        ),
+        ('Psicosocial',
+             (
+                 ('Medio ambiente físico de trabajo', 'Medio ambiente físico de trabajo'),
+                 ('Factores propios de la tarea', 'Factores propios de la tarea'),
+                 ('Organización del tiempo de trabajo', 'Organización del tiempo de trabajo'),
+                 ('Gestión administrativa de la empresa', 'Gestión administrativa de la empresa')
+             )
+        )
+    )
     empresa = models.ForeignKey(Empresa, null=False, on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=50)
-    nombre = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=50, choices=TIPOS)
+    nombre = models.CharField(max_length=50, choices=NOMBRES)
 
 class ExamenLaboratorio(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)

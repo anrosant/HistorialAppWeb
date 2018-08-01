@@ -262,7 +262,7 @@ def ingresoUsuario(request):
             usuario = authenticate(username=user, password=password)
         except User.DoesNotExist:
             usuario = None
-        if usuario is not None:
+        if usuario is not None and not usuario.is_superuser:
             '''Función que genera tokens de usuarios'''
             jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
             jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -271,7 +271,9 @@ def ingresoUsuario(request):
             payload = jwt_payload_handler(usuario)
             token = jwt_encode_handler(payload)
             context["token"] = token
+            usuario.token = token
             context["usuarioId"] = usuario.id
+            context["empleadoId"] = usuario.profile.empleado.id
             context["msj"] = "Ingreso exitoso"
             dataEmpleado = ser.serialize("json", Empleado.objects.all())
             context["empleado"] = dataEmpleado

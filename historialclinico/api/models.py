@@ -26,16 +26,25 @@ class Empleado(models.Model):
         return "{}".format(self.nombre)
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, null = True)
     token = models.CharField(max_length=200, blank=True)
 
     def __str__(self):  # __unicode__ for Python 2
         return self.user.username
 
+    def create_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
 class ConsultaMedica(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    examen_fisico = models.CharField(max_length=300)
+    examen_fisico = models.CharField(max_length=300, blank = True)
     fechaConsulta = models.DateField(default=timezone.now())
     prescripcion = models.CharField(max_length=300, blank=True)
     motivo = models.CharField(max_length=300, blank=True)
@@ -72,12 +81,12 @@ class Diagnostico(models.Model):
 class PermisoMedico(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     diagnostico = models.ForeignKey(Diagnostico, on_delete=models.CASCADE)
-    consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE)
-    doctor = models.CharField(max_length=100)
+    consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE, null=True)
+    doctor = models.CharField(max_length=100, blank = True)
     fecha_inicio = models.DateField(default=timezone.now())
     fecha_fin = models.DateField(default=timezone.now())
     dias_permiso = models.IntegerField()
-    observaciones_permiso = models.CharField(max_length=100)
+    observaciones_permiso = models.CharField(max_length=100, blank = True)
 
 class Inmunizacion(models.Model):
     observacion = models.CharField(max_length=300)
@@ -103,8 +112,8 @@ class AparatoSistema(models.Model):
 class AntecedentePatologicoPersonal(models.Model):
     ficha = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
     consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
-    lugar = models.CharField(max_length=100)
-    detalle = models.CharField(max_length=300)
+    lugar = models.CharField(max_length=100, blank=True)
+    detalle = models.CharField(max_length=300, blank= True)
 
 class AntecedentePatologicoFamiliar(models.Model):
     ficha = models.ForeignKey(FichaMedica, null=False, on_delete=models.CASCADE)

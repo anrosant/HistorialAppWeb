@@ -12,3 +12,12 @@
 #titulo_empresa_actual {
     margin-bottom: 10px;
 }
+div[class*='container_'], div[id^="boton_mas_"], div[class*='boton_eliminar_'] {
+    margin-bottom: 10px;
+}
+div[class*='boton_eliminar_'], div[id^="boton_mas_"] {
+    text-align: right;
+}
+div[id^="boton_mas_"] > input, div[class*='boton_eliminar_'] > input {
+    width: 37px;
+}

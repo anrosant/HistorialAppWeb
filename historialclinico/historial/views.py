@@ -60,13 +60,17 @@ def nuevaFichaMedica(request):
     tipos_ficha = FichaMedica.TIPOS
     lugares = AntecedentePatologicoPersonal.LUGARES
     fecha_ficha = date.today().strftime("%Y-%m-%d")
+    nombres_vacunas = Vacuna.NOMBRES
+    dosis_vacunas = Vacuna.DOSIS
     context = {
         'usuario': usuario,
         'tipos': tipos,
         'nombres': nombres,
         'fecha_ficha': fecha_ficha,
         'tipos_ficha': tipos_ficha,
-        'lugares': lugares
+        'lugares': lugares,
+        'nombres_vacunas': nombres_vacunas,
+        'dosis_vacunas': dosis_vacunas
     }
     return HttpResponse(template.render(context, request))
 

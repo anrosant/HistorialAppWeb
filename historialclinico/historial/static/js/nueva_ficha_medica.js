@@ -106,3 +106,43 @@ function ordenarPatologia(tipo) {
         $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_patologia_' + tipo + "_" + (i + 1));
     }
 }
+
+function agregarVacuna(tipo) {
+    var containers_dosis_vacuna = $(".container_dosis_vacuna_" + tipo);
+    var containers_fecha_vacuna = $(".container_fecha_vacuna_" + tipo);
+    var botones_eliminar = $(".boton_eliminar_vacuna_" + tipo);
+    if(containers_dosis_vacuna.length === 1) {
+        $(botones_eliminar[0]).removeAttr("hidden");
+    }
+    $(containers_dosis_vacuna[0]).clone(false, true).appendTo("#inmunizaciones_" + tipo);
+    $(containers_fecha_vacuna[0]).clone(false, true).appendTo("#inmunizaciones_" + tipo);
+    $(botones_eliminar[0]).clone(false, true).appendTo("#inmunizaciones_" + tipo);
+    $("#boton_mas_vacuna_" + tipo).appendTo("#inmunizaciones_" + tipo);
+    ordenarVacuna(tipo);
+}
+
+function eliminarVacuna(tipo, numero) {
+    $("#dosis_vacuna_" + tipo + "_" + numero).parent().remove();
+    $("#fecha_vacuna_" + tipo + "_" + numero).parent().remove();
+    $("#boton_eliminar_vacuna_" + tipo + "_" + numero).parent().remove();
+    var containers_dosis_vacuna = $(".container_dosis_vacuna_" + tipo);
+    var botones_eliminar = $(".boton_eliminar_vacuna_" + tipo);
+    if(containers_dosis_vacuna.length === 1) {
+        $(botones_eliminar[0]).attr("hidden", "");
+    }
+    ordenarVacuna(tipo);
+}
+
+function ordenarVacuna(tipo) {
+    var containers_dosis_vacuna = $(".container_dosis_vacuna_" + tipo);
+    var containers_fecha_vacuna = $(".container_fecha_vacuna_" + tipo);
+    var botones_eliminar = $(".boton_eliminar_vacuna_" + tipo);
+    for(var i = 0; i < containers_dosis_vacuna.length; i++) {
+        $($(containers_dosis_vacuna[i]).children()[0]).attr('id', 'dosis_vacuna_' + tipo + "_" + (i + 1));
+        $($(containers_dosis_vacuna[i]).children()[0]).attr('name', 'dosis_vacuna_' + tipo + "_" + (i + 1));
+        $($(containers_fecha_vacuna[i]).children()[0]).attr('id', 'fecha_vacuna_' + tipo + "_" + (i + 1));
+        $($(containers_fecha_vacuna[i]).children()[0]).attr('name', 'fecha_vacuna_' + tipo + "_" + (i + 1));
+        $($(botones_eliminar[i]).children()[0]).attr('onclick', 'eliminarVacuna(\'' + tipo + '\', ' + (i + 1) + ')');
+        $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_vacuna_' + tipo + "_" + (i + 1));
+    }
+}

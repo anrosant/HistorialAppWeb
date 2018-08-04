@@ -92,9 +92,21 @@ class Inmunizacion(models.Model):
     observacion = models.CharField(max_length=300)
 
 class Vacuna(models.Model):
+    NOMBRES = (
+        ('Tétanos', 'Tétanos'),
+        ('Hepatitis A - B', 'Hepatitis A - B'),
+        ('Fiebre tifoidea', 'Fiebre tifoidea'),
+        ('Fiebre amarilla', 'Fiebre amarilla')
+    )
+    DOSIS = (
+        ('Primera', 'Primera'),
+        ('Segunda', 'Segunda'),
+        ('Tercera', 'Tercera'),
+        ('Refuerzo', 'Refuerzo')
+    )
     inmunizacion = models.ForeignKey(Inmunizacion, null=False, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=30)
-    dosis = models.IntegerField()
+    nombre = models.CharField(max_length=30, choices=NOMBRES, default='Tétanos')
+    dosis = models.CharField(max_length=15, choices=DOSIS, default='Primera')
     fecha = models.DateField(default=timezone.now())
 
 class FichaMedica(models.Model):

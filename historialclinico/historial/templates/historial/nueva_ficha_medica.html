@@ -242,6 +242,134 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header" id="heading_inmunizaciones">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#inmunizaciones" aria-expanded="false" aria-controls="inmunizaciones">
+                        Inmunizaciones
+                    </button>
+                </h5>
+            </div>
+            <div id="inmunizaciones" class="collapse" aria-labelledby="heading_chequeo" data-parent="#acordeon_nueva_ficha_medica">
+                <div class="card-body">
+                    <div class="row" id="container_inmunizaciones">
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                            <h6>Vacuna</h6>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                            <div class="row">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <h6>Dosis</h6>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <h6>Fecha</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3" style="margin: 10px 0">
+                            <label>Tétanos</label>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9" style="margin: 10px 0">
+                            <div class="row" id="inmunizaciones_tetanos">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_dosis_vacuna_tetanos">
+                                    <select class="form-control" id="dosis_vacuna_tetanos_1" name="dosis_vacuna_tetanos_1">
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        {% for key, value in dosis_vacunas %}
+                                        <option value="{{ key }}">{{ key }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_fecha_vacuna_tetanos">
+                                    <input class="form-control" id="fecha_vacuna_tetanos_1" name="fecha_vacuna_tetanos_1" type="date">
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_vacuna_tetanos" hidden>
+                                    <input type="button" class="btn btn-danger" id="boton_eliminar_vacuna_tetanos_1" value="x" onclick="eliminarVacuna('tetanos', 1)" />
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_vacuna_tetanos">
+                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarVacuna('tetanos', 1)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3" style="margin: 10px 0">
+                            <label>Hepatitis A - B</label>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9" style="margin: 10px 0">
+                            <div class="row" id="inmunizaciones_hepatitis">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_dosis_vacuna_hepatitis">
+                                    <select class="form-control" id="dosis_vacuna_hepatitis_1" name="dosis_vacuna_hepatitis_1">
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        {% for key, value in dosis_vacunas %}
+                                        <option value="{{ key }}">{{ key }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_fecha_vacuna_hepatitis">
+                                    <input class="form-control" id="fecha_vacuna_hepatitis_1" name="fecha_vacuna_hepatitis_1" type="date">
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_vacuna_hepatitis" hidden>
+                                    <input type="button" class="btn btn-danger" id="boton_eliminar_vacuna_hepatitis_1" value="x" onclick="eliminarVacuna('hepatitis', 1)" />
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_vacuna_hepatitis">
+                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarVacuna('hepatitis', 1)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3" style="margin: 10px 0">
+                            <label>Fiebre tifoidea</label>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9" style="margin: 10px 0">
+                            <div class="row" id="inmunizaciones_tifoidea">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_dosis_vacuna_tifoidea">
+                                    <select class="form-control" id="dosis_vacuna_tifoidea_1" name="dosis_vacuna_tifoidea_1">
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        {% for key, value in dosis_vacunas %}
+                                        <option value="{{ key }}">{{ key }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_fecha_vacuna_tifoidea">
+                                    <input class="form-control" id="fecha_vacuna_tifoidea_1" name="fecha_vacuna_tifoidea_1" type="date">
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_vacuna_tifoidea" hidden>
+                                    <input type="button" class="btn btn-danger" id="boton_eliminar_vacuna_tifoidea_1" value="x" onclick="eliminarVacuna('tifoidea', 1)" />
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_vacuna_tifoidea">
+                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarVacuna('tifoidea', 1)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3" style="margin: 10px 0">
+                            <label>Fiebre amarilla</label>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9" style="margin: 10px 0">
+                            <div class="row" id="inmunizaciones_amarilla">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_dosis_vacuna_amarilla">
+                                    <select class="form-control" id="dosis_vacuna_amarilla_1" name="dosis_vacuna_amarilla_1">
+                                        <option selected disabled hidden>Escoja una opción</option>
+                                        {% for key, value in dosis_vacunas %}
+                                        <option value="{{ key }}">{{ key }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_fecha_vacuna_amarilla">
+                                    <input class="form-control" id="fecha_vacuna_amarilla_1" name="fecha_vacuna_amarilla_1" type="date">
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_vacuna_amarilla" hidden>
+                                    <input type="button" class="btn btn-danger" id="boton_eliminar_vacuna_amarilla_1" value="x" onclick="eliminarVacuna('amarilla', 1)" />
+                                </div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_vacuna_amarilla">
+                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarVacuna('amarilla', 1)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <label>Observaciones</label>
+                            <textarea class="form-control" id="observacion_vacuna" name="observacion_vacuna" style="resize: none" rows="3" type="text"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

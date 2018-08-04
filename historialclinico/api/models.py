@@ -123,8 +123,19 @@ class FichaMedica(models.Model):
     tipo = models.CharField(max_length=15, choices=TIPOS, default='Periódico')
 
 class AparatoSistema(models.Model):
+    NOMBRES = (
+        ('Sistema nervioso', 'Sistema nervioso'),
+        ('Órganos de los sentidos', 'Órganos de los sentidos'),
+        ('Respiratorio', 'Respiratorio'),
+        ('Digestivo', 'Digestivo'),
+        ('Endócrino', 'Endócrino'),
+        ('Músculo esquelético', 'Músculo esquelético'),
+        ('Genital - urinario', 'Genital - urinario'),
+        ('Piel y tegumentos', 'Piel y tegumentos'),
+        ('Hemolinfático', 'Hemolinfático'),
+    )
     ficha_medica = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=50, choices=NOMBRES, default='Digestivo')
     detalle = models.CharField(max_length=300)
 
 class AntecedentePatologicoPersonal(models.Model):

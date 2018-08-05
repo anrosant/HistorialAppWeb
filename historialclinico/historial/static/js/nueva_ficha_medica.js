@@ -1,3 +1,27 @@
+$(document).ready(function() {
+    $("#talla").keypress(function (e) {
+        return !!($.isNumeric(e.key) || e.key === "." || e.key === ",");
+    });
+    $("#peso").keypress(function (e) {
+        return !!($.isNumeric(e.key) || e.key === "." || e.key === ",");
+    });
+    $("#presion_sistolica").keypress(function (e) {
+        return !!($.isNumeric(e.key));
+    });
+    $("#presion_distolica").keypress(function (e) {
+        return !!($.isNumeric(e.key));
+    });
+    $("#frecuencia_cardiaca").keypress(function (e) {
+        return !!($.isNumeric(e.key));
+    });
+    $("#frecuencia_respiratoria").keypress(function (e) {
+        return !!($.isNumeric(e.key));
+    });
+    $("#temperatura").keypress(function (e) {
+        return !!($.isNumeric(e.key) || e.key === "." || e.key === ",");
+    });
+});
+
 function agregarRiesgo(tipo) {
     var containers_tipo_riesgo = $(".container_tipo_riesgo_" + tipo);
     var containers_nombre_riesgo = $(".container_nombre_riesgo_" + tipo);
@@ -144,5 +168,54 @@ function ordenarVacuna(tipo) {
         $($(containers_fecha_vacuna[i]).children()[0]).attr('name', 'fecha_vacuna_' + tipo + "_" + (i + 1));
         $($(botones_eliminar[i]).children()[0]).attr('onclick', 'eliminarVacuna(\'' + tipo + '\', ' + (i + 1) + ')');
         $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_vacuna_' + tipo + "_" + (i + 1));
+    }
+}
+
+function agregarAparato() {
+    var containers_nombre_aparato = $(".container_nombre_aparato_sistema");
+    var containers_detalle_aparato = $(".container_detalle_aparato_sistema");
+    var botones_eliminar = $(".boton_eliminar_aparato_sistema");
+    if(containers_nombre_aparato.length === 1) {
+        $(botones_eliminar[0]).removeAttr("hidden");
+    }
+    $(containers_nombre_aparato[0]).clone(false, true).appendTo("#container_aparatos_sistema");
+    $(containers_detalle_aparato[0]).clone(false, true).appendTo("#container_aparatos_sistema");
+    $(botones_eliminar[0]).clone(false, true).appendTo("#container_aparatos_sistema");
+    $("#boton_mas_aparato_sistema").appendTo("#container_aparatos_sistema");
+    ordenarAparato();
+}
+
+function eliminarAparato(numero) {
+    $("#nombre_aparato_sistema_" + numero).parent().remove();
+    $("#detalle_aparato_sistema_" + numero).parent().remove();
+    $("#boton_eliminar_aparato_sistema_" + numero).parent().remove();
+    var containers_nombre_aparato = $(".container_nombre_aparato_sistema");
+    var botones_eliminar = $(".boton_eliminar_aparato_sistema");
+    if(containers_nombre_aparato.length === 1) {
+        $(botones_eliminar[0]).attr("hidden", "");
+    }
+    ordenarAparato();
+}
+
+function ordenarAparato() {
+    var containers_nombre_aparato = $(".container_nombre_aparato_sistema");
+    var containers_detalle_aparato = $(".container_detalle_aparato_sistema");
+    var botones_eliminar = $(".boton_eliminar_aparato_sistema");
+    for(var i = 0; i < containers_nombre_aparato.length; i++) {
+        $($(containers_nombre_aparato[i]).children()[0]).attr('id', 'nombre_aparato_sistema_' + (i + 1));
+        $($(containers_nombre_aparato[i]).children()[0]).attr('name', 'nombre_aparato_sistema_' + (i + 1));
+        $($(containers_detalle_aparato[i]).children()[0]).attr('id', 'detalle_aparato_sistema_' + (i + 1));
+        $($(containers_detalle_aparato[i]).children()[0]).attr('name', 'detalle_aparato_sistema_' + (i + 1));
+        $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_aparato_sistema_' + (i + 1));
+    }
+}
+
+function calcularIMC() {
+    var talla = parseFloat($("#talla").val() / 100);
+    var peso = parseFloat($("#peso").val());
+    if(!isNaN(talla) && !isNaN(peso)) {
+        $("#indice_masa_corporal").val(parseFloat(peso / Math.pow(talla, 2)).toFixed(2));
+    } else {
+        $("#indice_masa_corporal").val("");
     }
 }

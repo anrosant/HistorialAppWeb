@@ -55,22 +55,24 @@ def mi_error_404(request):
 def nuevaFichaMedica(request):
     template = loader.get_template('historial/nueva_ficha_medica.html')
     usuario = User.objects.get(username=request.user.username)
-    tipos = FactorRiesgo.TIPOS
-    nombres = FactorRiesgo.NOMBRES
+    tipos_riesgos = FactorRiesgo.TIPOS
+    nombres_riesgos = FactorRiesgo.NOMBRES
     tipos_ficha = FichaMedica.TIPOS
     lugares = AntecedentePatologicoPersonal.LUGARES
     fecha_ficha = date.today().strftime("%Y-%m-%d")
     nombres_vacunas = Vacuna.NOMBRES
     dosis_vacunas = Vacuna.DOSIS
+    nombres_aparatos = AparatoSistema.NOMBRES
     context = {
         'usuario': usuario,
-        'tipos': tipos,
-        'nombres': nombres,
+        'tipos': tipos_riesgos,
+        'nombres': nombres_riesgos,
         'fecha_ficha': fecha_ficha,
         'tipos_ficha': tipos_ficha,
         'lugares': lugares,
         'nombres_vacunas': nombres_vacunas,
-        'dosis_vacunas': dosis_vacunas
+        'dosis_vacunas': dosis_vacunas,
+        'nombres_aparatos': nombres_aparatos
     }
     return HttpResponse(template.render(context, request))
 

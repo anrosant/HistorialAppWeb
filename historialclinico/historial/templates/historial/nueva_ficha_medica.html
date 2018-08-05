@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                            <label>Fecha</label>
+                            <label>Fecha de creación</label>
                             <input class="form-control" id="fecha_ficha" name="fecha_ficha" type="date" value="{{ fecha_ficha }}" disabled required>
                         </div>
                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
@@ -365,6 +365,130 @@
                         <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <label>Observaciones</label>
                             <textarea class="form-control" id="observacion_vacuna" name="observacion_vacuna" style="resize: none" rows="3" type="text"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading_aparatos_sistemas">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#aparatos_sistema" aria-expanded="false" aria-controls="aparatos_sistema">
+                            Revisión de aparatos y sistemas
+                        </button>
+                    </h5>
+                </div>
+                <div id="aparatos_sistema" class="collapse" aria-labelledby="heading_aparatos_sistemas" data-parent="#acordeon_nueva_ficha_medica">
+                    <div class="card-body">
+                        <div class="row" id="container_aparatos_sistema">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Nombre</label>
+                            </div>
+                            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">
+                                <label>Detalle</label>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 container_nombre_aparato_sistema">
+                                <select class="form-control" id="nombre_aparato_sistema_1" name="nombre_aparato_sistema_1">
+                                    <option selected disabled hidden>Escoja una opción</option>
+                                    {% for key, value in nombres_aparatos %}
+                                    <option value="{{ key }}">{{ key }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 container_detalle_aparato_sistema">
+                                <input class="form-control" id="detalle_aparato_sistema_1" name="detalle_aparato_sistema_1" type="text" required>
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_aparato_sistema" hidden>
+                                <input type="button" class="btn btn-danger" id="boton_eliminar_aparato_sistema_1" value="x" onclick="eliminarAparato(1)" />
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_aparato_sistema">
+                                <input type="button" class="btn btn-primary" value="+" onclick="agregarAparato()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading_examen_fisico">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#examen_fisico" aria-expanded="false" aria-controls="examen_fisico">
+                            Examen Físico
+                        </button>
+                    </h5>
+                </div>
+                <div id="examen_fisico" class="collapse" aria-labelledby="heading_examen_fisico" data-parent="#acordeon_nueva_ficha_medica">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12" id="titulo_signos_vitales">
+                                <h5>Signos vitales</h5>
+                            </div>
+                            <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <label>Presión arterial</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="presion_sistolica" name="presion_sistolica" type="number" required>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">/</div>
+                                    </div>
+                                    <input class="form-control" id="presion_distolica" name="presion_distolica" type="number" required>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">mmHg</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <label>Frecuencia cardiaca</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="frecuencia_cardiaca" name="frecuencia_cardiaca" type="number" required>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">x'</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <label>Frecuencia respiratoria</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="frecuencia_respiratoria" name="frecuencia_respiratoria" type="number" required>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">X'</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Talla</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="talla" name="talla" type="number" onchange="calcularIMC()" required>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">cm</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Peso</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="peso" name="peso" type="number" onchange="calcularIMC()" required>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">kg</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Temperatura</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="temperatura" name="temperatura" type="number" required>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">°C</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <label>Índice de masa corporal</label>
+                                <input class="form-control" id="indice_masa_corporal" name="indice_masa_corporal" type="number" disabled required>
+                            </div>
+                            <div class="col-lg-12" id="titulo_somatico_general">
+                                <h5>Somático general</h5>
+                            </div>
+                            <div class="col-lg-12" id="titulo_regional">
+                                <h5>Regional</h5>
+                            </div>
                         </div>
                     </div>
                 </div>

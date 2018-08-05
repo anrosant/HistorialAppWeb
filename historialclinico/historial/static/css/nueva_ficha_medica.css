@@ -5,11 +5,11 @@
     text-align: center;
     margin: 25px 0;
 }
-#titulo_empresas_anteriores {
+#titulo_empresas_anteriores, #titulo_somatico_general, #titulo_regional {
     margin-top: 15px;
     margin-bottom: 10px;
 }
-#titulo_empresa_actual {
+#titulo_empresa_actual, #titulo_signos_vitales {
     margin-bottom: 10px;
 }
 div[class*='container_'], div[id^="boton_mas_"], div[class*='boton_eliminar_'] {

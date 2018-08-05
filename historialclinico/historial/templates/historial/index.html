@@ -10,25 +10,25 @@
     <h4>Lista de empleados</h4>
 </div>
 <div>
-    <p>Seleccione un empleado para realizar una acción:</p>
+    <p>Seleccione un empleado para realizar una acción: </p>
 </div>
 <div>
     <table id="tabla_empleados" class="cell-border hover">
         <thead>
             <tr>
-                <th>Columna 1</th>
-                <th>Columna 2</th>
+                <th>Cédula</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
             </tr>
         </thead>
         <tbody>
+        {% for empleado in listaEmpleados %}
             <tr>
-                <td>Empleado 1</td>
-                <td>Data 1</td>
+                <td>{{ empleado.cedula }}</td>
+                <td>{{ empleado.nombre }}</td>
+                <td>{{ empleado.apellido }}</td>
             </tr>
-            <tr>
-                <td>Empleado 2</td>
-                <td>Data 2</td>
-            </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>

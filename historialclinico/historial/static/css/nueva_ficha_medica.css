@@ -21,3 +21,8 @@ div[class*='boton_eliminar_'], div[id^="boton_mas_"] {
 div[id^="boton_mas_"] > input, div[class*='boton_eliminar_'] > input {
     width: 37px;
 }
+div.row.empresa_anterior {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding-top: 10px;
+}

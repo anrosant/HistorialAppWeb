@@ -53,7 +53,7 @@
             <div id="antecedentes_laborales" class="collapse" aria-labelledby="heading_antecedentes_laborales" data-parent="#acordeon_nueva_ficha_medica">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12" id="titulo_empresa_actual">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="titulo_empresa_actual">
                             <h5>Empresa actual</h5>
                         </div>
                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
@@ -86,7 +86,7 @@
                                     <label>Nombre</label>
                                 </div>
                                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_tipo_riesgo_actual">
-                                    <select class="form-control" id="tipo_riesgo_actual_1" name="tipo_riesgo_actual_1" onchange="escogerTipo('actual', 1)" required>
+                                    <select class="form-control" id="tipo_riesgo_actual_1" name="tipo_riesgo_actual_1" onchange="escogerTipo('actual', 0, 1)" required>
                                         <option selected disabled hidden>Escoja una opción</option>
                                         {% for key, value in tipos %}
                                             <option value="{{ key }}">{{ key }}</option>
@@ -104,60 +104,75 @@
                                     </select>
                                 </div>
                                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_riesgo_empresa_actual" hidden>
-                                    <input type="button" class="btn btn-danger" id="boton_eliminar_riesgo_actual_1" value="x" onclick="eliminarRiesgo('actual', 1)" />
+                                    <input type="button" class="btn btn-danger" id="boton_eliminar_riesgo_actual_1" value="x" onclick="eliminarRiesgo(1)" />
                                 </div>
                                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_riesgo_empresa_actual">
-                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarRiesgo('actual')" />
+                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarRiesgo()" />
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12" id="titulo_empresas_anteriores">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="titulo_empresas_anteriores">
                             <h5>Empresas anteriores</h5>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                            <label>Nombre de la empresa</label>
-                            <input class="form-control nombre_empresa_anterior" name="nombre_empresa" type="text" required>
-                        </div>
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                            <label>Edad de inicio</label>
-                            <input class="form-control" id="tiempo_empresa_anterior" name="tiempo_empresa_anterior" min="18" max="80" type="number" required>
-                        </div>
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                            <label>Cargo</label>
-                            <input class="form-control cargo_empresa_anterior" name="cargo_empresa_anterior" type="text" required>
-                        </div>
-                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                            <h6>Riesgos</h6>
-                            <div class="row" id="container_riesgos_anteriores">
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
-                                    <label>Tipo</label>
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="row" id="container_empresas_anteriores">
+                                <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 container_empresa_anterior" id="container_empresa_anterior_1"
+                                     style="border: 1px solid gray; border-radius: 5px;padding-top: 10px;">
+                                    <div class="row">
+                                        <div class="form-group col-xl-5 col-lg-5 col-md-5 col-sm-5 container_nombre_empresa_anterior">
+                                            <label>Nombre de la empresa</label>
+                                            <input class="form-control" id="nombre_empresa_anterior_1" name="nombre_empresa_anterior_1" type="text" required>
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3 container_tiempo_empresa_anterior">
+                                            <label>Edad de inicio</label>
+                                            <input class="form-control" id="tiempo_empresa_anterior_1" name="tiempo_empresa_anterior_1" type="number" required>
+                                        </div>
+                                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4 container_cargo_empresa_anterior">
+                                            <label>Cargo</label>
+                                            <input class="form-control" id="cargo_empresa_anterior_1" name="cargo_empresa_anterior_1" type="text" required>
+                                        </div>
+                                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                            <h6>Riesgos</h6>
+                                            <div class="row container_riesgos_anteriores" id="container_riesgo_anterior_1">
+                                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                                    <label>Tipo</label>
+                                                </div>
+                                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                                    <label>Nombre</label>
+                                                </div>
+                                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_tipo_riesgo_anterior_1">
+                                                    <select class="form-control" id="tipo_riesgo_anterior_1_1" name="tipo_riesgo_anterior_1_1" onchange="escogerTipo('anterior', 1, 1)" required>
+                                                        <option selected disabled hidden>Escoja una opción</option>
+                                                        {% for key, value in tipos %}
+                                                        <option value="{{ key }}">{{ key }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_nombre_riesgo_anterior_1">
+                                                    <select class="form-control" id="nombre_riesgo_anterior_1_1" name="nombre_riesgo_anterior_1_1" required>
+                                                        <option selected disabled hidden>Escoja una opción</option>
+                                                        {% for key, value in nombres %}
+                                                        {% for key2, value2 in value %}
+                                                        <option class="{{ key }}" value="{{ key2 }}">{{ key2 }}</option>
+                                                        {% endfor %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_riesgo_empresa_anterior_1" hidden>
+                                                    <input type="button" class="btn btn-danger" id="boton_eliminar_riesgo_anterior_1_1" value="x" onclick="eliminarRiesgoAnterior(1, 1)" />
+                                                </div>
+                                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_riesgo_empresa_anterior_1">
+                                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarRiesgoAnterior(1)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
-                                    <label>Nombre</label>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end boton_eliminar_empresa_anterior" hidden>
+                                    <input type="button" class="btn btn-danger" id="boton_eliminar_empresa_anterior_1" value="x" onclick="eliminarEmpresa(1)" />
                                 </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_tipo_riesgo_anterior">
-                                    <select class="form-control" id="tipo_riesgo_anterior_1" name="tipo_riesgo_anterior_1" onchange="escogerTipo('anterior', 1)" required>
-                                        <option selected disabled hidden>Escoja una opción</option>
-                                        {% for key, value in tipos %}
-                                            <option value="{{ key }}">{{ key }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_nombre_riesgo_anterior">
-                                    <select class="form-control" id="nombre_riesgo_anterior_1" name="nombre_riesgo_anterior_1" required>
-                                        <option selected disabled hidden>Escoja una opción</option>
-                                        {% for key, value in nombres %}
-                                            {% for key2, value2 in value %}
-                                                <option class="{{ key }}" value="{{ key2 }}">{{ key2 }}</option>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_riesgo_empresa_anterior" hidden>
-                                    <input type="button" class="btn btn-danger" id="boton_eliminar_riesgo_anterior_1" value="x" onclick="eliminarRiesgo('anterior', 1)" />
-                                </div>
-                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_riesgo_empresa_anterior">
-                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarRiesgo('anterior')" />
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end" id="boton_mas_empresa_anterior">
+                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarEmpresa()" />
                                 </div>
                             </div>
                         </div>

@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^cerrarSesion/$', views.cerrarSesion, name='cerrarSesion'),
     url(r'^nuevo/ficha$', views.nuevaFichaMedica, name='nuevaFichaMedica'),
     url(r'^nuevo/empleado$', views.nuevoEmpleado, name='nuevoEmpleado'),
+    url(r'^crear/empleado', views.guardarEmpleado, name='guardarEmpleado'),
 ]
 
 if settings.DEBUG:

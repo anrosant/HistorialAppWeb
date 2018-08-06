@@ -6,6 +6,7 @@ from django.template import loader
 from django.contrib.auth.decorators import login_required
 from datetime import date
 from api.models import *
+import time
 
 ''' Esta vista me redirige a la página principal
     Valida si existe el usuario o no'''
@@ -15,8 +16,10 @@ from api.models import *
 def index(request):
     template = loader.get_template('historial/index.html')
     usuario = User.objects.get(username=request.user.username)
+    lista_empleados = Empleado.objects.all()
     context = {
-        'usuario': usuario
+        'usuario': usuario,
+        'listaEmpleados': lista_empleados
     }
     return HttpResponse(template.render(context, request))
 
@@ -38,7 +41,6 @@ def loginUser(request):
         'notice': notice
     }
     return HttpResponse(template.render(context, request))
-
 
 def cerrarSesion(request):
     logout(request)
@@ -84,3 +86,36 @@ def nuevoEmpleado(request):
         'usuario': usuario
     }
     return HttpResponse(template.render(context, request))
+
+'''
+    Permite crear un empleado
+    hace post
+'''
+@login_required(login_url='/login/')
+def guardarEmpleado(request):
+    if(request.method == 'POST'):
+        nuevoEmpleado = Empleado()
+        nuevoEmpleado.foto = request.POST.get('foto')
+        nuevoEmpleado.nombre = request.POST.get('nombres')
+        nuevoEmpleado.apellido = request.POST.get('apellidos')
+        nuevoEmpleado.cedula = request.POST.get('cedula')
+        nuevoEmpleado.sexo  = request.POST.get('sexo')
+        nuevoEmpleado.edad = request.POST.get('edad')
+        nuevoEmpleado.estadoCivil = request.POST.get('estado_civil')
+        nuevoEmpleado.lugarNacimiento = request.POST.get('lugar_nacimiento')
+        nuevoEmpleado.fechaNacimiento = request.POST.get('fecha_nacimiento')
+        nuevoEmpleado.correo = request.POST.get('correo')
+        nuevoEmpleado.direccion = request.POST.get('direccion')
+        nuevoEmpleado.instruccion = request.POST.get('instruccion')
+        nuevoEmpleado.profesion = request.POST.get('profesion')
+        nuevoEmpleado.ocupacion = request.POST.get('ocupacion')
+        nuevoEmpleado.fechaRegistro = time.strftime("%Y-%m-%d")
+        nuevoEmpleado.ficha_actual = 0
+        nuevoEmpleado.save()
+
+        lista_empleados = Empleado.objects.all()
+        context = {
+            'listaEmpleados': lista_empleados
+        }
+
+        return render(request, "historial/index.html", context)

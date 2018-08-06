@@ -11,14 +11,14 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form action="#" method="post">{% csrf_token %}
+            <form action="{% url 'historial:guardarEmpleado' %}" method="post">{% csrf_token %}
                 <div class="row">
                     <div class="card col-xl-3 col-lg-3 col-md-4 col-sm-4">
                         <img class="card-img-top" id="foto_empleado" height="300" src="{% static 'images/cargar_foto.png' %}" alt="Foto empleado">
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
-                                    Subir foto <input type="file" id="ingreso_foto">
+                                    Subir foto <input required type="file" id="foto" name="foto" accept="image/jpg, image/jpeg, image/png">
                                 </span>
                             </span>
                             <input type="text" class="form-control" readonly>
@@ -28,20 +28,19 @@
                         <div class="row">
                             <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                 <label>Nombres</label>
-                                <input class="form-control" id="nombres" name="nombres" type="text" required>
+                                <input class="form-control" id="nombres" name="nombres" type="text" minlength="2" maxlength="50" required>
                             </div>
                             <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                 <label>Apellidos</label>
-                                <input class="form-control" id="apellidos" name="apellidos" type="text" required>
+                                <input class="form-control" id="apellidos" name="apellidos" type="text" minlength="2" maxlength="50" required>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Cédula</label>
-                                <input class="form-control" id="cedula" name="cedula" type="number" required>
+                                <input class="form-control" id="cedula" name="cedula" type="text" minlength="10" maxlength="10" required>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Sexo</label>
-                                <select class="form-control" id="sexo" name="sexo" required>
-                                    <option selected disabled hidden>Escoja una opción</option>
+                                <select required="required" class="form-control" id="sexo" name="sexo">
                                     <option value="masculino">Masculino</option>
                                     <option value="femenino">Femenino</option>
                                 </select>
@@ -52,8 +51,7 @@
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Estado civil</label>
-                                <select class="form-control" id="estado_civil" name="estado_civil" required>
-                                    <option selected disabled hidden>Escoja una opción</option>
+                                <select required class="form-control" id="estado_civil" name="estado_civil">
                                     <option value="soltero">Soltero/a</option>
                                     <option value="casado">Casado/a</option>
                                     <option value="divorciado">Divorciado/a</option>
@@ -74,12 +72,11 @@
                             </div>
                             <div class="form-group col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <label>Dirección</label>
-                                <input class="form-control" id="direccion" name="direccion" type="text" required>
+                                <input required class="form-control" id="direccion" name="direccion" type="text">
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Instrucción</label>
-                                <select class="form-control" id="instruccion" name="instruccion" required>
-                                    <option selected disabled hidden>Escoja una opción</option>
+                                <select required class="form-control" id="instruccion" name="instruccion">
                                     <option value="ninguna">Ninguna</option>
                                     <option value="inicial">Inicial</option>
                                     <option value="basica">Básica</option>
@@ -89,7 +86,7 @@
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Profesión</label>
-                                <input class="form-control" id="profesion" name="profesion" type="text" required>
+                                <input class="form-control" id="profesion" name="profesion" type="text">
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Ocupación</label>

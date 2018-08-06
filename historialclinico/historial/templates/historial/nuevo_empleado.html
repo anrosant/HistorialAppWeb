@@ -18,10 +18,13 @@
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
-                                    Subir foto <input required type="file" id="foto" name="foto" accept="image/jpg, image/jpeg, image/png">
+                                    Subir foto <input required type="file" id="ingreso_foto" name="ingreso_foto" accept="image/jpg, image/jpeg, image/png"/>
                                 </span>
                             </span>
                             <input type="text" class="form-control" readonly>
+                        </div>
+                        <div id="mensaje" hidden>
+                            <h7>Formato de archivo inválido</h7>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-8 col-sm-8">
@@ -40,7 +43,7 @@
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Sexo</label>
-                                <select required="required" class="form-control" id="sexo" name="sexo">
+                                <select required class="form-control" id="sexo" name="sexo">
                                     <option value="masculino">Masculino</option>
                                     <option value="femenino">Femenino</option>
                                 </select>

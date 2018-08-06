@@ -95,7 +95,7 @@ def nuevoEmpleado(request):
 def guardarEmpleado(request):
     if(request.method == 'POST'):
         nuevoEmpleado = Empleado()
-        nuevoEmpleado.foto = request.POST.get('foto')
+        nuevoEmpleado.foto = request.POST.get('ingreso_foto')
         nuevoEmpleado.nombre = request.POST.get('nombres')
         nuevoEmpleado.apellido = request.POST.get('apellidos')
         nuevoEmpleado.cedula = request.POST.get('cedula')

@@ -43,3 +43,7 @@ div#navbar {
     margin-bottom: 5px;
     margin-top: 20px;
 }
+#mensaje {
+    margin: 5px 0;
+    color: red;
+}

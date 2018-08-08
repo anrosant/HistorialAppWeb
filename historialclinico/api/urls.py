@@ -46,14 +46,16 @@ urlpatterns = [
     url(r'^regional/(?P<pk>[0-9]+)/$', views.ListaRegionalView.as_view(), name="details"),
     url(r'^columna/$', views.CrearColumnaView.as_view(), name="create"),
     url(r'^columna/(?P<pk>[0-9]+)/$', views.ListaColumnaView.as_view(), name="details"),
-    url(r'^lumbar/$', views.CrearLumbarView.as_view(), name="create"),
-    url(r'^lumbar/(?P<pk>[0-9]+)/$', views.ListaLumbarView.as_view(), name="details"),
+    url(r'^regionLumbar/$', views.CrearRegionLumbarView.as_view(), name="create"),
+    url(r'^regionLumbar/(?P<pk>[0-9]+)/$', views.ListaRegionLumbarView.as_view(), name="details"),
     url(r'^extremidades/$', views.CrearExtremidadesView.as_view(), name="create"),
     url(r'^extremidades/(?P<pk>[0-9]+)/$', views.ListaExtremidadesView.as_view(), name="details"),
     url(r'^localizacion/$', views.CrearLocalizacionView.as_view(), name="create"),
     url(r'^localizacion/(?P<pk>[0-9]+)/$', views.ListaLocalizacionView.as_view(), name="details"),
     url(r'^examenFisico/$', views.CrearExamenFisicoView.as_view(), name="create"),
     url(r'^examenFisico/(?P<pk>[0-9]+)/$', views.ListaExamenFisicoView.as_view(), name="details"),
+    url(r'^examenConsulta/$', views.CrearExamenConsultaView.as_view(), name="create"),
+    url(r'^examenConsulta/(?P<pk>[0-9]+)/$', views.ListaExamenConsultaView.as_view(), name="details"),
     url(r'^usuario/', views.ingresoUsuario, name="hello"),
 ]
 

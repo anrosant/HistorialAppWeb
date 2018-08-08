@@ -1,14 +1,34 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.core import serializers as ser
+from rest_framework.generics import CreateAPIView
 
 from rest_framework_jwt.settings import api_settings
 from rest_framework.permissions import AllowAny
 
 from .serializers import *
+
+@permission_classes((AllowAny, ))
+class ImageCreate(CreateAPIView):
+
+    'Create a new image instance'
+
+    serializer_class = ExamenConsultaSerializer
+
+    def post(self, request, **kwargs):
+
+        serializer = ExamenConsultaSerializer(data=request.data)
+        if serializer.is_valid():
+
+            # Save request image in the database
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CrearEmpleadoView(generics.ListCreateAPIView):
     queryset = Empleado.objects.all()
@@ -180,6 +200,16 @@ class CrearExamenLaboratorioView(generics.ListCreateAPIView):
 class ListaExamenLaboratorioView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ExamenLaboratorio.objects.all()
     serializer_class = ExamenLaboratorioSerializer
+
+class CrearExamenConsultaView(generics.ListCreateAPIView):
+    queryset = ExamenConsulta.objects.all()
+    serializer_class = ExamenConsultaSerializer
+    def perform_create(self, serializer):
+        serializer.save()
+
+class ListaExamenConsultaView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ExamenConsulta.objects.all()
+    serializer_class = ExamenConsultaSerializer
 
 class CrearSomaticoGeneralView(generics.ListCreateAPIView):
     queryset = SomaticoGeneral.objects.all()

@@ -263,11 +263,22 @@ class FactorRiesgo(models.Model):
     tipo = models.CharField(max_length=50, choices=TIPOS)
     nombre = models.CharField(max_length=50, choices=NOMBRES)
 
+class ExamenConsulta(models.Model):
+    consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE)
+    imagen = models.ImageField()
+
 class ExamenLaboratorio(models.Model):
+    EXAMENES = (
+        ('Laboratorio', 'Laboratorio'),
+        ('Emo', 'Emo'),
+        ('Coproparasitario', 'Coproparasitario'),
+        ('Pruebas especiales de laboratorio', 'Pruebas especiales de laboratorio'),
+        ('Oftalmología', 'Oftalmología'),
+        ('Espirometría', 'Espirometría')
+    )
     ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
-    consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=100)
-    descripcion = models.CharField(max_length=50, blank=True)
+    tipo = models.CharField(max_length=50, choices=EXAMENES, default='Laboratorio')
+    descripcion = models.CharField(max_length=500, blank = True)
     imagen = models.ImageField()
 
 class SomaticoGeneral(models.Model):
@@ -296,7 +307,7 @@ class Columna(models.Model):
 class RegionLumbar(models.Model):
     dolor_punio_percusion = models.BooleanField()
     motricidad = models.BooleanField()
-    detalle_alteracion = models.CharField(max_length=300, blank=True)
+    detalle_alteracion = models.CharField(max_length=300, blank=True, null = True)
 
 class Extremidades(models.Model):
     dolor = models.CharField(max_length=20, blank=True)

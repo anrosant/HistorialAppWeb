@@ -54,6 +54,8 @@ urlpatterns = [
     url(r'^localizacion/(?P<pk>[0-9]+)/$', views.ListaLocalizacionView.as_view(), name="details"),
     url(r'^examenFisico/$', views.CrearExamenFisicoView.as_view(), name="create"),
     url(r'^examenFisico/(?P<pk>[0-9]+)/$', views.ListaExamenFisicoView.as_view(), name="details"),
+    url(r'^examenConsulta/$', views.CrearExamenConsultaView.as_view(), name="create"),
+    url(r'^examenConsulta/(?P<pk>[0-9]+)/$', views.ListaExamenConsultaView.as_view(), name="details"),
     url(r'^usuario/', views.ingresoUsuario, name="hello"),
 ]
 

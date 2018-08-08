@@ -313,31 +313,33 @@ def ingresoUsuario(request):
 
             consultas = ConsultaMedica.objects.all()
             if(len(consultas)>=3):
-                consultas=consultas[len(consultas-3):]
+                consultas=consultas[len(consultas)-3:]
             dataConsultaMedica = ser.serialize("json", consultas)
             context["consultaMedica"] = dataConsultaMedica
 
             atenciones = AtencionEnfermeria.objects.all()
             if (len(atenciones) >= 3):
-                atenciones = atenciones[len(atenciones - 3):]
+                atenciones = atenciones[len(atenciones)-3:]
             dataAtencionEnfermeria = ser.serialize("json", atenciones)
             context["atencionEnfermeria"] = dataAtencionEnfermeria
 
-            diagnosticos = []
-            signos = []
-            patologias = []
-            permisos = []
+            diagnosticos = Diagnostico.objects.none()
+            signos = SignosVitales.objects.none()
+            patologias = AntecedentePatologicoPersonal.objects.none()
+            permisos = PermisoMedico.objects.none()
             for consulta in consultas:
                 diagnostico = Diagnostico.objects.filter(consulta_medica = consulta.id)
-                diagnosticos+=diagnostico
+                diagnosticos= diagnosticos | diagnostico
                 signo = SignosVitales.objects.filter(consulta_medica=consulta.id)
-                signos += signo
+                signos = signos | signo
                 patologia = AntecedentePatologicoPersonal.objects.filter(consulta_medica = consulta.id)
-                patologias+=patologia
+                patologias = patologias | patologia
+                permiso = PermisoMedico.objects.filter(consulta_medica = consulta.id)
+                permisos = permisos | permiso
 
             for atencion in atenciones:
                 signo = SignosVitales.objects.filter(atencion_enfermeria=atencion.id)
-                signos += signo
+                signos = signos | signo
 
             dataDiagnostico = ser.serialize("json", diagnosticos)
             context["diagnostico"] = dataDiagnostico

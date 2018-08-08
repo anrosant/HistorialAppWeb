@@ -281,6 +281,7 @@ class ListaExamenFisicoView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ExamenFisico.objects.all()
     serializer_class = ExamenFisicoSerializer
 
+
 @api_view(['GET', 'POST'])
 @permission_classes((AllowAny, ))
 def ingresoUsuario(request):
@@ -309,19 +310,44 @@ def ingresoUsuario(request):
             context["empleado"] = dataEmpleado
             dataEnfermedad = ser.serialize("json", Enfermedad.objects.all())
             context["enfermedad"] = dataEnfermedad
-            dataConsultaMedica = ser.serialize("json", ConsultaMedica.objects.all())
+
+            consultas = ConsultaMedica.objects.all()
+            if(len(consultas)>=3):
+                consultas=consultas[len(consultas-3):]
+            dataConsultaMedica = ser.serialize("json", consultas)
             context["consultaMedica"] = dataConsultaMedica
-            dataAtencionEnfermeria = ser.serialize("json", AtencionEnfermeria.objects.all())
+
+            atenciones = AtencionEnfermeria.objects.all()
+            if (len(atenciones) >= 3):
+                atenciones = atenciones[len(atenciones - 3):]
+            dataAtencionEnfermeria = ser.serialize("json", atenciones)
             context["atencionEnfermeria"] = dataAtencionEnfermeria
-            dataDiagnostico = ser.serialize("json", Diagnostico.objects.all())
+
+            diagnosticos = []
+            signos = []
+            patologias = []
+            permisos = []
+            for consulta in consultas:
+                diagnostico = Diagnostico.objects.filter(consulta_medica = consulta.id)
+                diagnosticos+=diagnostico
+                signo = SignosVitales.objects.filter(consulta_medica=consulta.id)
+                signos += signo
+                patologia = AntecedentePatologicoPersonal.objects.filter(consulta_medica = consulta.id)
+                patologias+=patologia
+
+            for atencion in atenciones:
+                signo = SignosVitales.objects.filter(atencion_enfermeria=atencion.id)
+                signos += signo
+
+            dataDiagnostico = ser.serialize("json", diagnosticos)
             context["diagnostico"] = dataDiagnostico
-            dataPatologiasPersonales = ser.serialize("json", AntecedentePatologicoPersonal.objects.all())
+            dataPatologiasPersonales = ser.serialize("json", patologias)
             context["patologiasPersonales"] = dataPatologiasPersonales
             dataPatologiasFamiliares = ser.serialize("json", AntecedentePatologicoFamiliar.objects.all())
             context["patologiasFamiliares"] = dataPatologiasFamiliares
-            dataSignosVitales = ser.serialize("json", SignosVitales.objects.all())
+            dataSignosVitales = ser.serialize("json", signos)
             context["signosVitales"] = dataSignosVitales
-            dataPermisoMedico = ser.serialize("json", PermisoMedico.objects.all())
+            dataPermisoMedico = ser.serialize("json", permisos)
             context["permisoMedico"] = dataPermisoMedico
         else:
             context["msj"]="Usuario o contraseña incorrectos"

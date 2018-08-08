@@ -26,3 +26,7 @@ div.row.empresa_anterior {
     border-radius: 5px;
     padding-top: 10px;
 }
+.titulo_regiones {
+    font-weight: bold;
+    margin-top: 5px;
+}

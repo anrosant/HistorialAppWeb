@@ -293,7 +293,7 @@ class Columna(models.Model):
     lassegue = models.CharField(max_length=300, blank=True)
     detalle_alteracion = models.CharField(max_length=300, blank=True)
 
-class Lumbar(models.Model):
+class RegionLumbar(models.Model):
     dolor_punio_percusion = models.BooleanField()
     motricidad = models.BooleanField()
     detalle_alteracion = models.CharField(max_length=300, blank=True)
@@ -317,7 +317,7 @@ class ExamenFisico(models.Model):
     signos_vitales = models.ForeignKey(SignosVitales, null=True, on_delete=models.CASCADE)
     somatico_general = models.ForeignKey(SomaticoGeneral, null=True, on_delete=models.CASCADE)
     columna = models.ForeignKey(Columna, null=True, on_delete=models.CASCADE)
-    lumbar = models.ForeignKey(Lumbar, null=True, on_delete=models.CASCADE)
+    region_lumbar = models.ForeignKey(RegionLumbar, null=True, on_delete=models.CASCADE)
     extremidades = models.ForeignKey(Extremidades, null=True, on_delete=models.CASCADE)
     regional = models.ForeignKey(Regional, null=True, on_delete=models.CASCADE)
     talla = models.FloatField()

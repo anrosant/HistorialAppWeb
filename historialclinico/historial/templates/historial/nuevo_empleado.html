@@ -21,7 +21,7 @@
                                     Subir foto <input required type="file" id="ingreso_foto" name="ingreso_foto" accept="image/jpg, image/jpeg, image/png"/>
                                 </span>
                             </span>
-                            <input type="text" class="form-control" readonly>
+                            <input class="form-control" type="text" readonly>
                         </div>
                         <div id="mensaje" hidden>
                             <h7>Formato de archivo inválido</h7>
@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Sexo</label>
-                                <select required class="form-control" id="sexo" name="sexo">
+                                <select class="form-control" id="sexo" name="sexo" required>
                                     <option value="masculino">Masculino</option>
                                     <option value="femenino">Femenino</option>
                                 </select>
@@ -54,7 +54,8 @@
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Estado civil</label>
-                                <select required class="form-control" id="estado_civil" name="estado_civil">
+                                <select class="form-control" id="estado_civil" name="estado_civil" required>
+                                    <option hidden>Escoja una opción</option>
                                     <option value="soltero">Soltero/a</option>
                                     <option value="casado">Casado/a</option>
                                     <option value="divorciado">Divorciado/a</option>
@@ -75,11 +76,12 @@
                             </div>
                             <div class="form-group col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <label>Dirección</label>
-                                <input required class="form-control" id="direccion" name="direccion" type="text">
+                                <input class="form-control" id="direccion" name="direccion" type="text">
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Instrucción</label>
-                                <select required class="form-control" id="instruccion" name="instruccion">
+                                <select class="form-control" id="instruccion" name="instruccion">
+                                    <option hidden>Escoja una opción</option>
                                     <option value="ninguna">Ninguna</option>
                                     <option value="inicial">Inicial</option>
                                     <option value="basica">Básica</option>

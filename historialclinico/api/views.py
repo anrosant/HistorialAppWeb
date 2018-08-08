@@ -211,15 +211,15 @@ class ListaColumnaView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Columna.objects.all()
     serializer_class = ColumnaSerializer
 
-class CrearLumbarView(generics.ListCreateAPIView):
-    queryset = Lumbar.objects.all()
-    serializer_class = LumbarSerializer
+class CrearRegionLumbarView(generics.ListCreateAPIView):
+    queryset = RegionLumbar.objects.all()
+    serializer_class = RegionLumbarSerializer
     def perform_create(self, serializer):
         serializer.save()
 
-class ListaLumbarView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Lumbar.objects.all()
-    serializer_class = LumbarSerializer
+class ListaRegionLumbarView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RegionLumbar.objects.all()
+    serializer_class = RegionLumbarSerializer
 
 class CrearExtremidadesView(generics.ListCreateAPIView):
     queryset = Extremidades.objects.all()

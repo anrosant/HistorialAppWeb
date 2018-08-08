@@ -105,9 +105,9 @@ class ColumnaSerializer(serializers.ModelSerializer):
         fields = ('pk', 'cifosis_acentuada', 'contractura_muscular', 'dolor', 'lordosis_acentuada', 'escoliosis', 'motricidad',
                   'lassegue', 'detalle_alteracion')
 
-class LumbarSerializer(serializers.ModelSerializer):
+class RegionLumbarSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Lumbar
+        model = RegionLumbar
         fields = ('pk', 'dolor_punio_percusion', 'motricidad', 'detalle_alteracion')
 
 class ExtremidadesSerializer(serializers.ModelSerializer):
@@ -117,11 +117,11 @@ class ExtremidadesSerializer(serializers.ModelSerializer):
 
 class LocalizacionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Lumbar
+        model = RegionLumbar
         fields = ('pk', 'columna', 'extremidades', 'lugar')
 
 class ExamenFisicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamenFisico
-        fields = ('pk', 'ficha_medica', 'signos_vitales', 'somatico_general', 'columna', 'lumbar', 'extremidades',
+        fields = ('pk', 'ficha_medica', 'signos_vitales', 'somatico_general', 'columna', 'region_lumbar', 'extremidades',
                   'regional', 'talla', 'peso', 'indice_masa_corporal')

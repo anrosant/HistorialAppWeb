@@ -65,6 +65,7 @@ def nuevaFichaMedica(request):
     nombres_vacunas = Vacuna.NOMBRES
     dosis_vacunas = Vacuna.DOSIS
     nombres_aparatos = AparatoSistema.NOMBRES
+    tipos_examenes_laboratorio = ExamenLaboratorio.EXAMENES
     context = {
         'usuario': usuario,
         'tipos': tipos_riesgos,
@@ -74,7 +75,8 @@ def nuevaFichaMedica(request):
         'lugares': lugares,
         'nombres_vacunas': nombres_vacunas,
         'dosis_vacunas': dosis_vacunas,
-        'nombres_aparatos': nombres_aparatos
+        'nombres_aparatos': nombres_aparatos,
+        'tipos_examenes_laboratorio': tipos_examenes_laboratorio
     }
     return HttpResponse(template.render(context, request))
 

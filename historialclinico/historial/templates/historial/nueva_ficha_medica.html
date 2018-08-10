@@ -766,6 +766,60 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header" id="heading_examenes_laboratorio">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#examenes_laboratorio" aria-expanded="false" aria-controls="examenes_laboratorio">
+                            Exámenes de laboratorio
+                        </button>
+                    </h5>
+                </div>
+                <div id="examenes_laboratorio" class="collapse" aria-labelledby="heading_examenes_laboratorio" data-parent="#acordeon_nueva_ficha_medica">
+                    <div class="card-body">
+                        <div class="row" id="container_examenes_laboratorio">
+                            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 container_examenes" id="container_examen_laboratorio_1"
+                            style="border: 1px solid gray; border-radius: 5px;padding-top: 10px;">
+                                <div class="row">
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6 container_tipo_examen_laboratorio">
+                                        <label>Tipo</label>
+                                        <select class="form-control" id="tipo_examen_laboratorio_1" name="tipo_examen_laboratorio_1">
+                                            <option hidden>Escoja una opción</option>
+                                            {% for key, value in tipos_examenes_laboratorio %}
+                                            <option value="{{ key }}">{{ key }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                        <label>Archivo</label>
+                                        <div class="input-group container_archivo_examen_laboratorio">
+                                            <img class="card-img-top" id="imagen_examen_1" src="#" alt="Foto examen" hidden>
+                                            <span class="input-group-btn">
+                                                <span class="btn btn-default btn-file container_ingreso_examen_laboratorio">
+                                                    Subir examen <input type="file" id="ingreso_examen_1" name="ingreso_examen_1" accept="image/jpg, image/jpeg, image/png"/>
+                                                </span>
+                                            </span>
+                                            <input class="form-control" type="text" id="ruta_examen_1" disabled readonly>
+                                        </div>
+                                        <div class="mensajes" id="mensaje_1" hidden>
+                                            <h7>Formato de archivo inválido</h7>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 container_hallazgos_examen_laboratorio">
+                                        <label>Hallazgos</label>
+                                        <textarea class="form-control" id="hallazgos_examen_laboratorio_1" name="hallazgos_examen_laboratorio_1" style="resize: none" rows="3" type="text"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end boton_eliminar_examen_laboratorio" hidden>
+                                <input type="button" class="btn btn-danger" id="boton_eliminar_examen_laboratorio_1" value="x" onclick="eliminarExamenLaboratorio(1)" />
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end" id="boton_mas_examen_laboratorio">
+                                <input type="button" class="btn btn-primary" value="+" onclick="agregarExamenLaboratorio()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>

@@ -1,4 +1,72 @@
 $(document).ready(function() {
+    var imagen_valida = false;
+    var input_id;
+
+    $(document).on('change', '.btn-file :file', function() {                            //4
+        console.log("change: " + input_id);
+        var input = $(this);
+        if(imagen_valida) {
+            $("#mensaje_" + input_id).attr("hidden", "hidden");
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        } else {
+            $("#mensaje_" + input_id).removeAttr("hidden");
+            label = "";
+        }
+        input.trigger('fileselect', [label]);
+    });
+
+    $('.btn-file :file').on('fileselect', function(event, label) {                      //5
+        console.log("fileselect: " + input_id);
+        input_id = $(this).attr("id").trim().slice(-1);
+        var input = $("#ruta_examen_" + input_id);
+        var log = "";
+        if(imagen_valida) {
+            log = label;
+        }
+        if(input.length) {
+            input.val(log);
+        }
+        input_id = null;
+        imagen_valida = false;
+    });
+
+    function readURL(input) {                                                           //2
+        console.log("read_URL: " + input_id);
+        var reader = new FileReader();
+        if (input.files && input.files[0] && foto_valida(input.files[0])) {
+            reader.onload = function (e) {
+                $("#imagen_examen_" + input_id).attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            $("#imagen_examen_" + input_id).attr('src', "#");
+        }
+    }
+
+    $("[id*='ingreso_examen_']").change(function(){                                             //1
+        input_id = $(this).attr("id").trim().slice(-1);
+        console.log(input_id);
+        readURL(this);
+    });
+
+    var tipos_archivo = [
+        'image/jpg',
+        'image/jpeg',
+        'image/png'
+    ];
+
+    function foto_valida(archivo) {                                                     //3
+        console.log("foto_valida: " + input_id);
+        for(var i = 0; i < tipos_archivo.length; i++) {
+            if(archivo.type === tipos_archivo[i]) {
+                imagen_valida = true;
+                return true;
+            }
+        }
+        imagen_valida = false;
+        return false;
+    }
+
     $("#talla").keypress(function (e) {
         return !!($.isNumeric(e.key) || e.key === "." || e.key === ",");
     });
@@ -61,21 +129,20 @@ function agregarRiesgo() {
     }
     $(containers_tipo_riesgo[0]).clone(false, true).appendTo("#container_riesgos_actuales");
     $(containers_nombre_riesgo[0]).clone(false, true).appendTo("#container_riesgos_actuales");
-    restablecerCopia("#container_riesgos_actuales");
+    restablecerCopiaRiesgoActual();
     $(botones_eliminar[0]).clone(false, true).appendTo("#container_riesgos_actuales");
     $("#boton_mas_riesgo_empresa_actual").appendTo("#container_riesgos_actuales");
     ordenarRiesgo();
 }
 
-function restablecerCopia(elemento){
-    var cont = $(elemento).children();
+function restablecerCopiaRiesgoActual(){
+    var cont = $("#container_riesgos_actuales").children();
     var select = $(cont[cont.length - 1]).children()[0];
     var opci = $(select).children();
     for(var i = 0; i < opci.length; i++) {
         var attr1 = $(opci[i]).attr("hidden");
         var attr2 = $(opci[i]).attr("disabled");
-        if((typeof attr1 !== typeof undefined || attr1 !== false) &&
-            (typeof attr2 === typeof undefined || attr2 === false)) {
+        if((typeof attr1 !== typeof undefined || attr1 !== false) && i !== 0) {
             $(opci[i]).removeAttr("hidden");
         }
     }
@@ -117,10 +184,23 @@ function agregarRiesgoAnterior(empresa) {
     }
     $(containers_tipo_riesgo[0]).clone(false, true).appendTo("#container_riesgo_anterior_" + empresa);
     $(containers_nombre_riesgo[0]).clone(false, true).appendTo("#container_riesgo_anterior_" + empresa);
-    restablecerCopia(".container_riesgos_anteriores");
+    restablecerCopiaRiesgoAnterior();
     $(botones_eliminar[0]).clone(false, true).appendTo("#container_riesgo_anterior_" + empresa);
     $("#boton_mas_riesgo_empresa_anterior_" + empresa).appendTo("#container_riesgo_anterior_" + empresa);
     ordenarRiesgoAnterior();
+}
+
+function restablecerCopiaRiesgoAnterior() {
+    var cont = $("#container_empresas_anteriores").children();
+    var select = $(cont[cont.length - 1]).children()[0];
+    var opci = $(select).children();
+    for(var i = 0; i < opci.length; i++) {
+        var attr1 = $(opci[i]).attr("hidden");
+        var attr2 = $(opci[i]).attr("disabled");
+        if((typeof attr1 !== typeof undefined || attr1 !== false) && i !== 0) {
+            $(opci[i]).removeAttr("hidden");
+        }
+    }
 }
 
 function eliminarRiesgoAnterior(empresa, riesgo) {
@@ -373,5 +453,50 @@ function calcularIMC() {
         $("#indice_masa_corporal").val(parseFloat(peso / Math.pow(talla, 2)).toFixed(2));
     } else {
         $("#indice_masa_corporal").val("");
+    }
+}
+
+function agregarExamenLaboratorio() {
+    var containers_examenes_laboratorio = $(".container_examenes");
+    var botones_eliminar = $(".boton_eliminar_examen_laboratorio");
+    if(containers_examenes_laboratorio.length === 1) {
+        $(botones_eliminar[0]).removeAttr("hidden");
+    }
+    $(containers_examenes_laboratorio[0]).clone(false, false).appendTo("#container_examenes_laboratorio");
+    $(botones_eliminar[0]).clone(false, true).appendTo("#container_examenes_laboratorio");
+    $("#boton_mas_examen_laboratorio").appendTo("#container_examenes_laboratorio");
+    ordenarExamenLaboratorio();
+}
+
+function eliminarExamenLaboratorio(numero) {
+    $("#container_examen_laboratorio_" + numero).remove();
+    $("#boton_eliminar_examen_laboratorio_" + numero).parent().remove();
+    var containers_examenes_laboratorio = $(".container_examenes");
+    var botones_eliminar = $(".boton_eliminar_examen_laboratorio");
+    if(containers_examenes_laboratorio.length === 1) {
+        $(botones_eliminar[0]).attr("hidden", "");
+    }
+    ordenarExamenLaboratorio();
+}
+
+function ordenarExamenLaboratorio() {
+    var containers_examenes_laboratorio = $(".container_examenes");
+    var containers_tipo_examen_laboratorio = $(".container_tipo_examen_laboratorio");
+    var containers_archivo_examen_laboratorio = $(".container_archivo_examen_laboratorio");
+    var containers_ingreso_examen_laboratorio = $(".container_ingreso_examen_laboratorio");
+    var containers_hallazgos_examen_laboratorio = $(".container_hallazgos_examen_laboratorio");
+    var botones_eliminar = $(".boton_eliminar_examen_laboratorio");
+    for(var i = 0; i < containers_examenes_laboratorio.length; i++) {
+        $($(containers_examenes_laboratorio[i])).attr('id', 'container_examen_laboratorio_' + (i + 1));
+        $($(containers_tipo_examen_laboratorio[i]).children()[1]).attr('id', 'tipo_examen_laboratorio_' + (i + 1));
+        $($(containers_tipo_examen_laboratorio[i]).children()[1]).attr('name', 'tipo_examen_laboratorio_' + (i + 1));
+        $($(containers_archivo_examen_laboratorio[i]).children()[0]).attr('id', 'imagen_examen_' + (i + 1));
+        $($(containers_archivo_examen_laboratorio[i]).children()[2]).attr('id', 'ruta_examen_' + (i + 1));
+        $($(containers_ingreso_examen_laboratorio[i]).children()[0]).attr('id', 'ingreso_examen_' + (i + 1));
+        $($(containers_ingreso_examen_laboratorio[i]).children()[0]).attr('name', 'ingreso_examen_' + (i + 1));
+        $($(containers_hallazgos_examen_laboratorio[i]).children()[1]).attr('id', 'hallazgos_examen_laboratorio_' + (i + 1));
+        $($(containers_hallazgos_examen_laboratorio[i]).children()[1]).attr('name', 'hallazgos_examen_laboratorio_' + (i + 1));
+        $($(botones_eliminar[i]).children()[0]).attr('onclick', 'eliminarExamenLaboratorio(' + (i + 1) + ')');
+        $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_examen_laboratorio_' + (i + 1));
     }
 }

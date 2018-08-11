@@ -327,6 +327,7 @@ def ingresoUsuario(request):
             signos = SignosVitales.objects.none()
             patologias = AntecedentePatologicoPersonal.objects.none()
             permisos = PermisoMedico.objects.none()
+            examenes = ExamenConsulta.objects.none()
             for consulta in consultas:
                 diagnostico = Diagnostico.objects.filter(consulta_medica = consulta.id)
                 diagnosticos= diagnosticos | diagnostico
@@ -336,6 +337,8 @@ def ingresoUsuario(request):
                 patologias = patologias | patologia
                 permiso = PermisoMedico.objects.filter(consulta_medica = consulta.id)
                 permisos = permisos | permiso
+                examen = ExamenConsulta.objects.filter(consulta_medica = consulta.id)
+                examenes = examenes | examen
 
             for atencion in atenciones:
                 signo = SignosVitales.objects.filter(atencion_enfermeria=atencion.id)
@@ -351,6 +354,8 @@ def ingresoUsuario(request):
             context["signosVitales"] = dataSignosVitales
             dataPermisoMedico = ser.serialize("json", permisos)
             context["permisoMedico"] = dataPermisoMedico
+            dataExamenes = ser.serialize("json", examenes)
+            context["examenesConsulta"]=dataExamenes
         else:
             context["msj"]="Usuario o contraseña incorrectos"
     else:

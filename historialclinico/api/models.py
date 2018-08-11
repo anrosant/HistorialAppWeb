@@ -73,20 +73,22 @@ class Enfermedad(models.Model):
     nombre = models.CharField(max_length=100)
     grupo = models.CharField(max_length=100)
 
-class Diagnostico(models.Model):
-    enfermedad = models.ForeignKey(Enfermedad, on_delete=models.CASCADE)
-    consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE)
-    tipoEnfermedad = models.CharField(max_length=100)
-
 class PermisoMedico(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    diagnostico = models.ForeignKey(Diagnostico, on_delete=models.CASCADE)
     consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE, null=True)
     doctor = models.CharField(max_length=100, blank = True)
     fecha_inicio = models.DateField(default=timezone.now())
     fecha_fin = models.DateField(default=timezone.now())
     dias_permiso = models.IntegerField()
     observaciones_permiso = models.CharField(max_length=100, blank = True)
+
+class Diagnostico(models.Model):
+    enfermedad = models.ForeignKey(Enfermedad, blank=True, null=True, on_delete=models.CASCADE)
+    consulta_medica = models.ForeignKey(ConsultaMedica, blank=True, null=True, on_delete=models.CASCADE)
+    tipo_enfermedad = models.CharField(max_length=100)
+    permiso_medico = models.ForeignKey(PermisoMedico, blank=True, null=True, on_delete=models.CASCADE)
+
+
 
 class Inmunizacion(models.Model):
     observacion = models.CharField(max_length=300)

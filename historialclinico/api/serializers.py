@@ -70,16 +70,15 @@ class EnfermedadSerializer(serializers.ModelSerializer):
         model = Enfermedad
         fields = ( 'pk','codigo', 'nombre', 'grupo')
 
-class DiagnosticoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Diagnostico
-        fields = ('pk', 'enfermedad', 'consulta_medica', 'tipoEnfermedad')
-
 class PermisoMedicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = PermisoMedico
-        fields = ('pk', 'empleado', 'diagnostico', 'consulta_medica', 'doctor', 'fecha_inicio', 'fecha_fin', 'dias_permiso',
-                  'observaciones_permiso')
+        fields = ('pk', 'empleado', 'consulta_medica', 'doctor', 'fecha_inicio', 'fecha_fin', 'dias_permiso', 'observaciones_permiso')
+
+class DiagnosticoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Diagnostico
+        fields = ('pk', 'enfermedad', 'consulta_medica', 'tipo_enfermedad', 'permiso_medico')
 
 class InmunizacionSerializer(serializers.ModelSerializer):
     class Meta:

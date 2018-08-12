@@ -306,20 +306,25 @@ def ingresoUsuario(request):
             context["usuarioId"] = usuario.id
             context["empleadoId"] = usuario.profile.empleado.id
             context["msj"] = "Ingreso exitoso"
-            dataEmpleado = ser.serialize("json", Empleado.objects.all())
+            empleados = Empleado.objects.all()
+            dataEmpleado = ser.serialize("json", empleados)
             context["empleado"] = dataEmpleado
             dataEnfermedad = ser.serialize("json", Enfermedad.objects.all())
             context["enfermedad"] = dataEnfermedad
+            consultas = ConsultaMedica.objects.none()
+            atenciones = AtencionEnfermeria.objects.none()
 
-            consultas = ConsultaMedica.objects.all()
-            if(len(consultas)>=3):
-                consultas=consultas[len(consultas)-3:]
+            #Por cada empleado, selecciona 3 consultas y atenciones
+            for empleado in empleados:
+                consulta = ConsultaMedica.objects.filter(empleado = empleado.id)
+                atencion = AtencionEnfermeria.objects.filter(empleado = empleado.id)
+
+                consultas = consultas | consulta
+                atenciones = atenciones | atencion
+
             dataConsultaMedica = ser.serialize("json", consultas)
             context["consultaMedica"] = dataConsultaMedica
 
-            atenciones = AtencionEnfermeria.objects.all()
-            if (len(atenciones) >= 3):
-                atenciones = atenciones[len(atenciones)-3:]
             dataAtencionEnfermeria = ser.serialize("json", atenciones)
             context["atencionEnfermeria"] = dataAtencionEnfermeria
 

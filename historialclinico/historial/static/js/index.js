@@ -25,4 +25,10 @@ $(document).ready( function () {
             }
         }
     });
+
+    $('#tabla_empleados tbody').on('click', 'tr', function() {
+        //console.log($('#tabla_empleados').DataTable().row(this).id(false));
+        $("input#id_empleado").val($('#tabla_empleados').DataTable().row(this).id(false));
+        $("#formulario").submit();
+    });
 } );

@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 
 class Empleado(models.Model):
     foto = models.ImageField()
-    cedula = models.CharField(max_length=12)
+    cedula = models.CharField(max_length=10)
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     edad = models.IntegerField()
@@ -14,10 +14,10 @@ class Empleado(models.Model):
     estadoCivil = models.CharField(max_length=20)
     lugarNacimiento = models.CharField(max_length=30)
     fechaNacimiento = models.DateField()
-    direccion = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=80)
     correo = models.EmailField(blank=True, max_length=30)
-    instruccion = models.CharField(max_length=30)
-    profesion = models.CharField(max_length=50)
+    instruccion = models.CharField(blank=True, max_length=50)
+    profesion = models.CharField(blank=True, max_length=50)
     ocupacion = models.CharField(max_length=50)
     fechaRegistro = models.DateField(default=timezone.now())
     ficha_actual = models.IntegerField(default = 0)
@@ -63,30 +63,15 @@ class SignosVitales(models.Model):
     consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
     atencion_enfermeria = models.ForeignKey(AtencionEnfermeria, null=True, on_delete=models.CASCADE)
     fecha = models.DateField(default=timezone.now())
-    presion_sistolica = models.IntegerField()
-    presion_distolica = models.IntegerField()
-    pulso = models.IntegerField()
-    temperatura = models.FloatField()
+    presion_sistolica = models.IntegerField(blank=True)
+    presion_distolica = models.IntegerField(blank=True)
+    pulso = models.IntegerField(blank=True)
+    temperatura = models.FloatField(blank=True)
 
 class Enfermedad(models.Model):
     codigo = models.CharField(max_length=10)
     nombre = models.CharField(max_length=100)
     grupo = models.CharField(max_length=100)
-
-class Diagnostico(models.Model):
-    enfermedad = models.ForeignKey(Enfermedad, on_delete=models.CASCADE)
-    consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE)
-    tipoEnfermedad = models.CharField(max_length=100)
-
-class PermisoMedico(models.Model):
-    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    diagnostico = models.ForeignKey(Diagnostico, on_delete=models.CASCADE)
-    consulta_medica = models.ForeignKey(ConsultaMedica, on_delete=models.CASCADE, null=True)
-    doctor = models.CharField(max_length=100, blank = True)
-    fecha_inicio = models.DateField(default=timezone.now())
-    fecha_fin = models.DateField(default=timezone.now())
-    dias_permiso = models.IntegerField()
-    observaciones_permiso = models.CharField(max_length=100, blank = True)
 
 class Inmunizacion(models.Model):
     observacion = models.CharField(max_length=300)
@@ -105,8 +90,8 @@ class Vacuna(models.Model):
         ('Refuerzo', 'Refuerzo')
     )
     inmunizacion = models.ForeignKey(Inmunizacion, null=False, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=30, choices=NOMBRES, default='Tétanos')
-    dosis = models.CharField(max_length=15, choices=DOSIS, default='Primera')
+    nombre = models.CharField(max_length=30, choices=NOMBRES, default='Tétanos', blank=True)
+    dosis = models.CharField(max_length=15, choices=DOSIS, default='Primera', blank=True)
     fecha = models.DateField(default=timezone.now())
 
 class FichaMedica(models.Model):
@@ -121,6 +106,24 @@ class FichaMedica(models.Model):
     fecha = models.DateField()
     ciudad = models.CharField(max_length=50)
     tipo = models.CharField(max_length=15, choices=TIPOS, default='Periódico')
+    prescripcion = models.CharField(max_length=300, blank=True)
+
+class Diagnostico(models.Model):
+    enfermedad = models.ForeignKey(Enfermedad, on_delete=models.CASCADE)
+    consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
+    ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
+    tipoEnfermedad = models.CharField(max_length=100)
+
+class PermisoMedico(models.Model):
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    diagnostico = models.ForeignKey(Diagnostico, on_delete=models.CASCADE)
+    consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
+    fecha_registro = models.DateField(default=timezone.now())
+    doctor = models.CharField(max_length=100, blank = True)
+    fecha_inicio = models.DateField(default=timezone.now())
+    fecha_fin = models.DateField(default=timezone.now())
+    dias_permiso = models.IntegerField()
+    observaciones_permiso = models.CharField(max_length=100, blank = True)
 
 class AparatoSistema(models.Model):
     NOMBRES = (
@@ -171,8 +174,46 @@ class AntecedentePatologicoPersonal(models.Model):
     lugar = models.CharField(max_length=100, choices=LUGARES, default="Ojos")
     detalle = models.CharField(max_length=300)
 
+class AntecedenteGinecoObstetrico(models.Model):
+    ficha = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
+    fecha_ultima_menstruacion = models.DateField()
+    planificacion_familiar = models.CharField(max_length=300)
+
+class Antecedente(models.Model):
+    ANTECEDENTES = (
+        ('Gesto', 'Gesto'),
+        ('Parto', 'Parto'),
+        ('Aborto', 'Aborto'),
+        ('Cesárea', 'Cesárea')
+    )
+    antecedete_gineco_obstetrico = models.ForeignKey(AntecedenteGinecoObstetrico, on_delete=models.CASCADE)
+    antecedente = models.CharField(max_length=100, choices=ANTECEDENTES, default="Gesto")
+
+class Habito(models.Model):
+    ALCOHOL = (
+        ('De 2 a 12 veces al año', 'De 2 a 12 veces al año'),
+        ('Una vez al año', 'Una vez al año'),
+        ('De 5 a 7 días a la semana', 'De 5 a 7 días a la semana'),
+        ('De 2 a 4 veces a la semana', 'De 2 a 4 veces a la semana'),
+        ('De 2 a 7 veces a la semana', 'De 2 a 7 veces a la semana'),
+        ('Al menos una vez a la semana', 'Al menos una vez a la semana'),
+        ('No consume', 'No consume')
+    )
+    TABACO = (
+        ('1 o 2 veces al año', '1 o 2 veces al año'),
+        ('3 veces al mes', '3 veces al mes'),
+        ('4 veces a la semana', '4 veces a la semana'),
+        ('A diario o casi a diario', 'A diario o casi a diario'),
+        ('Ex-fumador', 'Ex-fumador'),
+        ('No fuma', 'No fuma')
+    )
+    ficha = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
+    alcohol = models.CharField(max_length=100, choices=ALCOHOL, default="No consume")
+    tabaco = models.CharField(max_length=100, choices=TABACO, default="No fuma")
+    cantidad_tabaco = models.IntegerField(default = 0)
+
 class AntecedentePatologicoFamiliar(models.Model):
-    ficha = models.ForeignKey(FichaMedica, null=False, on_delete=models.CASCADE)
+    ficha = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
     parentesco = models.CharField(max_length=100)
     patologia = models.CharField(max_length=50)
     detalle = models.CharField(max_length=100)
@@ -182,12 +223,14 @@ class Empresa(models.Model):
     cargo = models.CharField(max_length=100)
     actividad = models.CharField(max_length=100)
     epps = models.CharField(max_length=100)
+    area_trabajo = models.CharField(max_length=100)
 
 class AntecedenteLaboral(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
-    empresa = models.ForeignKey(Empresa, null=False, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     tiempo = models.CharField(max_length=50)
-    edad_inicio = models.CharField(max_length=2)
+    edad_inicio = models.CharField(max_length=20)
+    actividades_extralaborales = models.CharField(max_length=300)
     actual = models.BooleanField(default=False)
 
 class FactorRiesgo(models.Model):
@@ -259,7 +302,7 @@ class FactorRiesgo(models.Model):
              )
         )
     )
-    empresa = models.ForeignKey(Empresa, null=False, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=50, choices=TIPOS)
     nombre = models.CharField(max_length=50, choices=NOMBRES)
 
@@ -276,7 +319,7 @@ class ExamenLaboratorio(models.Model):
         ('Oftalmología', 'Oftalmología'),
         ('Espirometría', 'Espirometría')
     )
-    ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
+    ficha_medica = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=50, choices=EXAMENES, default='Laboratorio')
     descripcion = models.CharField(max_length=500, blank = True)
     imagen = models.ImageField()
@@ -324,7 +367,7 @@ class Localizacion(models.Model):
     lugar = models.CharField(max_length=20, blank=True)
 
 class ExamenFisico(models.Model):
-    ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
+    ficha_medica = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
     signos_vitales = models.ForeignKey(SignosVitales, null=True, on_delete=models.CASCADE)
     somatico_general = models.ForeignKey(SomaticoGeneral, null=True, on_delete=models.CASCADE)
     columna = models.ForeignKey(Columna, null=True, on_delete=models.CASCADE)
@@ -334,3 +377,10 @@ class ExamenFisico(models.Model):
     talla = models.FloatField()
     peso = models.FloatField()
     indice_masa_corporal = models.FloatField()
+    examen_neurologico_elemental = models.CharField(max_length=300, blank=True)
+
+class Vulnerabilidad(models.Model):
+    ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
+    persona_vulnerable = models.BooleanField(default=False)
+    persona_discapacidad = models.BooleanField(default=False)
+    descripcion = models.CharField(max_length=300, blank=True)

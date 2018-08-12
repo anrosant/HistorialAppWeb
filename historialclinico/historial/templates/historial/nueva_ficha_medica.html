@@ -6,7 +6,7 @@
 {% endblock %}
 {% block contenido %}
 <div id="titulo_contenido">
-    <h4>Nueva Ficha Médica</h4>
+    <h4>Nueva Ficha Médica {{ id_empleado }}</h4>
 </div>
 <div class="accordion" id="acordeon_nueva_ficha_medica">
     <form action="#" method="post">{% csrf_token %}
@@ -60,56 +60,25 @@
                             <label>Nombre de la empresa</label>
                             <input class="form-control" id="nombre_empresa_actual" name="nombre_empresa_actual" type="text" required>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group col-xl-2 col-lg-2 col-md-2 col-sm-2">
                             <label>Edad de inicio</label>
                             <input class="form-control" id="edad_inicio" name="edad_inicio" min="18" max="80" type="number" required>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                            <label>Área de trabajo</label>
+                            <input class="form-control" id="area_trabajo" name="area_trabajo" type="text">
+                        </div>
+                        <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                             <label>Cargo</label>
                             <input class="form-control" id="cargo_actual" name="cargo_actual" type="text" required>
                         </div>
                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label>Actividad</label>
-                            <textarea class="form-control" id="actividad" name="actividad" style="resize: none" rows="2" type="text" required></textarea>
+                            <label>Riesgos</label>
+                            <textarea class="form-control" id="riesgos" name="riesgos" style="resize: none" rows="2" type="text"></textarea>
                         </div>
                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             <label>EPPS</label>
-                            <textarea class="form-control" id="epps" name="epps" style="resize: none" rows="2" type="text" required></textarea>
-                        </div>
-                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                            <h6>Riesgos</h6>
-                            <div class="row" id="container_riesgos_actuales">
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
-                                    <label>Tipo</label>
-                                </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
-                                    <label>Nombre</label>
-                                </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_tipo_riesgo_actual">
-                                    <select class="form-control" id="tipo_riesgo_actual_1" name="tipo_riesgo_actual_1" onchange="escogerTipo('actual', 0, 1)" required>
-                                        <option hidden>Escoja una opción</option>
-                                        {% for key, value in tipos %}
-                                            <option value="{{ key }}">{{ key }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_nombre_riesgo_actual">
-                                    <select class="form-control" id="nombre_riesgo_actual_1" name="nombre_riesgo_actual_1" required>
-                                        <option hidden>Escoja una opción</option>
-                                        {% for key, value in nombres %}
-                                            {% for key2, value2 in value %}
-                                                <option class="{{ key }}" value="{{ key2 }}">{{ key2 }}</option>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_riesgo_empresa_actual" hidden>
-                                    <input type="button" class="btn btn-danger" id="boton_eliminar_riesgo_actual_1" value="x" onclick="eliminarRiesgo(1)" />
-                                </div>
-                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_riesgo_empresa_actual">
-                                    <input type="button" class="btn btn-primary" value="+" onclick="agregarRiesgo()" />
-                                </div>
-                            </div>
+                            <textarea class="form-control" id="epps" name="epps" style="resize: none" rows="2" type="text"></textarea>
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="titulo_empresas_anteriores">
                             <h5>Empresas anteriores</h5>
@@ -124,12 +93,12 @@
                                             <input class="form-control" id="nombre_empresa_anterior_1" name="nombre_empresa_anterior_1" type="text" required>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3 container_tiempo_empresa_anterior">
-                                            <label>Edad de inicio</label>
-                                            <input class="form-control" id="tiempo_empresa_anterior_1" name="tiempo_empresa_anterior_1" type="number" required>
+                                            <label>Tiempo</label>
+                                            <input class="form-control" id="tiempo_empresa_anterior_1" name="tiempo_empresa_anterior_1" type="text" required>
                                         </div>
                                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4 container_cargo_empresa_anterior">
                                             <label>Cargo</label>
-                                            <input class="form-control" id="cargo_empresa_anterior_1" name="cargo_empresa_anterior_1" type="text" required>
+                                            <input class="form-control" id="cargo_empresa_anterior_1" name="cargo_empresa_anterior_1" type="text">
                                         </div>
                                         <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <h6>Riesgos</h6>
@@ -141,7 +110,7 @@
                                                     <label>Nombre</label>
                                                 </div>
                                                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_tipo_riesgo_anterior_1">
-                                                    <select class="form-control" id="tipo_riesgo_anterior_1_1" name="tipo_riesgo_anterior_1_1" onchange="escogerTipo('anterior', 1, 1)" required>
+                                                    <select class="form-control" id="tipo_riesgo_anterior_1_1" name="tipo_riesgo_anterior_1_1" onchange="escogerTipo('anterior', 1, 1)">
                                                         <option hidden>Escoja una opción</option>
                                                         {% for key, value in tipos %}
                                                         <option value="{{ key }}">{{ key }}</option>
@@ -149,7 +118,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 container_nombre_riesgo_anterior_1">
-                                                    <select class="form-control" id="nombre_riesgo_anterior_1_1" name="nombre_riesgo_anterior_1_1" required>
+                                                    <select class="form-control" id="nombre_riesgo_anterior_1_1" name="nombre_riesgo_anterior_1_1">
                                                         <option hidden>Escoja una opción</option>
                                                         {% for key, value in nombres %}
                                                         {% for key2, value2 in value %}
@@ -176,6 +145,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <label>Actividades extralaborales</label>
+                            <textarea class="form-control" id="actividades_extralaborales" name="actividades_extralaborales" style="resize: none" rows="3" type="text"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,7 +171,7 @@
                             <label>Detalle</label>
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 container_nombre_patologia_personal">
-                            <select class="form-control" id="nombre_patologia_personal_1" name="nombre_patologia_personal_1" required>
+                            <select class="form-control" id="nombre_patologia_personal_1" name="nombre_patologia_personal_1">
                                 <option hidden>Escoja una opción</option>
                                 {% for key, value in lugares %}
                                 <option value="{{ key }}">{{ key }}</option>
@@ -206,13 +179,88 @@
                             </select>
                         </div>
                         <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 container_detalle_patologia_personal">
-                            <textarea class="form-control" id="detalle_patologia_personal_1" name="detalle_patologia_personal_1" style="resize: none" rows="1" type="text" required></textarea>
+                            <textarea class="form-control" id="detalle_patologia_personal_1" name="detalle_patologia_personal_1" style="resize: none" rows="1" type="text"></textarea>
                         </div>
                         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_patologia_personal" hidden>
                             <input type="button" class="btn btn-danger" id="boton_eliminar_patologia_personal_1" value="x" onclick="eliminarPatologia('personal', 1)" />
                         </div>
                         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_patologia_personal">
                             <input type="button" class="btn btn-primary" value="+" onclick="agregarPatologia('personal')" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="heading_antecedentes_gineco-obstetricos">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#antecedentes_gineco-obstetricos" aria-expanded="false" aria-controls="antecedentes_gineco-obstetricos">
+                        Antecedentes gineco-obstétricos
+                    </button>
+                </h5>
+            </div>
+            <div id="antecedentes_gineco-obstetricos" class="collapse" aria-labelledby="heading_antecedentes_gineco-obstetricos" data-parent="#acordeon_nueva_ficha_medica">
+                <div class="card-body">
+                    <div class="row" id="container_antecedentes_gineco-obstetricos">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label>Antecedentes</label>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label>Fecha de última menstruación</label>
+                        </div>
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            {% for key2, value in antecedentes %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="{{ key2 }}" name="antecedente_gineco-obstetrico" type="checkbox" value="{{ key2 }}">
+                                <label class="form-check-label" for="{{ key2 }}">{{ key2 }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <input class="form-control" id="fecha_ultima_menstruacion" name="fecha_ultima_menstruacion" type="date">
+                        </div>
+                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <label>Planificación familiar</label>
+                            <textarea class="form-control" id="planificacion_familiar" name="planificacion_familiar" style="resize: none" rows="3" type="text"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="heading_habitos">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#habitos" aria-expanded="false" aria-controls="habitos">
+                        Hábitos
+                    </button>
+                </h5>
+            </div>
+            <div id="habitos" class="collapse" aria-labelledby="heading_habitos" data-parent="#acordeon_nueva_ficha_medica">
+                <div class="card-body">
+                    <div class="row" id="container_habitos">
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="titulo_regiones">Alcohol</label>
+                            {% for key, value in alcohol %}
+                            <div class="form-check">
+                                <input class="form-check-input" id="{{ key }}" name="alcohol" type="radio">
+                                <label class="form-check-label" for="{{ key }}">{{ key }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="titulo_regiones">Tabaco</label>
+                            {% for key1, value in tabaco %}
+                            <div class="form-check">
+                                <input class="form-check-input" id="{{ key1 }}" name="tabaco" type="radio">
+                                <label class="form-check-label" for="{{ key1 }}">{{ key1 }}</label>
+                            </div>
+                            {% endfor %}
+                            <div class="row">
+                                <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6" id="container_tabaco">
+                                    <label>Cantidad</label>
+                                    <input class="form-control" id="cantidad_tabaco" name="cantidad_tabaco" type="number">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -239,13 +287,13 @@
                             <label>Detalle</label>
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 container_parentesco_patologia_familiar">
-                            <input class="form-control" id="parentesco_patologia_familiar_1" name="parentesco_patologia_familiar_1" type="text" required>
+                            <input class="form-control" id="parentesco_patologia_familiar_1" name="parentesco_patologia_familiar_1" type="text">
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 container_nombre_patologia_familiar">
-                            <input class="form-control" id="nombre_patologia_familiar_1" name="nombre_patologia_familiar_1" type="text" required>
+                            <input class="form-control" id="nombre_patologia_familiar_1" name="nombre_patologia_familiar_1" type="text">
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 container_detalle_patologia_familiar">
-                            <textarea class="form-control" id="detalle_patologia_familiar_1" name="detalle_patologia_familiar_1" style="resize: none" rows="1" type="text" required></textarea>
+                            <textarea class="form-control" id="detalle_patologia_familiar_1" name="detalle_patologia_familiar_1" style="resize: none" rows="1" type="text"></textarea>
                         </div>
                         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_patologia_familiar" hidden>
                             <input type="button" class="btn btn-danger" id="boton_eliminar_patologia_familiar_1" value="x" onclick="eliminarPatologia('familiar', 1)" />
@@ -410,7 +458,7 @@
                                 </select>
                             </div>
                             <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 container_detalle_aparato_sistema">
-                                <input class="form-control" id="detalle_aparato_sistema_1" name="detalle_aparato_sistema_1" type="text" required>
+                                <input class="form-control" id="detalle_aparato_sistema_1" name="detalle_aparato_sistema_1" type="text">
                             </div>
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_aparato_sistema" hidden>
                                 <input type="button" class="btn btn-danger" id="boton_eliminar_aparato_sistema_1" value="x" onclick="eliminarAparato(1)" />
@@ -439,11 +487,11 @@
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Presión arterial</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="presion_sistolica" name="presion_sistolica" type="number" required>
+                                    <input class="form-control" id="presion_sistolica" name="presion_sistolica" type="number">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">/</div>
                                     </div>
-                                    <input class="form-control" id="presion_distolica" name="presion_distolica" type="number" required>
+                                    <input class="form-control" id="presion_distolica" name="presion_distolica" type="number">
                                     <div class="input-group-append">
                                         <div class="input-group-text">mmHg</div>
                                     </div>
@@ -452,7 +500,7 @@
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Frecuencia cardiaca</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="frecuencia_cardiaca" name="frecuencia_cardiaca" type="number" required>
+                                    <input class="form-control" id="frecuencia_cardiaca" name="frecuencia_cardiaca" type="number">
                                     <div class="input-group-append">
                                         <div class="input-group-text">x'</div>
                                     </div>
@@ -461,7 +509,7 @@
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Frecuencia respiratoria</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="frecuencia_respiratoria" name="frecuencia_respiratoria" type="number" required>
+                                    <input class="form-control" id="frecuencia_respiratoria" name="frecuencia_respiratoria" type="number">
                                     <div class="input-group-append">
                                         <div class="input-group-text">X'</div>
                                     </div>
@@ -470,7 +518,7 @@
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Talla</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="talla" name="talla" type="number" onchange="calcularIMC()" required>
+                                    <input class="form-control" id="talla" name="talla" type="number" onchange="calcularIMC()">
                                     <div class="input-group-append">
                                         <div class="input-group-text">cm</div>
                                     </div>
@@ -479,7 +527,7 @@
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Peso</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="peso" name="peso" type="number" onchange="calcularIMC()" required>
+                                    <input class="form-control" id="peso" name="peso" type="number" onchange="calcularIMC()">
                                     <div class="input-group-append">
                                         <div class="input-group-text">kg</div>
                                     </div>
@@ -488,7 +536,7 @@
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Temperatura</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="temperatura" name="temperatura" type="number" required>
+                                    <input class="form-control" id="temperatura" name="temperatura" type="number">
                                     <div class="input-group-append">
                                         <div class="input-group-text">°C</div>
                                     </div>
@@ -496,7 +544,7 @@
                             </div>
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Índice de masa corporal</label>
-                                <input class="form-control" id="indice_masa_corporal" name="indice_masa_corporal" type="number" disabled required>
+                                <input class="form-control" id="indice_masa_corporal" name="indice_masa_corporal" type="number" disabled>
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="titulo_somatico_general">
                                 <h5>Somático general</h5>
@@ -581,79 +629,79 @@
                             </div>
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Cifosis (acentuada)</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="cifosis_acentuada_si" name="cifosis_acentuada" type="radio">
-                                    <label class="custom-control-label" for="cifosis_acentuada_si">Sí</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="cifosis_acentuada_si" name="cifosis_acentuada" type="radio">
+                                    <label class="form-check-label" for="cifosis_acentuada_si">Sí</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="cifosis_acentuada_no" name="cifosis_acentuada" type="radio">
-                                    <label class="custom-control-label" for="cifosis_acentuada_no">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="cifosis_acentuada_no" name="cifosis_acentuada" type="radio">
+                                    <label class="form-check-label" for="cifosis_acentuada_no">No</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Escoliosis</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="escoliosis_si" name="escoliosis" type="radio">
-                                    <label class="custom-control-label" for="escoliosis_si">Sí</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="escoliosis_si" name="escoliosis" type="radio">
+                                    <label class="form-check-label" for="escoliosis_si">Sí</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="escoliosis_no" name="escoliosis" type="radio">
-                                    <label class="custom-control-label" for="escoliosis_no">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="escoliosis_no" name="escoliosis" type="radio">
+                                    <label class="form-check-label" for="escoliosis_no">No</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Dolor</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="dolor_columna_si" name="dolor_columna" type="radio">
-                                    <label class="custom-control-label" for="dolor_columna_si">Sí</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="dolor_columna_si" name="dolor_columna" type="radio">
+                                    <label class="form-check-label" for="dolor_columna_si">Sí</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="dolor_columna_no" name="dolor_columna" type="radio">
-                                    <label class="custom-control-label" for="dolor_columna_no">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="dolor_columna_no" name="dolor_columna" type="radio">
+                                    <label class="form-check-label" for="dolor_columna_no">No</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Lordosis (acentuada)</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="lordosis_acentuada_si" name="lordosis_acentuada" type="radio">
-                                    <label class="custom-control-label" for="lordosis_acentuada_si">Sí</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="lordosis_acentuada_si" name="lordosis_acentuada" type="radio">
+                                    <label class="form-check-label" for="lordosis_acentuada_si">Sí</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="lordosis_acentuada_no" name="lordosis_acentuada" type="radio">
-                                    <label class="custom-control-label" for="lordosis_acentuada_no">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="lordosis_acentuada_no" name="lordosis_acentuada" type="radio">
+                                    <label class="form-check-label" for="lordosis_acentuada_no">No</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Contractura muscular</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="contractura_muscular_si" name="contractura_muscular" type="radio">
-                                    <label class="custom-control-label" for="contractura_muscular_si">Sí</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="contractura_muscular_si" name="contractura_muscular" type="radio">
+                                    <label class="form-check-label" for="contractura_muscular_si">Sí</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="contractura_muscular_no" name="contractura_muscular" type="radio">
-                                    <label class="custom-control-label" for="contractura_muscular_no">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="contractura_muscular_no" name="contractura_muscular" type="radio">
+                                    <label class="form-check-label" for="contractura_muscular_no">No</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Motricidad</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="motricidad_columna_normal" name="motricidad_columna" type="radio">
-                                    <label class="custom-control-label" for="motricidad_columna_normal">Normal</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="motricidad_columna_normal" name="motricidad_columna" type="radio">
+                                    <label class="form-check-label" for="motricidad_columna_normal">Normal</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="motricidad_columna_alterada" name="motricidad_columna" type="radio">
-                                    <label class="custom-control-label" for="motricidad_columna_alterada">Alterada</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="motricidad_columna_alterada" name="motricidad_columna" type="radio">
+                                    <label class="form-check-label" for="motricidad_columna_alterada">Alterada</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Lassegue</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="lassegue_izquierda" name="lassegue" type="checkbox">
-                                    <label class="custom-control-label" for="lassegue_izquierda">Izquierda</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="lassegue_izquierda" name="lassegue" type="checkbox">
+                                    <label class="form-check-label" for="lassegue_izquierda">Izquierda</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="lassegue_derecha" name="lassegue" type="checkbox">
-                                    <label class="custom-control-label" for="lassegue_derecha">Derecha</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="lassegue_derecha" name="lassegue" type="checkbox">
+                                    <label class="form-check-label" for="lassegue_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -665,24 +713,24 @@
                             </div>
                             <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                 <label>Dolor puño percusión</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="dolor_punio_percusion_si" name="dolor_punio_percusion" type="checkbox">
-                                    <label class="custom-control-label" for="dolor_punio_percusion_si">Sí</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="dolor_punio_percusion_si" name="dolor_punio_percusion" type="checkbox">
+                                    <label class="form-check-label" for="dolor_punio_percusion_si">Sí</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="dolor_punio_percusion_no" name="dolor_punio_percusion" type="checkbox">
-                                    <label class="custom-control-label" for="dolor_punio_percusion_no">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="dolor_punio_percusion_no" name="dolor_punio_percusion" type="checkbox">
+                                    <label class="form-check-label" for="dolor_punio_percusion_no">No</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                 <label>Motricidad</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="motricidad_lumbar_normal" name="motricidad_lumbar" type="radio">
-                                    <label class="custom-control-label" for="motricidad_lumbar_normal">Normal</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="motricidad_lumbar_normal" name="motricidad_lumbar" type="radio">
+                                    <label class="form-check-label" for="motricidad_lumbar_normal">Normal</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="motricidad_lumbar_alterada" name="motricidad_lumbar" type="radio">
-                                    <label class="custom-control-label" for="motricidad_lumbar_alterada">Alterada</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="motricidad_lumbar_alterada" name="motricidad_lumbar" type="radio">
+                                    <label class="form-check-label" for="motricidad_lumbar_alterada">Alterada</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -694,73 +742,80 @@
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Phalen</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="phalen_izquierda" name="phalen" type="checkbox">
-                                    <label class="custom-control-label" for="phalen_izquierda">Izquierda</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="phalen_izquierda" name="phalen" type="checkbox">
+                                    <label class="form-check-label" for="phalen_izquierda">Izquierda</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="phalen_derecha" name="phalen" type="checkbox">
-                                    <label class="custom-control-label" for="phalen_derecha">Derecha</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="phalen_derecha" name="phalen" type="checkbox">
+                                    <label class="form-check-label" for="phalen_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Tilen</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="tilen_izquierda" name="tilen" type="checkbox">
-                                    <label class="custom-control-label" for="tilen_izquierda">Izquierda</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="tilen_izquierda" name="tilen" type="checkbox">
+                                    <label class="form-check-label" for="tilen_izquierda">Izquierda</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="tilen_derecha" name="tilen" type="checkbox">
-                                    <label class="custom-control-label" for="tilen_derecha">Derecha</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="tilen_derecha" name="tilen" type="checkbox">
+                                    <label class="form-check-label" for="tilen_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Dolor</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="dolor_extremidades_si" name="dolor_extremidades" type="radio">
-                                    <label class="custom-control-label" for="dolor_extremidades_si">Sí</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="dolor_extremidades_si" name="dolor_extremidades" type="radio">
+                                    <label class="form-check-label" for="dolor_extremidades_si">Sí</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="dolor_extremidades_no" name="dolor_extremidades" type="radio">
-                                    <label class="custom-control-label" for="dolor_extremidades_no">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="dolor_extremidades_no" name="dolor_extremidades" type="radio">
+                                    <label class="form-check-label" for="dolor_extremidades_no">No</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Signo cajón rodilla</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="signo_cajon_izquierda" name="signo_cajon" type="checkbox">
-                                    <label class="custom-control-label" for="signo_cajon_izquierda">Izquierda</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="signo_cajon_izquierda" name="signo_cajon" type="checkbox">
+                                    <label class="form-check-label" for="signo_cajon_izquierda">Izquierda</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="signo_cajon_derecha" name="signo_cajon" type="checkbox">
-                                    <label class="custom-control-label" for="signo_cajon_derecha">Derecha</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="signo_cajon_derecha" name="signo_cajon" type="checkbox">
+                                    <label class="form-check-label" for="signo_cajon_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Finkelstein</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="finkelstein_izquierda" name="finkelstein" type="checkbox">
-                                    <label class="custom-control-label" for="finkelstein_izquierda">Izquierda</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="finkelstein_izquierda" name="finkelstein" type="checkbox">
+                                    <label class="form-check-label" for="finkelstein_izquierda">Izquierda</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="finkelstein_derecha" name="finkelstein" type="checkbox">
-                                    <label class="custom-control-label" for="finkelstein_derecha">Derecha</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="finkelstein_derecha" name="finkelstein" type="checkbox">
+                                    <label class="form-check-label" for="finkelstein_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Motricidad</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="motricidad_extremidades_normal" name="motricidad_extremidades" type="radio">
-                                    <label class="custom-control-label" for="motricidad_extremidades_normal">Normal</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="motricidad_extremidades_normal" name="motricidad_extremidades" type="radio">
+                                    <label class="form-check-label" for="motricidad_extremidades_normal">Normal</label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" id="motricidad_extremidades_alterada" name="motricidad_extremidades" type="radio">
-                                    <label class="custom-control-label" for="motricidad_extremidades_alterada">Alterada</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="motricidad_extremidades_alterada" name="motricidad_extremidades" type="radio">
+                                    <label class="form-check-label" for="motricidad_extremidades_alterada">Alterada</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label>Detalle de alteración</label>
                                 <textarea class="form-control" id="detalle_alteracion_extremidades" name="detalle_alteracion_extremidades" style="resize: none" rows="3" type="text"></textarea>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                <label class="titulo_regiones">Examen neurológico elemental</label>
+                            </div>
+                            <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                <label>Descripción</label>
+                                <textarea class="form-control" id="examen_neurologico_elemental" name="examen_neurologico_elemental" style="resize: none" rows="3" type="text"></textarea>
                             </div>
                         </div>
                     </div>
@@ -815,6 +870,82 @@
                             </div>
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end" id="boton_mas_examen_laboratorio">
                                 <input type="button" class="btn btn-primary" value="+" onclick="agregarExamenLaboratorio()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading_diagnosticos">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#diagnosticos" aria-expanded="false" aria-controls="diagnosticos">
+                            Diagnósticos
+                        </button>
+                    </h5>
+                </div>
+                <div id="diagnosticos" class="collapse" aria-labelledby="heading_diagnosticos" data-parent="#acordeon_nueva_ficha_medica">
+                    <div class="card-body">
+                        <div class="row" id="container_diagnosticos">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading_prescripciones">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#prescripciones" aria-expanded="false" aria-controls="prescripciones">
+                            Prescripciones y/o recomendaciones médicas
+                        </button>
+                    </h5>
+                </div>
+                <div id="prescripciones" class="collapse" aria-labelledby="heading_prescripciones" data-parent="#acordeon_nueva_ficha_medica">
+                    <div class="card-body">
+                        <div class="row" id="container_prescripciones">
+                            <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                <label>Prescripciones</label>
+                                <textarea class="form-control" id="prescripciones_medicas" name="prescripciones_medicas" style="resize: none" rows="3" type="text"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading_persona_vulnerable">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#vulnerabilidad" aria-expanded="false" aria-controls="persona_vulnerable">
+                            Persona vulnerable
+                        </button>
+                    </h5>
+                </div>
+                <div id="vulnerabilidad" class="collapse" aria-labelledby="heading_persona_vulnerable" data-parent="#acordeon_nueva_ficha_medica">
+                    <div class="card-body">
+                        <div class="row" id="container_persona_vulnerable">
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                <label>Persona vulnerable</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="persona_vulnerable_si" name="persona_vulnerable" type="radio">
+                                    <label class="form-check-label" for="persona_vulnerable_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="persona_vulnerable_no" name="persona_vulnerable" type="radio">
+                                    <label class="form-check-label" for="persona_vulnerable_no">No</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                <label>Persona con discapacidad</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="persona_discapacidad_si" name="persona_discapacidad" type="radio">
+                                    <label class="form-check-label" for="persona_discapacidad_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="persona_discapacidad_no" name="persona_discapacidad" type="radio">
+                                    <label class="form-check-label" for="persona_discapacidad_no">No</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                <label>Descripción</label>
+                                <textarea class="form-control" id="descripcion_vulnerabilidad" name="descripcion_vulnerabilidad" style="resize: none" rows="2" type="text"></textarea>
                             </div>
                         </div>
                     </div>

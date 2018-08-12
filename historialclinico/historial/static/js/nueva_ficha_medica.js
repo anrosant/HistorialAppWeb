@@ -120,61 +120,6 @@ function escogerTipo(tipo, empresa, riesgo) {
     }
 }
 
-function agregarRiesgo() {
-    var containers_tipo_riesgo = $(".container_tipo_riesgo_actual");
-    var containers_nombre_riesgo = $(".container_nombre_riesgo_actual");
-    var botones_eliminar = $(".boton_eliminar_riesgo_empresa_actual");
-    if(containers_tipo_riesgo.length === 1) {
-        $(botones_eliminar[0]).removeAttr("hidden");
-    }
-    $(containers_tipo_riesgo[0]).clone(false, true).appendTo("#container_riesgos_actuales");
-    $(containers_nombre_riesgo[0]).clone(false, true).appendTo("#container_riesgos_actuales");
-    restablecerCopiaRiesgoActual();
-    $(botones_eliminar[0]).clone(false, true).appendTo("#container_riesgos_actuales");
-    $("#boton_mas_riesgo_empresa_actual").appendTo("#container_riesgos_actuales");
-    ordenarRiesgo();
-}
-
-function restablecerCopiaRiesgoActual(){
-    var cont = $("#container_riesgos_actuales").children();
-    var select = $(cont[cont.length - 1]).children()[0];
-    var opci = $(select).children();
-    for(var i = 0; i < opci.length; i++) {
-        var attr1 = $(opci[i]).attr("hidden");
-        var attr2 = $(opci[i]).attr("disabled");
-        if((typeof attr1 !== typeof undefined || attr1 !== false) && i !== 0) {
-            $(opci[i]).removeAttr("hidden");
-        }
-    }
-}
-
-function eliminarRiesgo(numero) {
-    $("#tipo_riesgo_actual_" + numero).parent().remove();
-    $("#nombre_riesgo_actual_" + numero).parent().remove();
-    $("#boton_eliminar_riesgo_actual_" + numero).parent().remove();
-    var containers_tipo_riesgo = $(".container_tipo_riesgo_actual");
-    var botones_eliminar = $(".boton_eliminar_riesgo_empresa_actual");
-    if(containers_tipo_riesgo.length === 1) {
-        $(botones_eliminar[0]).attr("hidden", "");
-    }
-    ordenarRiesgo();
-}
-
-function ordenarRiesgo() {
-    var containers_tipo_riesgo = $(".container_tipo_riesgo_actual");
-    var containers_nombre_riesgo = $(".container_nombre_riesgo_actual");
-    var botones_eliminar = $(".boton_eliminar_riesgo_empresa_actual");
-    for(var i = 0; i < containers_tipo_riesgo.length; i++) {
-        $($(containers_tipo_riesgo[i]).children()[0]).attr('id', 'tipo_riesgo_actual_' + (i + 1));
-        $($(containers_tipo_riesgo[i]).children()[0]).attr('name', 'tipo_riesgo_actual_' + (i + 1));
-        $($(containers_tipo_riesgo[i]).children()[0]).attr('onchange', 'escogerTipo("actual", 0, ' + (i + 1) + ')');
-        $($(containers_nombre_riesgo[i]).children()[0]).attr('id', 'nombre_riesgo_actual_' + (i + 1));
-        $($(containers_nombre_riesgo[i]).children()[0]).attr('name', 'nombre_riesgo_actual_' + (i + 1));
-        $($(botones_eliminar[i]).children()[0]).attr('onclick', 'eliminarRiesgo("actual", ' + (i + 1) + ')');
-        $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_riesgo_actual_' + (i + 1));
-    }
-}
-
 function agregarRiesgoAnterior(empresa) {
     var containers_tipo_riesgo = $(".container_tipo_riesgo_anterior_" + empresa);
     var containers_nombre_riesgo = $(".container_nombre_riesgo_anterior_" + empresa);

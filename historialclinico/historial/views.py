@@ -26,7 +26,7 @@ def index(request):
 
 def loginUser(request):
     template = loader.get_template('historial/login.html')
-    if (request.method == 'POST'):
+    if(request.method == 'POST'):
         nombre = request.POST['usuario']
         clave = request.POST['password']
         usuario = authenticate(request, username=nombre, password=clave)
@@ -66,6 +66,12 @@ def nuevaFichaMedica(request):
     dosis_vacunas = Vacuna.DOSIS
     nombres_aparatos = AparatoSistema.NOMBRES
     tipos_examenes_laboratorio = ExamenLaboratorio.EXAMENES
+    antecedentes = Antecedente.ANTECEDENTES
+    alcohol = Habito.ALCOHOL
+    tabaco = Habito.TABACO
+    id_empleado = '0'
+    if (request.method == 'POST'):
+        id_empleado = request.POST.get('id_empleado')
     context = {
         'usuario': usuario,
         'tipos': tipos_riesgos,
@@ -76,7 +82,11 @@ def nuevaFichaMedica(request):
         'nombres_vacunas': nombres_vacunas,
         'dosis_vacunas': dosis_vacunas,
         'nombres_aparatos': nombres_aparatos,
-        'tipos_examenes_laboratorio': tipos_examenes_laboratorio
+        'tipos_examenes_laboratorio': tipos_examenes_laboratorio,
+        'antecedentes': antecedentes,
+        'alcohol': alcohol,
+        'tabaco': tabaco,
+        'id_empleado': id_empleado
     }
     return HttpResponse(template.render(context, request))
 
@@ -115,9 +125,4 @@ def guardarEmpleado(request):
         nuevoEmpleado.ficha_actual = 0
         nuevoEmpleado.save()
 
-        lista_empleados = Empleado.objects.all()
-        context = {
-            'listaEmpleados': lista_empleados
-        }
-
-        return render(request, "historial/index.html", context)
+        return redirect('historial:index')

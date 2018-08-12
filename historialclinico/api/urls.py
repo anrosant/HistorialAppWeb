@@ -30,6 +30,12 @@ urlpatterns = [
     url(r'^aparatoSistema/(?P<pk>[0-9]+)/$', views.ListaAparatoSistemaView.as_view(), name="details"),
     url(r'^antecedentePatologicoPersonal/$', views.CrearAntecedentePatologicoPersonal.as_view(), name="create"),
     url(r'^antecedentePatologicoPersonal/(?P<pk>[0-9]+)/$', views.ListaAntecedentePatologicoPersonalView.as_view(), name="details"),
+    url(r'^antecedenteGinecoObstetrico/$', views.CrearAntecedenteGinecoObstetrico.as_view(), name="create"),
+    url(r'^antecedenteGinecoObstetrico/(?P<pk>[0-9]+)/$', views.ListaAntecedenteGinecoObstetricoView.as_view(), name="details"),
+    url(r'^antecedente/$', views.CrearAntecedente.as_view(), name="create"),
+    url(r'^antecedente/(?P<pk>[0-9]+)/$', views.ListaAntecedenteView.as_view(), name="details"),
+    url(r'^habito/$', views.CrearHabito.as_view(), name="create"),
+    url(r'^habito/(?P<pk>[0-9]+)/$', views.ListaHabitoView.as_view(), name="details"),
     url(r'^antecedentePatologicoFamiliar/$', views.CrearAntecedentePatologicoFamiliarView.as_view(), name="create"),
     url(r'^antecedentePatologicoFamiliar/(?P<pk>[0-9]+)/$', views.ListaAntecedentePatologicoFamiliarView.as_view(), name="details"),
     url(r'^empresa/$', views.CrearEmpresaView.as_view(), name="create"),
@@ -56,6 +62,8 @@ urlpatterns = [
     url(r'^examenFisico/(?P<pk>[0-9]+)/$', views.ListaExamenFisicoView.as_view(), name="details"),
     url(r'^examenConsulta/$', views.CrearExamenConsultaView.as_view(), name="create"),
     url(r'^examenConsulta/(?P<pk>[0-9]+)/$', views.ListaExamenConsultaView.as_view(), name="details"),
+    url(r'^vulnerabilidad/$', views.CrearVulnerabilidadView.as_view(), name="create"),
+    url(r'^vulnerabilidad/(?P<pk>[0-9]+)/$', views.ListaVulnerabilidadView.as_view(), name="details"),
     url(r'^usuario/', views.ingresoUsuario, name="hello"),
 ]
 

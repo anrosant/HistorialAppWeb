@@ -62,3 +62,7 @@ div[id*="mensaje_"] {
 .container-examenes {
     border: 1px solid black;
 }
+#container_tabaco {
+    margin-top: 10px;
+    margin-bottom: 0;
+}

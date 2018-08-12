@@ -73,7 +73,7 @@ class EnfermedadSerializer(serializers.ModelSerializer):
 class DiagnosticoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diagnostico
-        fields = ('pk', 'enfermedad', 'consulta_medica', 'tipoEnfermedad')
+        fields = ('pk', 'enfermedad', 'consulta_medica', 'ficha_medica', 'tipoEnfermedad')
 
 class PermisoMedicoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -114,7 +114,7 @@ class AntecedenteGinecoObstetricoSerializer(serializers.ModelSerializer):
 class AntecedenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Antecedente
-        fields = ('pk', 'antecedete_gineco_obstetrico', 'antecedete')
+        fields = ('pk', 'antecedente_gineco_obstetrico', 'antecedente')
 
 class HabitoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -153,7 +153,6 @@ class ExamenConsultaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamenConsulta
         fields = ('pk', 'consulta_medica', 'imagen')
-
 
 class SomaticoGeneralSerializer(serializers.ModelSerializer):
     class Meta:

@@ -186,7 +186,7 @@ class Antecedente(models.Model):
         ('Aborto', 'Aborto'),
         ('Cesárea', 'Cesárea')
     )
-    antecedete_gineco_obstetrico = models.ForeignKey(AntecedenteGinecoObstetrico, on_delete=models.CASCADE)
+    antecedente_gineco_obstetrico = models.ForeignKey(AntecedenteGinecoObstetrico, on_delete=models.CASCADE)
     antecedente = models.CharField(max_length=100, choices=ANTECEDENTES, default="Gesto")
 
 class Habito(models.Model):

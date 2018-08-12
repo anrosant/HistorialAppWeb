@@ -114,7 +114,7 @@ class AntecedenteGinecoObstetricoSerializer(serializers.ModelSerializer):
 class AntecedenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Antecedente
-        fields = ('pk', 'antecedete_gineco_obstetrico', 'antecedete')
+        fields = ('pk', 'antecedente_gineco_obstetrico', 'antecedente')
 
 class HabitoSerializer(serializers.ModelSerializer):
     class Meta:

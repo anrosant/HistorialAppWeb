@@ -7,3 +7,6 @@ div#contenido {
 div#navbar {
     display: none;
 }
+tr:hover {
+    cursor: pointer;
+}

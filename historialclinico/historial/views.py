@@ -26,7 +26,7 @@ def index(request):
 
 def loginUser(request):
     template = loader.get_template('historial/login.html')
-    if (request.method == 'POST'):
+    if(request.method == 'POST'):
         nombre = request.POST['usuario']
         clave = request.POST['password']
         usuario = authenticate(request, username=nombre, password=clave)
@@ -57,22 +57,36 @@ def mi_error_404(request):
 def nuevaFichaMedica(request):
     template = loader.get_template('historial/nueva_ficha_medica.html')
     usuario = User.objects.get(username=request.user.username)
-    tipos = FactorRiesgo.TIPOS
-    nombres = FactorRiesgo.NOMBRES
+    tipos_riesgos = FactorRiesgo.TIPOS
+    nombres_riesgos = FactorRiesgo.NOMBRES
     tipos_ficha = FichaMedica.TIPOS
     lugares = AntecedentePatologicoPersonal.LUGARES
     fecha_ficha = date.today().strftime("%Y-%m-%d")
     nombres_vacunas = Vacuna.NOMBRES
     dosis_vacunas = Vacuna.DOSIS
+    nombres_aparatos = AparatoSistema.NOMBRES
+    tipos_examenes_laboratorio = ExamenLaboratorio.EXAMENES
+    antecedentes = Antecedente.ANTECEDENTES
+    alcohol = Habito.ALCOHOL
+    tabaco = Habito.TABACO
+    id_empleado = '0'
+    if (request.method == 'POST'):
+        id_empleado = request.POST.get('id_empleado')
     context = {
         'usuario': usuario,
-        'tipos': tipos,
-        'nombres': nombres,
+        'tipos': tipos_riesgos,
+        'nombres': nombres_riesgos,
         'fecha_ficha': fecha_ficha,
         'tipos_ficha': tipos_ficha,
         'lugares': lugares,
         'nombres_vacunas': nombres_vacunas,
-        'dosis_vacunas': dosis_vacunas
+        'dosis_vacunas': dosis_vacunas,
+        'nombres_aparatos': nombres_aparatos,
+        'tipos_examenes_laboratorio': tipos_examenes_laboratorio,
+        'antecedentes': antecedentes,
+        'alcohol': alcohol,
+        'tabaco': tabaco,
+        'id_empleado': id_empleado
     }
     return HttpResponse(template.render(context, request))
 
@@ -93,7 +107,7 @@ def nuevoEmpleado(request):
 def guardarEmpleado(request):
     if(request.method == 'POST'):
         nuevoEmpleado = Empleado()
-        nuevoEmpleado.foto = request.POST.get('foto')
+        nuevoEmpleado.foto = request.POST.get('ingreso_foto')
         nuevoEmpleado.nombre = request.POST.get('nombres')
         nuevoEmpleado.apellido = request.POST.get('apellidos')
         nuevoEmpleado.cedula = request.POST.get('cedula')
@@ -111,9 +125,4 @@ def guardarEmpleado(request):
         nuevoEmpleado.ficha_actual = 0
         nuevoEmpleado.save()
 
-        lista_empleados = Empleado.objects.all()
-        context = {
-            'listaEmpleados': lista_empleados
-        }
-
-        return render(request, "historial/index.html", context)
+        return redirect('historial:index')

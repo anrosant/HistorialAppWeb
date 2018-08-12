@@ -151,6 +151,39 @@ class ListaAntecedentePatologicoPersonalView(generics.RetrieveUpdateDestroyAPIVi
     queryset = AntecedentePatologicoPersonal.objects.all()
     serializer_class = AntecedentePatologicoPersonalSerializer
 
+class CrearAntecedenteGinecoObstetrico(generics.ListCreateAPIView):
+    queryset = AntecedenteGinecoObstetrico.objects.all()
+    serializer_class = AntecedenteGinecoObstetricoSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class ListaAntecedenteGinecoObstetricoView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AntecedenteGinecoObstetrico.objects.all()
+    serializer_class = AntecedenteGinecoObstetricoSerializer
+
+class CrearAntecedente(generics.ListCreateAPIView):
+    queryset = Antecedente.objects.all()
+    serializer_class = AntecedenteSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class ListaAntecedenteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Antecedente.objects.all()
+    serializer_class = AntecedenteSerializer
+
+class CrearHabito(generics.ListCreateAPIView):
+    queryset = Habito.objects.all()
+    serializer_class = HabitoSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class ListaHabitoView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Habito.objects.all()
+    serializer_class = HabitoSerializer
+
 class CrearAntecedentePatologicoFamiliarView(generics.ListCreateAPIView):
     queryset = AntecedentePatologicoFamiliar.objects.all()
     serializer_class = AntecedentePatologicoFamiliarSerializer
@@ -281,6 +314,15 @@ class ListaExamenFisicoView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ExamenFisico.objects.all()
     serializer_class = ExamenFisicoSerializer
 
+class CrearVulnerabilidadView(generics.ListCreateAPIView):
+    queryset = Vulnerabilidad.objects.all()
+    serializer_class = VulnerabilidadSerializer
+    def perform_create(self, serializer):
+        serializer.save()
+
+class ListaVulnerabilidadView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Vulnerabilidad.objects.all()
+    serializer_class = VulnerabilidadSerializer
 
 @api_view(['GET', 'POST'])
 @permission_classes((AllowAny, ))

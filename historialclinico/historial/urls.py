@@ -11,9 +11,12 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.loginUser, name='login'),
     url(r'^cerrarSesion/$', views.cerrarSesion, name='cerrarSesion'),
-    url(r'^nuevo/ficha$', views.nuevaFichaMedica, name='nuevaFichaMedica'),
+    url(r'^nuevo/ficha/(?P<empleado>[0-9]+)/$', views.nuevaFichaMedica, name='nuevaFichaMedica'),
     url(r'^nuevo/empleado$', views.nuevoEmpleado, name='nuevoEmpleado'),
     url(r'^crear/empleado', views.guardarEmpleado, name='guardarEmpleado'),
+    url(r'^crear/ficha', views.guardarFichaMedica, name='guardarFichaMedica'),
+    url(r'^info/empleado/$', views.infoEmpleado, name='infoEmpleado'),
+    url(r'^consultar/ficha/(?P<empleado>[0-9]+)/$', views.consultarFicha, name='consultarFicha'),
 ]
 
 if settings.DEBUG:

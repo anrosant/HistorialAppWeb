@@ -5,9 +5,6 @@ div#contenido {
     text-align: center;
     margin-bottom: 40px;
 }
-div#navbar {
-    display: none;
-}
 tr:hover {
     cursor: pointer;
 }

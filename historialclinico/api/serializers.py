@@ -129,7 +129,7 @@ class AntecedentePatologicoFamiliarSerializer(serializers.ModelSerializer):
 class EmpresaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empresa
-        fields = ('pk', 'nombre', 'cargo', 'actividad', 'epps', 'area_trabajo')
+        fields = ('pk', 'nombre', 'cargo', 'riesgos', 'epps', 'area_trabajo')
 
 class AntecedenteLaboralSerializer(serializers.ModelSerializer):
     class Meta:
@@ -168,7 +168,7 @@ class ColumnaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Columna
         fields = ('pk', 'cifosis_acentuada', 'contractura_muscular', 'dolor', 'lordosis_acentuada', 'escoliosis', 'motricidad',
-                  'lassegue', 'detalle_alteracion')
+                  'detalle_alteracion')
 
 class RegionLumbarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -178,12 +178,12 @@ class RegionLumbarSerializer(serializers.ModelSerializer):
 class ExtremidadesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Extremidades
-        fields = ('pk', 'dolor', 'phalen', 'tinel', 'signo_cajon_rodilla', 'finkelstein', 'motricidad', 'observaciones')
+        fields = ('pk', 'dolor', 'motricidad', 'observaciones')
 
 class LocalizacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegionLumbar
-        fields = ('pk', 'columna', 'extremidades', 'lugar')
+        fields = ('pk', 'columna', 'extremidades', 'tipo', 'lugar')
 
 class ExamenFisicoSerializer(serializers.ModelSerializer):
     class Meta:

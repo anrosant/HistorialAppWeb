@@ -3,7 +3,6 @@ $(document).ready(function() {
     var input_id;
 
     $(document).on('change', '.btn-file :file', function() {                            //4
-        console.log("change: " + input_id);
         var input = $(this);
         if(imagen_valida) {
             $("#mensaje_" + input_id).attr("hidden", "hidden");
@@ -16,7 +15,6 @@ $(document).ready(function() {
     });
 
     $('.btn-file :file').on('fileselect', function(event, label) {                      //5
-        console.log("fileselect: " + input_id);
         input_id = $(this).attr("id").trim().slice(-1);
         var input = $("#ruta_examen_" + input_id);
         var log = "";
@@ -31,7 +29,6 @@ $(document).ready(function() {
     });
 
     function readURL(input) {                                                           //2
-        console.log("read_URL: " + input_id);
         var reader = new FileReader();
         if (input.files && input.files[0] && foto_valida(input.files[0])) {
             reader.onload = function (e) {
@@ -45,7 +42,6 @@ $(document).ready(function() {
 
     $("[id*='ingreso_examen_']").change(function(){                                             //1
         input_id = $(this).attr("id").trim().slice(-1);
-        console.log(input_id);
         readURL(this);
     });
 
@@ -88,6 +84,140 @@ $(document).ready(function() {
     $("#temperatura").keypress(function (e) {
         return !!($.isNumeric(e.key) || e.key === "." || e.key === ",");
     });
+
+    if($("#ficha_empleado").val() === "True") {
+        $("#tipo_ficha option:eq(0)").prop('selected', true);
+        $("#tipo_ficha").prop("disabled", true);
+        $("#input_ficha_hidden").val($("#tipo_ficha").val())
+    } else {
+        $("#tipo_ficha option:eq(0)").remove();
+        $("#tipo_ficha option:eq(0)").prop('selected', true);
+        $("#input_ficha_hidden").val($("#tipo_ficha").val());
+    }
+
+    $("#tipo_ficha").change(function(){
+        $("#input_ficha_hidden").val($("#tipo_ficha").val());
+    });
+
+    $("[id*='dosis_vacuna_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        var tipo = $(this).attr("id").trim().slice(13, -2);
+        $("#fecha_vacuna_" + tipo + "_" + numero).prop("required", true);
+    });
+
+    $("[id*='fecha_vacuna_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        var tipo = $(this).attr("id").trim().slice(13, -2);
+        $("#dosis_vacuna_" + tipo + "_" + numero).prop("required", true);
+    });
+
+    $("[id*='tipo_riesgo_anterior_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        var empresa = $(this).attr("id").trim().slice(21, -2);
+        $("#nombre_riesgo_anterior_" + empresa + "_" + numero).prop("required", true);
+    });
+
+    $("[id*='nombre_riesgo_anterior_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        var empresa = $(this).attr("id").trim().slice(23, -2);
+        $("#tipo_riesgo_anterior_" + empresa + "_" + numero).prop("required", true);
+    });
+
+    $("[id*='nombre_patologia_personal_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#detalle_patologia_personal_" + numero).prop("required", true);
+    });
+
+    $("[id*='detalle_patologia_personal_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#nombre_patologia_personal_" + numero).prop("required", true);
+    });
+
+    $("[id*='parentesco_patologia_familiar_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#nombre_patologia_familiar_" + numero).prop("required", true);
+        $("#detalle_patologia_familiar_" + numero).prop("required", true);
+    });
+
+    $("[id*='nombre_patologia_familiar_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#detalle_patologia_personal_" + numero).prop("required", true);
+        $("#parentesco_patologia_familiar_" + numero).prop("required", true);
+    });
+
+    $("[id*='detalle_patologia_familiar_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#nombre_patologia_personal_" + numero).prop("required", true);
+        $("#parentesco_patologia_familiar_" + numero).prop("required", true);
+    });
+
+    $("[id*='nombre_aparato_sistema_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#detalle_aparato_sistema_" + numero).prop("required", true);
+    });
+
+    $("[id*='detalle_aparato_sistema_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#nombre_aparato_sistema_" + numero).prop("required", true);
+    });
+
+    $("[id*='tipo_examen_laboratorio_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#imagen_examen_" + numero).prop("required", true);
+        $("#hallazgos_examen_laboratorio_" + numero).prop("required", true);
+    });
+
+    $("[id*='imagen_examen_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#tipo_examen_laboratorio_" + numero).prop("required", true);
+        $("#hallazgos_examen_laboratorio_" + numero).prop("required", true);
+    });
+
+    $("[id*='hallazgos_examen_laboratorio_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#tipo_examen_laboratorio_" + numero).prop("required", true);
+        $("#imagen_examen_" + numero).prop("required", true);
+    });
+
+    $("[id*='enfermedad_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#tipo_diagnostico_" + numero).prop("required", true);
+    });
+
+    $("[id*='tipo_diagnostico_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#enfermedad_" + numero).prop("required", true);
+    });
+
+    $("[id*='nombre_empresa_anterior_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#tiempo_empresa_anterior_" + numero).prop("required", true);
+    });
+
+    $("[id*='tiempo_empresa_anterior_']").change(function(){
+        var numero = $(this).attr("id").trim().slice(-1);
+        $("#nombre_empresa_anterior_" + numero).prop("required", true);
+    });
+
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        alert("Debe llenar los campos requeridos marcados en rojo");
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
 });
 
 function escogerTipo(tipo, empresa, riesgo) {
@@ -198,6 +328,7 @@ function agregarEmpresa() {
     var botones_eliminar = $(".boton_eliminar_empresa_anterior");
     if(containers_empresas_anteriores.length === 1) {
         $(botones_eliminar[0]).removeAttr("hidden");
+        $(botones_eliminar[0]).addClass("col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end boton_eliminar_empresa_anterior");
     }
     $(containers_empresas_anteriores[0]).clone(false, false).appendTo("#container_empresas_anteriores");
     /*var containers_empresas = $("#container_empresas_anteriores");
@@ -237,6 +368,7 @@ function eliminarEmpresa(numero) {
     var botones_eliminar = $(".boton_eliminar_empresa_anterior");
     if(containers_empresas_anteriores.length === 1) {
         $(botones_eliminar[0]).attr("hidden", "");
+        $(botones_eliminar[0]).removeClass("d-flex");
     }
     ordenarEmpresa();
 }
@@ -361,6 +493,8 @@ function agregarAparato() {
     }
     $(containers_nombre_aparato[0]).clone(false, false).appendTo("#container_aparatos_sistema");
     $(containers_detalle_aparato[0]).clone(false, false).appendTo("#container_aparatos_sistema");
+    var cont = $("#container_aparatos_sistema").children();
+    $($(cont[cont.length - 1]).children()[0]).val("");
     $(botones_eliminar[0]).clone(false, true).appendTo("#container_aparatos_sistema");
     $("#boton_mas_aparato_sistema").appendTo("#container_aparatos_sistema");
     ordenarAparato();
@@ -406,6 +540,7 @@ function agregarExamenLaboratorio() {
     var botones_eliminar = $(".boton_eliminar_examen_laboratorio");
     if(containers_examenes_laboratorio.length === 1) {
         $(botones_eliminar[0]).removeAttr("hidden");
+        $(botones_eliminar[0]).addClass("col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end boton_eliminar_examen_laboratorio");
     }
     $(containers_examenes_laboratorio[0]).clone(false, false).appendTo("#container_examenes_laboratorio");
     $(botones_eliminar[0]).clone(false, true).appendTo("#container_examenes_laboratorio");
@@ -420,6 +555,7 @@ function eliminarExamenLaboratorio(numero) {
     var botones_eliminar = $(".boton_eliminar_examen_laboratorio");
     if(containers_examenes_laboratorio.length === 1) {
         $(botones_eliminar[0]).attr("hidden", "");
+        $(botones_eliminar[0]).removeClass("d-flex");
     }
     ordenarExamenLaboratorio();
 }
@@ -443,5 +579,54 @@ function ordenarExamenLaboratorio() {
         $($(containers_hallazgos_examen_laboratorio[i]).children()[1]).attr('name', 'hallazgos_examen_laboratorio_' + (i + 1));
         $($(botones_eliminar[i]).children()[0]).attr('onclick', 'eliminarExamenLaboratorio(' + (i + 1) + ')');
         $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_examen_laboratorio_' + (i + 1));
+    }
+}
+
+function agregarDiagnostico() {
+    var containers_enfermedad = $(".container_enfermedad");
+    var containers_diagnostico_tipo = $(".container_diagnostico_tipo");
+    var botones_eliminar = $(".boton_eliminar_diagnostico");
+    if(containers_enfermedad.length === 1) {
+        $(botones_eliminar[0]).removeAttr("hidden");
+    }
+    $(containers_enfermedad[0]).clone(false, false).appendTo("#container_diagnosticos");
+    var copia = $(containers_diagnostico_tipo[0]).clone(false, false);
+    $($($(copia).children()[0]).children()[0]).prop("checked", false);
+    $($($(copia).children()[1]).children()[0]).prop("checked", false);
+    $(copia).appendTo("#container_diagnosticos");
+    $(botones_eliminar[0]).clone(false, true).appendTo("#container_diagnosticos");
+    $("#boton_mas_diagnostico").appendTo("#container_diagnosticos");
+    ordenarDiagnostico();
+}
+
+function eliminarDiagnostico(numero) {
+    $("#container_enfermedad_" + numero).remove();
+    $("#container_diagnostico_tipo_" + numero).remove();
+    $("#boton_eliminar_diagnostico_" + numero).parent().remove();
+    var containers_enfermedad = $(".container_enfermedad");
+    var botones_eliminar = $(".boton_eliminar_diagnostico");
+    if(containers_enfermedad.length === 1) {
+        $(botones_eliminar[0]).attr("hidden", "");
+    }
+    ordenarDiagnostico();
+}
+
+function ordenarDiagnostico() {
+    var containers_enfermedad = $(".container_enfermedad");
+    var containers_diagnostico_tipo = $(".container_diagnostico_tipo");
+    var botones_eliminar = $(".boton_eliminar_diagnostico");
+    for(var i = 0; i < containers_enfermedad.length; i++) {
+        $(containers_enfermedad[i]).attr('id', 'container_enfermedad_' + (i + 1));
+        $($(containers_enfermedad[i]).children()[0]).attr('id', 'enfermedad_' + (i + 1));
+        $($(containers_enfermedad[i]).children()[0]).attr('name', 'enfermedad_' + (i + 1));
+        $(containers_diagnostico_tipo[i]).attr('id', 'container_diagnostico_tipo_' + (i + 1));
+        $($($(containers_diagnostico_tipo[i]).children()[0]).children()[0]).attr('id', 'tipo_diagnostico_presuntorio_' + (i + 1));
+        $($($(containers_diagnostico_tipo[i]).children()[0]).children()[0]).attr('name', 'tipo_diagnostico_' + (i + 1));
+        $($($(containers_diagnostico_tipo[i]).children()[0]).children()[1]).attr('for', 'tipo_diagnostico_presuntorio_' + (i + 1));
+        $($($(containers_diagnostico_tipo[i]).children()[1]).children()[0]).attr('id', 'tipo_diagnostico_definitorio_' + (i + 1));
+        $($($(containers_diagnostico_tipo[i]).children()[1]).children()[0]).attr('name', 'tipo_diagnostico_' + (i + 1));
+        $($($(containers_diagnostico_tipo[i]).children()[1]).children()[1]).attr('for', 'tipo_diagnostico_definitorio_' + (i + 1));
+        $($(botones_eliminar[i]).children()[0]).attr('onclick', 'eliminarDiagnostico(' + (i + 1) + ')');
+        $($(botones_eliminar[i]).children()[0]).attr('id', 'boton_eliminar_diagnostico_' + (i + 1));
     }
 }

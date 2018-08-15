@@ -31,8 +31,8 @@
         {% endfor %}
         </tbody>
     </table>
-    <form id="formulario" action="{% url 'historial:nuevaFichaMedica' %}" method="post" hidden>{% csrf_token %}
-        <input id="id_empleado" name="id_empleado">
+    <form id="formulario" action="{% url 'historial:infoEmpleado' %}" method="post">{% csrf_token %}
+        <input id="id_empleado" name="id_empleado" value="{{ id_empleado }}" hidden>
     </form>
 </div>
 {% endblock %}

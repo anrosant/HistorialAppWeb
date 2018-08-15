@@ -31,7 +31,7 @@ def loginUser(request):
         nombre = request.POST['usuario']
         clave = request.POST['password']
         usuario = authenticate(request, username=nombre, password=clave)
-        if usuario is not None:
+        if usuario is not None and not usuario.is_superuser:
             login(request, usuario)
             return redirect('historial:index')
         else:
@@ -120,11 +120,13 @@ def infoEmpleado(request):
     template = loader.get_template('historial/info_empleado.html')
     usuario = User.objects.get(username=request.user.username)
     id_empleado = 0
+    empleado = usuario.profile.empleado
     if (request.method == 'POST'):
         id_empleado = request.POST.get('id_empleado')
     context = {
         'usuario': usuario,
-        'id_empleado': id_empleado
+        'id_empleado': id_empleado,
+        'empleado': empleado
     }
     return HttpResponse(template.render(context, request))
 

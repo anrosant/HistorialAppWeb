@@ -6,10 +6,13 @@
 {% endblock %}
 {% block contenido %}
 <div id="titulo_contenido">
-    <h4>Nueva Ficha Médica {{ id_empleado }}</h4>
+    <h4>Nueva Ficha Médica</h4>
+</div>
+<div>
+    <p style="font-weight: bold;">Empleado: <span style="font-weight: normal">{{ empleado.nombre }} {{ empleado.apellido }}</span></p>
 </div>
 <div class="accordion" id="acordeon_nueva_ficha_medica">
-    <form action="#" method="post">{% csrf_token %}
+    <form action="{% url 'historial:guardarFichaMedica' %}" class="needs-validation" novalidate method="post">{% csrf_token %}
         <div class="card">
             <div class="card-header" id="heading_chequeo">
                 <h5 class="mb-0">
@@ -21,23 +24,20 @@
             <div id="chequeo" class="collapse" aria-labelledby="heading_chequeo" data-parent="#acordeon_nueva_ficha_medica">
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                            <label>Fecha de creación</label>
-                            <input class="form-control" id="fecha_ficha" name="fecha_ficha" type="date" value="{{ fecha_ficha }}" disabled required>
-                        </div>
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             <label>Ciudad</label>
                             <input class="form-control" id="ciudad_ficha" name="ciudad_ficha" type="text" required>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             <label>Tipo</label>
                             <select class="form-control" id="tipo_ficha" name="tipo_ficha" required>
-                                <option hidden>Escoja una opción</option>
                                 {% for key, value in tipos_ficha %}
                                 <option value="{{ key }}">{{ key }}</option>
                                 {% endfor %}
                             </select>
                         </div>
+                        <input id="input_ficha_hidden" name="input_ficha_hidden" value="" hidden>
+                        <input id="ficha_empleado" value="{{ tipo_inicial }}" hidden>
                     </div>
                 </div>
             </div>
@@ -74,11 +74,11 @@
                         </div>
                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             <label>Riesgos</label>
-                            <textarea class="form-control" id="riesgos" name="riesgos" style="resize: none" rows="2" type="text"></textarea>
+                            <textarea class="form-control" placeholder="No refiere riesgos" id="riesgos" name="riesgos" style="resize: none" rows="2" type="text"></textarea>
                         </div>
                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             <label>EPPS</label>
-                            <textarea class="form-control" id="epps" name="epps" style="resize: none" rows="2" type="text"></textarea>
+                            <textarea class="form-control" placeholder="No refiere epps" id="epps" name="epps" style="resize: none" rows="2" type="text"></textarea>
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="titulo_empresas_anteriores">
                             <h5>Empresas anteriores</h5>
@@ -90,11 +90,11 @@
                                     <div class="row">
                                         <div class="form-group col-xl-5 col-lg-5 col-md-5 col-sm-5 container_nombre_empresa_anterior">
                                             <label>Nombre de la empresa</label>
-                                            <input class="form-control" id="nombre_empresa_anterior_1" name="nombre_empresa_anterior_1" type="text" required>
+                                            <input class="form-control" id="nombre_empresa_anterior_1" name="nombre_empresa_anterior_1" type="text">
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3 container_tiempo_empresa_anterior">
                                             <label>Tiempo</label>
-                                            <input class="form-control" id="tiempo_empresa_anterior_1" name="tiempo_empresa_anterior_1" type="text" required>
+                                            <input class="form-control" id="tiempo_empresa_anterior_1" name="tiempo_empresa_anterior_1" type="text">
                                         </div>
                                         <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4 container_cargo_empresa_anterior">
                                             <label>Cargo</label>
@@ -137,8 +137,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end boton_eliminar_empresa_anterior" hidden>
-                                    <input type="button" class="btn btn-danger" id="boton_eliminar_empresa_anterior_1" value="x" onclick="eliminarEmpresa(1)" />
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 align-items-center justify-content-end boton_eliminar_empresa_anterior" hidden>
+                                    <input type="button" class="btn btn-danger" id="boton_eliminar_empresa_anterior_1" value="x" onclick="eliminarEmpresa(1)"/>
                                 </div>
                                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end" id="boton_mas_empresa_anterior">
                                     <input type="button" class="btn btn-primary" value="+" onclick="agregarEmpresa()" />
@@ -147,7 +147,7 @@
                         </div>
                         <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <label>Actividades extralaborales</label>
-                            <textarea class="form-control" id="actividades_extralaborales" name="actividades_extralaborales" style="resize: none" rows="3" type="text"></textarea>
+                            <textarea class="form-control" placeholder="No refiere actividades extralaborales" id="actividades_extralaborales" name="actividades_extralaborales" style="resize: none" rows="3" type="text"></textarea>
                         </div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                             </select>
                         </div>
                         <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 container_detalle_patologia_personal">
-                            <textarea class="form-control" id="detalle_patologia_personal_1" name="detalle_patologia_personal_1" style="resize: none" rows="1" type="text"></textarea>
+                            <textarea class="form-control" placeholder="No refiere detalle" id="detalle_patologia_personal_1" name="detalle_patologia_personal_1" style="resize: none" rows="1" type="text"></textarea>
                         </div>
                         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_patologia_personal" hidden>
                             <input type="button" class="btn btn-danger" id="boton_eliminar_patologia_personal_1" value="x" onclick="eliminarPatologia('personal', 1)" />
@@ -191,6 +191,7 @@
                 </div>
             </div>
         </div>
+        {% if empleado.sexo == 'femenino' %}
         <div class="card">
             <div class="card-header" id="heading_antecedentes_gineco-obstetricos">
                 <h5 class="mb-0">
@@ -211,7 +212,7 @@
                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             {% for key2, value in antecedentes %}
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="{{ key2 }}" name="antecedente_gineco-obstetrico" type="checkbox" value="{{ key2 }}">
+                                <input class="form-check-input" id="{{ key2 }}" name="antecedente_gineco-obstetrico[]" type="checkbox" value="{{ key2 }}">
                                 <label class="form-check-label" for="{{ key2 }}">{{ key2 }}</label>
                             </div>
                             {% endfor %}
@@ -221,12 +222,13 @@
                         </div>
                         <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <label>Planificación familiar</label>
-                            <textarea class="form-control" id="planificacion_familiar" name="planificacion_familiar" style="resize: none" rows="3" type="text"></textarea>
+                            <textarea class="form-control" placeholder="No refiere planificación familiar" id="planificacion_familiar" name="planificacion_familiar" style="resize: none" rows="3" type="text"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% endif %}
         <div class="card">
             <div class="card-header" id="heading_habitos">
                 <h5 class="mb-0">
@@ -427,7 +429,7 @@
                         </div>
                         <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <label>Observaciones</label>
-                            <textarea class="form-control" id="observacion_vacuna" name="observacion_vacuna" style="resize: none" rows="3" type="text"></textarea>
+                            <textarea class="form-control" placeholder="No refiere observaciones" id="observacion_vacuna" name="observacion_vacuna" style="resize: none" rows="3" type="text"></textarea>
                         </div>
                     </div>
                 </div>
@@ -458,7 +460,7 @@
                                 </select>
                             </div>
                             <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 container_detalle_aparato_sistema">
-                                <input class="form-control" id="detalle_aparato_sistema_1" name="detalle_aparato_sistema_1" type="text">
+                                <input class="form-control" placeholder="No refiere detalle" id="detalle_aparato_sistema_1" name="detalle_aparato_sistema_1" type="text">
                             </div>
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_aparato_sistema" hidden>
                                 <input type="button" class="btn btn-danger" id="boton_eliminar_aparato_sistema_1" value="x" onclick="eliminarAparato(1)" />
@@ -544,7 +546,7 @@
                             </div>
                             <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label>Índice de masa corporal</label>
-                                <input class="form-control" id="indice_masa_corporal" name="indice_masa_corporal" type="number" disabled>
+                                <input class="form-control" id="indice_masa_corporal" name="indice_masa_corporal" type="number" readonly>
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="titulo_somatico_general">
                                 <h5>Somático general</h5>
@@ -553,7 +555,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Apariencia</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="apariencia" name="apariencia" type="text">
+                                        <input class="form-control" placeholder="No refiere apariencia" id="apariencia" name="apariencia" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -561,7 +563,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Estado nutricional</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="estado_nutricional" name="estado_nutricional" type="text">
+                                        <input class="form-control" placeholder="No refiere estado nutricional" id="estado_nutricional" name="estado_nutricional" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -569,7 +571,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Actividades psicomotoras</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="actividades_psicomotoras" name="actividades_psicomotoras" type="text">
+                                        <input class="form-control" placeholder="No refiere actividades psicomotoras" id="actividades_psicomotoras" name="actividades_psicomotoras" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -580,7 +582,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Piel y tegumentos</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="piel_tegumentos" name="piel_tegumentos" type="text">
+                                        <input class="form-control" placeholder="No refiere detalle regional" id="piel_tegumentos" name="piel_tegumentos" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -588,7 +590,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Cabeza y cuello</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="cabeza_cuello" name="cabeza_cuello" type="text">
+                                        <input class="form-control" placeholder="No refiere detalle piel y tegumentos" id="cabeza_cuello" name="cabeza_cuello" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -596,7 +598,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Tórax</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="torax" name="torax" type="text">
+                                        <input class="form-control" placeholder="No refiere detalle tórax" id="torax" name="torax" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -604,7 +606,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Corazón</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="corazon" name="corazon" type="text">
+                                        <input class="form-control" placeholder="No refiere detalle corazón" id="corazon" name="corazon" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -612,7 +614,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Pulmones</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="pulmones" name="pulmones" type="text">
+                                        <input class="form-control" placeholder="No refiere detalle pulmones" id="pulmones" name="pulmones" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -620,7 +622,7 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-form-label">Abdomen</label>
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                                        <input class="form-control" id="abdomen" name="abdomen" type="text">
+                                        <input class="form-control" placeholder="No refiere detalle abdomen" id="abdomen" name="abdomen" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -696,17 +698,17 @@
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Lassegue</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="lassegue_izquierda" name="lassegue" type="checkbox">
+                                    <input class="form-check-input" id="lassegue_izquierda" name="lassegue[]" type="checkbox">
                                     <label class="form-check-label" for="lassegue_izquierda">Izquierda</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="lassegue_derecha" name="lassegue" type="checkbox">
+                                    <input class="form-check-input" id="lassegue_derecha" name="lassegue[]" type="checkbox">
                                     <label class="form-check-label" for="lassegue_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label>Detalle de alteración</label>
-                                <textarea class="form-control" id="detalle_alteracion_columna" name="detalle_alteracion_columna" style="resize: none" rows="3" type="text"></textarea>
+                                <textarea class="form-control" placeholder="No refiere detalle de alteración" id="detalle_alteracion_columna" name="detalle_alteracion_columna" style="resize: none" rows="3" type="text"></textarea>
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label class="titulo_regiones">Región Lumbar</label>
@@ -714,11 +716,11 @@
                             <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                 <label>Dolor puño percusión</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="dolor_punio_percusion_si" name="dolor_punio_percusion" type="checkbox">
+                                    <input class="form-check-input" id="dolor_punio_percusion_si" name="dolor_punio_percusion" type="radio">
                                     <label class="form-check-label" for="dolor_punio_percusion_si">Sí</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="dolor_punio_percusion_no" name="dolor_punio_percusion" type="checkbox">
+                                    <input class="form-check-input" id="dolor_punio_percusion_no" name="dolor_punio_percusion" type="radio">
                                     <label class="form-check-label" for="dolor_punio_percusion_no">No</label>
                                 </div>
                             </div>
@@ -735,7 +737,7 @@
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label>Detalle de alteración</label>
-                                <textarea class="form-control" id="detalle_alteracion_lumbar" name="detalle_alteracion_lumbar" style="resize: none" rows="3" type="text"></textarea>
+                                <textarea class="form-control" placeholder="No refiere detalle de alteración" id="detalle_alteracion_lumbar" name="detalle_alteracion_lumbar" style="resize: none" rows="3" type="text"></textarea>
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label class="titulo_regiones">Extremidades</label>
@@ -743,22 +745,22 @@
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Phalen</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="phalen_izquierda" name="phalen" type="checkbox">
+                                    <input class="form-check-input" id="phalen_izquierda" name="phalen[]" type="checkbox">
                                     <label class="form-check-label" for="phalen_izquierda">Izquierda</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="phalen_derecha" name="phalen" type="checkbox">
+                                    <input class="form-check-input" id="phalen_derecha" name="phalen[]" type="checkbox">
                                     <label class="form-check-label" for="phalen_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Tilen</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="tilen_izquierda" name="tilen" type="checkbox">
+                                    <input class="form-check-input" id="tilen_izquierda" name="tinel[]" type="checkbox">
                                     <label class="form-check-label" for="tilen_izquierda">Izquierda</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="tilen_derecha" name="tilen" type="checkbox">
+                                    <input class="form-check-input" id="tilen_derecha" name="tinel[]" type="checkbox">
                                     <label class="form-check-label" for="tilen_derecha">Derecha</label>
                                 </div>
                             </div>
@@ -776,22 +778,22 @@
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Signo cajón rodilla</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="signo_cajon_izquierda" name="signo_cajon" type="checkbox">
+                                    <input class="form-check-input" id="signo_cajon_izquierda" name="signo_cajon[]" type="checkbox">
                                     <label class="form-check-label" for="signo_cajon_izquierda">Izquierda</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="signo_cajon_derecha" name="signo_cajon" type="checkbox">
+                                    <input class="form-check-input" id="signo_cajon_derecha" name="signo_cajon[]" type="checkbox">
                                     <label class="form-check-label" for="signo_cajon_derecha">Derecha</label>
                                 </div>
                             </div>
                             <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <label>Finkelstein</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="finkelstein_izquierda" name="finkelstein" type="checkbox">
+                                    <input class="form-check-input" id="finkelstein_izquierda" name="finkelstein[]" type="checkbox">
                                     <label class="form-check-label" for="finkelstein_izquierda">Izquierda</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" id="finkelstein_derecha" name="finkelstein" type="checkbox">
+                                    <input class="form-check-input" id="finkelstein_derecha" name="finkelstein[]" type="checkbox">
                                     <label class="form-check-label" for="finkelstein_derecha">Derecha</label>
                                 </div>
                             </div>
@@ -808,14 +810,14 @@
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label>Detalle de alteración</label>
-                                <textarea class="form-control" id="detalle_alteracion_extremidades" name="detalle_alteracion_extremidades" style="resize: none" rows="3" type="text"></textarea>
+                                <textarea class="form-control" placeholder="No refiere detalle de alteración" id="detalle_alteracion_extremidades" name="detalle_alteracion_extremidades" style="resize: none" rows="3" type="text"></textarea>
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label class="titulo_regiones">Examen neurológico elemental</label>
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label>Descripción</label>
-                                <textarea class="form-control" id="examen_neurologico_elemental" name="examen_neurologico_elemental" style="resize: none" rows="3" type="text"></textarea>
+                                <textarea class="form-control" placeholder="No refiere descripción" id="examen_neurologico_elemental" name="examen_neurologico_elemental" style="resize: none" rows="3" type="text"></textarea>
                             </div>
                         </div>
                     </div>
@@ -861,11 +863,11 @@
                                     </div>
                                     <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 container_hallazgos_examen_laboratorio">
                                         <label>Hallazgos</label>
-                                        <textarea class="form-control" id="hallazgos_examen_laboratorio_1" name="hallazgos_examen_laboratorio_1" style="resize: none" rows="3" type="text"></textarea>
+                                        <textarea class="form-control" placeholder="No refiere hallazgos" id="hallazgos_examen_laboratorio_1" name="hallazgos_examen_laboratorio_1" style="resize: none" rows="3" type="text"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end boton_eliminar_examen_laboratorio" hidden>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 align-items-center justify-content-end boton_eliminar_examen_laboratorio" hidden>
                                 <input type="button" class="btn btn-danger" id="boton_eliminar_examen_laboratorio_1" value="x" onclick="eliminarExamenLaboratorio(1)" />
                             </div>
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-flex align-items-center justify-content-end" id="boton_mas_examen_laboratorio">
@@ -886,7 +888,36 @@
                 <div id="diagnosticos" class="collapse" aria-labelledby="heading_diagnosticos" data-parent="#acordeon_nueva_ficha_medica">
                     <div class="card-body">
                         <div class="row" id="container_diagnosticos">
-
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                <label>Enfermedad</label>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <label>Tipo</label>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 container_enfermedad" id="container_enfermedad_1">
+                                <select class="form-control" id="enfermedad_1" name="enfermedad_1">
+                                    <option hidden>Escoja una opción</option>
+                                    {% for enf in enfermedades %}
+                                    <option value="{{ enf.codigo }}">{{ enf.codigo }} - {{ enf.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 container_diagnostico_tipo" id="container_diagnostico_tipo_1">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" id="tipo_diagnostico_presuntorio_1" name="tipo_diagnostico_1" type="radio" value="Presuntorio">
+                                    <label class="form-check-label" for="tipo_diagnostico_presuntorio_1">Presuntorio</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" id="tipo_diagnostico_definitorio_1" name="tipo_diagnostico_1" type="radio" value="Definitorio">
+                                    <label class="form-check-label" for="tipo_diagnostico_definitorio_1">Definitorio</label>
+                                </div>
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 boton_eliminar_diagnostico" hidden>
+                                <input type="button" class="btn btn-danger" id="boton_eliminar_diagnostico_1" value="x" onclick="eliminarDiagnostico(1)" />
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" id="boton_mas_diagnostico">
+                                <input type="button" class="btn btn-primary" value="+" onclick="agregarDiagnostico()" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -904,7 +935,7 @@
                         <div class="row" id="container_prescripciones">
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label>Prescripciones</label>
-                                <textarea class="form-control" id="prescripciones_medicas" name="prescripciones_medicas" style="resize: none" rows="3" type="text"></textarea>
+                                <textarea class="form-control" placeholder="No refiere prescripciones" id="prescripciones_medicas" name="prescripciones_medicas" style="resize: none" rows="3" type="text"></textarea>
                             </div>
                         </div>
                     </div>
@@ -945,12 +976,16 @@
                             </div>
                             <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <label>Descripción</label>
-                                <textarea class="form-control" id="descripcion_vulnerabilidad" name="descripcion_vulnerabilidad" style="resize: none" rows="2" type="text"></textarea>
+                                <textarea class="form-control" placeholder="No refiere descripción" id="descripcion_vulnerabilidad" name="descripcion_vulnerabilidad" style="resize: none" rows="2" type="text"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <input id="id_empleado" name="id_empleado" value="{{ id_empleado }}" hidden>
+        <div id="boton" class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
     </form>
 </div>

@@ -1,5 +1,5 @@
 $(document).ready( function () {
-    $('#tabla_empleados').DataTable({
+    $('#tabla_fichas').DataTable({
         language: {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -26,8 +26,8 @@ $(document).ready( function () {
         }
     });
 
-    $('#tabla_empleados tbody').on('click', 'tr', function() {
+    /*$('#tabla_fichas tbody').on('click', 'tr', function() {
         $("input#id_empleado").val($('#tabla_empleados').DataTable().row(this).id(false));
         $("#formulario").submit();
-    });
+    });*/
 } );

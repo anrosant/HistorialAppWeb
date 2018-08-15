@@ -1,0 +1,42 @@
+{% extends "historial/base.html" %}
+{% load static %}
+{% block titulo %}Historial médico{% endblock %}
+{% block estilos %}
+<link href="{% static 'css/lista_ficha_medica_empleado.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block contenido %}
+<div id="titulo_lista">
+    <h4>Lista de fichas médicas</h4>
+</div>
+<div>
+    <p style="font-weight: bold;">Empleado: <span style="font-weight: normal">{{ empleado.nombre }} {{ empleado.apellido }}</span></p>
+</div>
+<div>
+    <p>Seleccione una ficha para visualizar su información: </p>
+</div>
+<div>
+    <table id="tabla_fichas" class="cell-border hover">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Ciudad</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ficha in lista_fichas_empleado %}
+            <tr id="{{ ficha.id }}">
+                <td>{{ ficha.fecha|date:"d/m/Y" }}</td>
+                <td>{{ ficha.tipo }}</td>
+                <td>{{ ficha.ciudad }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/lista_ficha_medica_empleado.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}" type="text/javascript"></script>
+{% endblock %}

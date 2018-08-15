@@ -30,7 +30,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="{% url 'historial:nuevoEmpleado' %}">Nuevo</a>
-                            <a class="dropdown-item" href="#">Consultar</a>
+                            <a class="dropdown-item" href="{% url 'historial:index' %}">Consultar</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -70,8 +70,8 @@
                                         </a>
                                     </div>
                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#acordeon_ficha">
-                                        <a class="nav-link link" href="{% url 'historial:nuevaFichaMedica'%}">Nuevo</a>
-                                        <a class="nav-link link" href="#">Consultar</a>
+                                        <a class="nav-link link" href="{% url 'historial:nuevaFichaMedica' empleado=id_empleado %}">Nuevo</a>
+                                        <a class="nav-link link" href="{% url 'historial:consultarFicha' empleado=id_empleado %}">Consultar</a>
                                     </div>
                                 </div>
                             </div>

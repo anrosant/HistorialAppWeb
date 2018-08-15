@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.core import serializers as ser
 from rest_framework.generics import CreateAPIView
-
+import itertools
 from rest_framework_jwt.settings import api_settings
 from rest_framework.permissions import AllowAny
 
@@ -351,18 +351,16 @@ def ingresoUsuario(request):
             empleados = Empleado.objects.all()
             dataEmpleado = ser.serialize("json", empleados)
             context["empleado"] = dataEmpleado
-            dataEnfermedad = ser.serialize("json", Enfermedad.objects.all())
-            context["enfermedad"] = dataEnfermedad
             consultas = ConsultaMedica.objects.none()
             atenciones = AtencionEnfermeria.objects.none()
 
             #Por cada empleado, selecciona 3 consultas y atenciones
             for empleado in empleados:
-                consulta = ConsultaMedica.objects.filter(empleado = empleado.id)
-                atencion = AtencionEnfermeria.objects.filter(empleado = empleado.id)
-
-                consultas = consultas | consulta
-                atenciones = atenciones | atencion
+                consulta = ConsultaMedica.objects.filter(empleado = empleado.id)[-3:]
+                atencion = AtencionEnfermeria.objects.filter(empleado = empleado.id)[-3:]
+                #import itertools
+                consultas = itertools.chain(consultas, consulta)
+                atenciones = itertools.chain(atenciones, atencion)
 
             dataConsultaMedica = ser.serialize("json", consultas)
             context["consultaMedica"] = dataConsultaMedica
@@ -403,6 +401,10 @@ def ingresoUsuario(request):
             context["permisoMedico"] = dataPermisoMedico
             dataExamenes = ser.serialize("json", examenes)
             context["examenesConsulta"]=dataExamenes
+            if (usuario.profile.empleado.ocupacion == "Doctor"):
+                dataEnfermedad = ser.serialize("json", Enfermedad.objects.all())
+                context["enfermedad"] = dataEnfermedad
+
         else:
             context["msj"]="Usuario o contraseña incorrectos"
     else:

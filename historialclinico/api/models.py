@@ -63,10 +63,10 @@ class SignosVitales(models.Model):
     consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
     atencion_enfermeria = models.ForeignKey(AtencionEnfermeria, null=True, on_delete=models.CASCADE)
     fecha = models.DateField(default=timezone.now())
-    presion_sistolica = models.IntegerField(blank=True)
-    presion_distolica = models.IntegerField(blank=True)
-    pulso = models.IntegerField(blank=True)
-    temperatura = models.FloatField(blank=True)
+    presion_sistolica = models.IntegerField(null=True)
+    presion_distolica = models.IntegerField(null=True)
+    pulso = models.IntegerField(null=True)
+    temperatura = models.FloatField(null=True)
 
 class Enfermedad(models.Model):
     codigo = models.CharField(max_length=10)
@@ -103,7 +103,7 @@ class FichaMedica(models.Model):
     )
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     inmunizacion = models.ForeignKey(Inmunizacion, null=True, on_delete=models.CASCADE)
-    fecha = models.DateField()
+    fecha = models.DateField(default=timezone.now())
     ciudad = models.CharField(max_length=50)
     tipo = models.CharField(max_length=15, choices=TIPOS, default='Periódico')
     prescripcion = models.CharField(max_length=300, blank=True)
@@ -208,9 +208,9 @@ class Habito(models.Model):
         ('No fuma', 'No fuma')
     )
     ficha = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
-    alcohol = models.CharField(max_length=100, choices=ALCOHOL, default="No consume")
-    tabaco = models.CharField(max_length=100, choices=TABACO, default="No fuma")
-    cantidad_tabaco = models.IntegerField(default = 0)
+    alcohol = models.CharField(max_length=100, choices=ALCOHOL, null=True, default="No consume")
+    tabaco = models.CharField(max_length=100, choices=TABACO, null=True, default="No fuma")
+    cantidad_tabaco = models.IntegerField(null=True)
 
 class AntecedentePatologicoFamiliar(models.Model):
     ficha = models.ForeignKey(FichaMedica, on_delete=models.CASCADE)
@@ -221,8 +221,8 @@ class AntecedentePatologicoFamiliar(models.Model):
 class Empresa(models.Model):
     nombre = models.CharField(max_length=100)
     cargo = models.CharField(max_length=100)
-    actividad = models.CharField(max_length=100)
-    epps = models.CharField(max_length=100)
+    riesgos = models.CharField(blank=True, max_length=300)
+    epps = models.CharField(blank=True, max_length=100)
     area_trabajo = models.CharField(max_length=100)
 
 class AntecedenteLaboral(models.Model):
@@ -338,32 +338,28 @@ class Regional(models.Model):
     abdomen = models.CharField(max_length=300, blank=True)
 
 class Columna(models.Model):
-    cifosis_acentuada = models.BooleanField()
-    contractura_muscular = models.BooleanField()
-    dolor = models.BooleanField()
-    lordosis_acentuada = models.BooleanField()
-    escoliosis = models.BooleanField()
-    motricidad = models.CharField(max_length=300, blank=True)
-    lassegue = models.CharField(max_length=300, blank=True)
+    cifosis_acentuada = models.BooleanField(null=True)
+    contractura_muscular = models.BooleanField(null=True)
+    dolor = models.BooleanField(null=True)
+    lordosis_acentuada = models.BooleanField(null=True)
+    escoliosis = models.BooleanField(null=True)
+    motricidad = models.CharField(max_length=20, null=True)
     detalle_alteracion = models.CharField(max_length=300, blank=True)
 
 class RegionLumbar(models.Model):
-    dolor_punio_percusion = models.BooleanField()
-    motricidad = models.BooleanField()
+    dolor_punio_percusion = models.BooleanField(null=True)
+    motricidad = models.CharField(max_length=20, null=True)
     detalle_alteracion = models.CharField(max_length=300, blank=True, null = True)
 
 class Extremidades(models.Model):
-    dolor = models.CharField(max_length=20, blank=True)
-    phalen = models.CharField(max_length=20, blank=True)
-    tinel = models.CharField(max_length=20, blank=True)
-    signo_cajon_rodilla = models.CharField(max_length=20, blank=True)
-    finkelstein = models.CharField(max_length=20, blank=True)
-    motricidad = models.CharField(max_length=20, blank=True)
+    dolor = models.BooleanField(null=True)
+    motricidad = models.CharField(max_length=20, null=True)
     observaciones = models.CharField(max_length=20, blank=True)
 
 class Localizacion(models.Model):
     columna = models.ForeignKey(Columna, null=True, on_delete=models.CASCADE)
     extremidades = models.ForeignKey(Extremidades, null=True, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=40, blank=True)
     lugar = models.CharField(max_length=20, blank=True)
 
 class ExamenFisico(models.Model):
@@ -374,13 +370,14 @@ class ExamenFisico(models.Model):
     region_lumbar = models.ForeignKey(RegionLumbar, null=True, on_delete=models.CASCADE)
     extremidades = models.ForeignKey(Extremidades, null=True, on_delete=models.CASCADE)
     regional = models.ForeignKey(Regional, null=True, on_delete=models.CASCADE)
-    talla = models.FloatField()
-    peso = models.FloatField()
-    indice_masa_corporal = models.FloatField()
+    talla = models.FloatField(null=True)
+    peso = models.FloatField(null=True)
+    indice_masa_corporal = models.FloatField(null=True)
+    frecuencia_respiratoria = models.IntegerField(null=True)
     examen_neurologico_elemental = models.CharField(max_length=300, blank=True)
 
 class Vulnerabilidad(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
-    persona_vulnerable = models.BooleanField(default=False)
-    persona_discapacidad = models.BooleanField(default=False)
+    persona_vulnerable = models.BooleanField(default=False, null=True)
+    persona_discapacidad = models.BooleanField(default=False, null=True)
     descripcion = models.CharField(max_length=300, blank=True)

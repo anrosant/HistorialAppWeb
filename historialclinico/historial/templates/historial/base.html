@@ -29,7 +29,9 @@
                             Empleados
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            {% if empleado.ocupacion == 'Doctor' or empleado.ocupacion == 'doctor' %}
                             <a class="dropdown-item" href="{% url 'historial:nuevoEmpleado' %}">Nuevo</a>
+                            {% endif %}
                             <a class="dropdown-item" href="{% url 'historial:index' %}">Consultar</a>
                         </div>
                     </li>
@@ -70,7 +72,9 @@
                                         </a>
                                     </div>
                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#acordeon_ficha">
+                                        {% if empleado.ocupacion == 'Doctor' or empleado.ocupacion == 'doctor' %}
                                         <a class="nav-link link" href="{% url 'historial:nuevaFichaMedica' empleado=id_empleado %}">Nuevo</a>
+                                        {% endif %}
                                         <a class="nav-link link" href="{% url 'historial:consultarFicha' empleado=id_empleado %}">Consultar</a>
                                     </div>
                                 </div>

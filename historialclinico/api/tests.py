@@ -1,4 +1,4 @@
-'''from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -448,4 +448,4 @@ class DiagnosticoTestCase(TestCase):
             format='json',
             follow=True)
 
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

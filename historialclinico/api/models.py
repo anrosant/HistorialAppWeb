@@ -338,21 +338,21 @@ class Regional(models.Model):
     abdomen = models.CharField(max_length=300, blank=True)
 
 class Columna(models.Model):
-    cifosis_acentuada = models.BooleanField(null=True)
-    contractura_muscular = models.BooleanField(null=True)
-    dolor = models.BooleanField(null=True)
-    lordosis_acentuada = models.BooleanField(null=True)
-    escoliosis = models.BooleanField(null=True)
+    cifosis_acentuada = models.NullBooleanField(null=True)
+    contractura_muscular = models.NullBooleanField(null=True)
+    dolor = models.NullBooleanField(null=True)
+    lordosis_acentuada = models.NullBooleanField(null=True)
+    escoliosis = models.NullBooleanField(null=True)
     motricidad = models.CharField(max_length=20, null=True)
     detalle_alteracion = models.CharField(max_length=300, blank=True)
 
 class RegionLumbar(models.Model):
-    dolor_punio_percusion = models.BooleanField(null=True)
+    dolor_punio_percusion = models.NullBooleanField(null=True)
     motricidad = models.CharField(max_length=20, null=True)
     detalle_alteracion = models.CharField(max_length=300, blank=True, null = True)
 
 class Extremidades(models.Model):
-    dolor = models.BooleanField(null=True)
+    dolor = models.NullBooleanField(null=True)
     motricidad = models.CharField(max_length=20, null=True)
     observaciones = models.CharField(max_length=20, blank=True)
 
@@ -378,6 +378,6 @@ class ExamenFisico(models.Model):
 
 class Vulnerabilidad(models.Model):
     ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
-    persona_vulnerable = models.BooleanField(default=False, null=True)
-    persona_discapacidad = models.BooleanField(default=False, null=True)
+    persona_vulnerable = models.NullBooleanField(default=False, null=True)
+    persona_discapacidad = models.NullBooleanField(default=False, null=True)
     descripcion = models.CharField(max_length=300, blank=True)

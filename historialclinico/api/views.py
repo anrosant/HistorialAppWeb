@@ -356,9 +356,12 @@ def ingresoUsuario(request):
 
             #Por cada empleado, selecciona 3 consultas y atenciones
             for empleado in empleados:
-                consulta = ConsultaMedica.objects.filter(empleado = empleado.id)[-3:]
-                atencion = AtencionEnfermeria.objects.filter(empleado = empleado.id)[-3:]
-                #import itertools
+                consulta = ConsultaMedica.objects.filter(empleado = empleado.id)
+                atencion = AtencionEnfermeria.objects.filter(empleado = empleado.id)
+                if(len(consulta)>=3):
+                    consulta = consulta[len(consulta)-3:]
+                if(len(atencion)>=3):
+                    atencion = atencion[len(consulta)-3:]
                 consultas = itertools.chain(consultas, consulta)
                 atenciones = itertools.chain(atenciones, atencion)
 

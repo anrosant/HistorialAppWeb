@@ -108,15 +108,8 @@ class FichaMedica(models.Model):
     tipo = models.CharField(max_length=15, choices=TIPOS, default='Periódico')
     prescripcion = models.CharField(max_length=300, blank=True)
 
-class Diagnostico(models.Model):
-    enfermedad = models.ForeignKey(Enfermedad, on_delete=models.CASCADE)
-    consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
-    ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
-    tipoEnfermedad = models.CharField(max_length=100)
-
 class PermisoMedico(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    diagnostico = models.ForeignKey(Diagnostico, on_delete=models.CASCADE)
     consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
     fecha_registro = models.DateField(default=timezone.now())
     doctor = models.CharField(max_length=100, blank = True)
@@ -124,6 +117,13 @@ class PermisoMedico(models.Model):
     fecha_fin = models.DateField(default=timezone.now())
     dias_permiso = models.IntegerField()
     observaciones_permiso = models.CharField(max_length=100, blank = True)
+
+class Diagnostico(models.Model):
+    enfermedad = models.ForeignKey(Enfermedad, on_delete=models.CASCADE)
+    consulta_medica = models.ForeignKey(ConsultaMedica, null=True, on_delete=models.CASCADE)
+    ficha_medica = models.ForeignKey(FichaMedica, null=True, on_delete=models.CASCADE)
+    tipoEnfermedad = models.CharField(max_length=100)
+    permiso_medico = models.ForeignKey(PermisoMedico, null=True, on_delete=models.CASCADE)
 
 class AparatoSistema(models.Model):
     NOMBRES = (
@@ -221,7 +221,7 @@ class AntecedentePatologicoFamiliar(models.Model):
 class Empresa(models.Model):
     nombre = models.CharField(max_length=100)
     cargo = models.CharField(max_length=100)
-    riesgos = models.CharField(blank=True, max_length=300)
+    #riesgos = models.CharField(blank=True, null=True, max_length=300)
     epps = models.CharField(blank=True, max_length=100)
     area_trabajo = models.CharField(max_length=100)
 

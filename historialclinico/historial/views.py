@@ -196,7 +196,7 @@ def guardarFichaMedica(request):
         empresa_actual = Empresa()
         empresa_actual.nombre = request.POST.get('nombre_empresa_actual')
         empresa_actual.cargo = request.POST.get('cargo_actual')
-        empresa_actual.riesgos = request.POST.get('riesgos')
+        #empresa_actual.riesgos = request.POST.get('riesgos')
         empresa_actual.epps = request.POST.get('epps')
         empresa_actual.area_trabajo = request.POST.get('area_trabajo')
         empresa_actual.save()

@@ -70,16 +70,16 @@ class EnfermedadSerializer(serializers.ModelSerializer):
         model = Enfermedad
         fields = ( 'pk','codigo', 'nombre', 'grupo')
 
-class DiagnosticoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Diagnostico
-        fields = ('pk', 'enfermedad', 'consulta_medica', 'ficha_medica', 'tipoEnfermedad')
-
 class PermisoMedicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = PermisoMedico
-        fields = ('pk', 'empleado', 'diagnostico', 'consulta_medica', 'fecha_registro', 'doctor', 'fecha_inicio',
+        fields = ('pk', 'empleado', 'consulta_medica', 'fecha_registro', 'doctor', 'fecha_inicio',
                   'fecha_fin', 'dias_permiso', 'observaciones_permiso')
+
+class DiagnosticoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Diagnostico
+        fields = ('pk', 'enfermedad', 'consulta_medica', 'ficha_medica', 'tipoEnfermedad', 'permiso_medico')
 
 class InmunizacionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -129,7 +129,7 @@ class AntecedentePatologicoFamiliarSerializer(serializers.ModelSerializer):
 class EmpresaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empresa
-        fields = ('pk', 'nombre', 'cargo', 'riesgos', 'epps', 'area_trabajo')
+        fields = ('pk', 'nombre', 'cargo', 'epps', 'area_trabajo')
 
 class AntecedenteLaboralSerializer(serializers.ModelSerializer):
     class Meta:
